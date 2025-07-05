@@ -240,11 +240,11 @@ export default function Solutions() {
             fill
             className="object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-gray-800/70 to-black/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-800/70 to-black/80"></div>
         </div>
 
-        <div className="absolute top-10 left-10 w-80 h-80 bg-gray-400/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-gray-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-10 left-10 w-20 h-20 bg-gray-400/20 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-32 h-32 bg-gray-600/20 rounded-full blur-xl animate-pulse delay-1000"></div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
@@ -342,11 +342,11 @@ export default function Solutions() {
                   <div className="flex items-center justify-between">
                     <Link
                       href={`/solutions/${product.slug}`}
-                      className="bg-gradient-to-r from-gray-700 to-gray-900 text-white px-6 py-3 rounded-xl font-semibold hover:from-gray-800 hover:to-black transition-all duration-300 shadow-lg hover:shadow-xl"
+                      className="bg-gradient-to-r from-gray-800 to-black text-white px-6 py-3 rounded-xl font-semibold hover:from-gray-700 hover:to-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
                     >
                       Learn More
                     </Link>
-                    <button className="border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:border-gray-600 hover:text-gray-600 transition-colors duration-300">
+                    <button className="border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:border-gray-800 hover:text-gray-800 transition-colors duration-300">
                       Request Demo
                     </button>
                   </div>
@@ -427,7 +427,7 @@ export default function Solutions() {
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
-                        className="bg-gradient-to-r from-gray-700 to-gray-900 h-2 rounded-full transition-all duration-1000"
+                        className="bg-gradient-to-r from-gray-800 to-black h-2 rounded-full transition-all duration-1000"
                         style={{ width: `${solution.progress}%` }}
                       ></div>
                     </div>
@@ -443,7 +443,7 @@ export default function Solutions() {
                     ))}
                   </div>
 
-                  <button className="w-full bg-gradient-to-r from-gray-700 to-gray-900 text-white px-6 py-3 rounded-xl font-semibold hover:from-gray-800 hover:to-black transition-all duration-300 shadow-lg">
+                  <button className="w-full bg-gradient-to-r from-gray-800 to-black text-white px-6 py-3 rounded-xl font-semibold hover:from-gray-700 hover:to-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105">
                     Join Beta Program
                   </button>
                 </div>

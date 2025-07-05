@@ -9,7 +9,7 @@ export default function Contact() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <Section className="relative bg-gradient-to-br from-gray-900 via-gray-900 to-black text-white overflow-hidden">
+      <Section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src="/placeholder.svg?height=800&width=1600"
@@ -17,15 +17,15 @@ export default function Contact() {
             fill
             className="object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 to-black/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-800/70 to-black/80"></div>
         </div>
 
-        <div className="absolute top-20 left-20 w-80 h-80 bg-gray-400/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-gray-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-10 left-10 w-20 h-20 bg-gray-400/20 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-32 h-32 bg-gray-600/20 rounded-full blur-xl animate-pulse delay-1000"></div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <div className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-8 py-3 mb-8">
+            <div className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-2 mb-8">
               <span className="text-gray-200 text-sm font-medium">💬 Get In Touch</span>
             </div>
             <h1 className="text-6xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-white via-gray-100 to-gray-200 bg-clip-text text-transparent">
@@ -50,7 +50,7 @@ export default function Contact() {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <div className="bg-white rounded-3xl shadow-2xl p-10 border border-gray-100">
+              <div className="bg-white rounded-3xl shadow-xl p-10 border border-gray-100 hover:shadow-2xl transition-all duration-300">
                 <h2 className="text-3xl font-bold mb-2 text-gray-900">Send us a Message</h2>
                 <p className="text-gray-600 mb-8 text-lg">
                   Fill out the form below and we'll get back to you within 24 hours.
@@ -79,7 +79,7 @@ export default function Contact() {
               {/* Contact Cards */}
               <div className="space-y-6">
                 <div className="group flex items-start gap-6 p-8 bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl hover:shadow-xl transition-all duration-300 border border-gray-100">
-                  <div className="bg-gradient-to-br from-gray-500 to-gray-600 p-4 rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  <div className="bg-gradient-to-br from-gray-500 to-gray-700 p-4 rounded-2xl shadow-lg group-hover:scale-110 transition-transform duration-300">
                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"

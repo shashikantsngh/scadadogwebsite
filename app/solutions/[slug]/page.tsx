@@ -474,39 +474,39 @@ export default function SolutionPage({ params }: SolutionPageProps) {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <Section className="relative bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white overflow-hidden">
+      <Section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src={solution.image || "/placeholder.svg"}
             alt={solution.name}
             fill
-            className="object-cover opacity-30"
+            className="object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-800/70 to-black/80"></div>
         </div>
 
-        <div className="absolute top-10 left-10 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-10 left-10 w-80 h-80 bg-gray-400/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-gray-600/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
               <div className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-2 mb-6">
-                <span className="text-blue-200 text-sm font-medium">{solution.category}</span>
+                <span className="text-gray-200 text-sm font-medium">{solution.category}</span>
               </div>
               <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">{solution.name}</h1>
-              <p className="text-xl text-blue-100 mb-8 leading-relaxed">{solution.description}</p>
+              <p className="text-xl text-gray-100 mb-8 leading-relaxed">{solution.description}</p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <button className="bg-white text-blue-900 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 transition-colors duration-300 shadow-lg">
+                <button className="bg-white text-gray-900 px-8 py-4 rounded-xl font-semibold hover:bg-gray-50 transition-colors duration-300 shadow-lg">
                   Request Demo
                 </button>
-                <button className="border-2 border-white/30 bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-blue-900 transition-all duration-300">
+                <button className="border-2 border-white/30 bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-gray-900 transition-all duration-300">
                   Download Datasheet
                 </button>
               </div>
 
-              <div className="flex items-center gap-8 text-blue-200">
+              <div className="flex items-center gap-8 text-gray-200">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-white">{solution.version}</div>
                   <div className="text-sm">Current Version</div>
@@ -606,7 +606,7 @@ export default function SolutionPage({ params }: SolutionPageProps) {
                 {Object.entries(solution.specifications).map(([key, value]) => (
                   <div key={key} className="flex justify-between items-center p-4 bg-gray-50 rounded-xl">
                     <span className="font-semibold text-gray-900">{key}</span>
-                    <span className="text-blue-600 font-medium">{value}</span>
+                    <span className="text-gray-600 font-medium">{value}</span>
                   </div>
                 ))}
               </div>
@@ -623,15 +623,15 @@ export default function SolutionPage({ params }: SolutionPageProps) {
                 {solution.useCases.map((useCase, index) => (
                   <div
                     key={index}
-                    className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100"
+                    className="bg-gradient-to-br from-gray-500 to-gray-600 rounded-2xl p-6 border border-gray-100"
                   >
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">{useCase.title}</h3>
-                    <p className="text-gray-700 mb-4">{useCase.description}</p>
+                    <h3 className="text-xl font-bold text-white mb-3">{useCase.title}</h3>
+                    <p className="text-gray-100 mb-4">{useCase.description}</p>
                     <div className="flex flex-wrap gap-2">
                       {useCase.industries.map((industry) => (
                         <span
                           key={industry}
-                          className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium"
+                          className="bg-white/20 text-white px-3 py-1 rounded-full text-sm font-medium"
                         >
                           {industry}
                         </span>
@@ -670,16 +670,16 @@ export default function SolutionPage({ params }: SolutionPageProps) {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 className={`bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border ${
-                  key === "professional" ? "border-blue-500 ring-2 ring-blue-500/20" : "border-gray-100"
+                  key === "professional" ? "border-gray-500 ring-2 ring-gray-500/20" : "border-gray-100"
                 }`}
               >
                 {key === "professional" && (
-                  <div className="bg-blue-500 text-white px-4 py-2 rounded-full text-sm font-bold text-center mb-6">
+                  <div className="bg-gray-600 text-white px-4 py-2 rounded-full text-sm font-bold text-center mb-6">
                     Most Popular
                   </div>
                 )}
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-blue-600 mb-6">{plan.price}</div>
+                <div className="text-4xl font-bold text-gray-600 mb-6">{plan.price}</div>
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center gap-3">
@@ -691,7 +691,7 @@ export default function SolutionPage({ params }: SolutionPageProps) {
                 <button
                   className={`w-full py-3 rounded-xl font-semibold transition-colors duration-300 ${
                     key === "professional"
-                      ? "bg-blue-600 text-white hover:bg-blue-700"
+                      ? "bg-gray-600 text-white hover:bg-gray-700"
                       : "bg-gray-100 text-gray-900 hover:bg-gray-200"
                   }`}
                 >
@@ -727,13 +727,13 @@ export default function SolutionPage({ params }: SolutionPageProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl p-8 border border-blue-100"
+                className="bg-gradient-to-br from-gray-50 to-white rounded-3xl p-8 border border-gray-100"
               >
                 <blockquote className="text-lg text-gray-700 mb-6 italic leading-relaxed">
                   "{testimonial.quote}"
                 </blockquote>
                 <div className="flex items-center">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-full flex items-center justify-center mr-4">
                     <span className="text-white font-bold text-lg">
                       {testimonial.author
                         .split(" ")
@@ -743,7 +743,7 @@ export default function SolutionPage({ params }: SolutionPageProps) {
                   </div>
                   <div>
                     <div className="font-bold text-gray-900">{testimonial.author}</div>
-                    <div className="text-blue-600 font-medium">{testimonial.title}</div>
+                    <div className="text-gray-600 font-medium">{testimonial.title}</div>
                     <div className="text-gray-600 text-sm">{testimonial.company}</div>
                   </div>
                 </div>
@@ -754,7 +754,7 @@ export default function SolutionPage({ params }: SolutionPageProps) {
       </Section>
 
       {/* CTA Section */}
-      <Section className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
+      <Section className="bg-gray-900 text-white">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -763,14 +763,14 @@ export default function SolutionPage({ params }: SolutionPageProps) {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl font-bold mb-6">Ready to Get Started?</h2>
-            <p className="text-xl mb-8 text-blue-100 max-w-3xl mx-auto">
+            <p className="text-xl mb-8 text-gray-100 max-w-3xl mx-auto">
               Experience the power of {solution.name} with a personalized demo or start your free trial today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-blue-900 px-8 py-4 rounded-lg font-semibold hover:bg-blue-50 transition-colors duration-300 shadow-lg">
+              <button className="bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors duration-300 shadow-lg">
                 Schedule Demo
               </button>
-              <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-900 transition-colors duration-300">
+              <button className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition-colors duration-300">
                 Start Free Trial
               </button>
               <Link
