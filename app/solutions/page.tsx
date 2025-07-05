@@ -240,7 +240,7 @@ export default function Solutions() {
             fill
             className="object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 to-black/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-gray-800/70 to-black/90"></div>
         </div>
 
         <div className="absolute top-10 left-10 w-80 h-80 bg-gray-400/10 rounded-full blur-3xl animate-pulse"></div>

@@ -482,7 +482,7 @@ export default function SolutionPage({ params }: SolutionPageProps) {
             fill
             className="object-cover opacity-30"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/90 to-purple-900/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-black"></div>
         </div>
 
         <div className="absolute top-10 left-10 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
@@ -754,7 +754,7 @@ export default function SolutionPage({ params }: SolutionPageProps) {
       </Section>
 
       {/* CTA Section */}
-      <Section className="bg-blue-900 text-white">
+      <Section className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
         <div className="max-w-6xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
