@@ -14,6 +14,7 @@ interface BlogPost {
   image: string
   author: string
   featured: boolean
+  slug?: string // Add optional slug property
 }
 
 interface BlogCardProps {
@@ -22,8 +23,8 @@ interface BlogCardProps {
 }
 
 export default function BlogCard({ post, index }: BlogCardProps) {
-  // Create slug from title
-  const slug = post.title
+  // Create slug from title if not provided
+  const slug = post.slug || post.title
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")

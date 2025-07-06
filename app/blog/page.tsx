@@ -18,6 +18,7 @@ export default function Blog() {
       image: "/placeholder.svg?height=300&width=500",
       author: "ScadaDog Team",
       featured: true,
+      slug: "how-i-bypassed-ges-fancy-software", 
     },
     {
       id: 2,
@@ -30,6 +31,7 @@ export default function Blog() {
       image: "/placeholder.svg?height=300&width=500",
       author: "ScadaDog Team",
       featured: true,
+      slug: "building-integration-for-datadog",
     },
     {
       id: 3,
@@ -42,6 +44,7 @@ export default function Blog() {
       image: "/placeholder.svg?height=300&width=500",
       author: "ScadaDog Team",
       featured: true,
+      slug: "legacy-integrations-hacking-defunct-secondwind-scada", 
     },
     {
       id: 4,
@@ -54,6 +57,7 @@ export default function Blog() {
       image: "/placeholder.svg?height=300&width=500",
       author: "ScadaDog Team",
       featured: false,
+      slug: "the-future-of-iiot-bridging-ot-and-it-securely", 
     },
     {
       id: 5,
@@ -66,6 +70,7 @@ export default function Blog() {
       image: "/placeholder.svg?height=300&width=500",
       author: "ScadaDog Team",
       featured: false,
+      slug: "ai-in-industrial-automation-real-world-applications", 
     },
     {
       id: 6,
@@ -78,6 +83,7 @@ export default function Blog() {
       image: "/placeholder.svg?height=300&width=500",
       author: "ScadaDog Team",
       featured: false,
+      slug: "cybersecurity-for-ot-networks-a-practical-guide", 
     },
   ]
 

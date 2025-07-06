@@ -930,22 +930,22 @@ export default function BlogPost({ params }: BlogPostPageProps) {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <Section className="relative bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white overflow-hidden">
+      <Section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image src={post.image || "/placeholder.svg"} alt={post.title} fill className="object-cover opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/90 to-purple-900/90"></div>
+          <Image src={post.image || "/placeholder.svg"} alt={post.title} fill className="object-cover opacity-20" />
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-800/70 to-black/80"></div>
         </div>
 
-        <div className="absolute top-10 left-10 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-10 left-10 w-20 h-20 bg-gray-400/20 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-32 h-32 bg-gray-600/20 rounded-full blur-xl animate-pulse delay-1000"></div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <div className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-6 py-2 mb-8">
-              <span className="text-blue-200 text-sm font-medium">{post.category}</span>
+              <span className="text-gray-200 text-sm font-medium">{post.category}</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">{post.title}</h1>
-            <div className="flex items-center justify-center gap-6 text-blue-200 mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight bg-gradient-to-r from-white via-gray-100 to-gray-200 bg-clip-text text-transparent">{post.title}</h1>
+            <div className="flex items-center justify-center gap-6 text-gray-200 mb-8">
               <div className="flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -982,7 +982,7 @@ export default function BlogPost({ params }: BlogPostPageProps) {
                 <span>{post.readTime}</span>
               </div>
             </div>
-            <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">{post.excerpt}</p>
+            <p className="text-xl text-gray-100 max-w-3xl mx-auto leading-relaxed">{post.excerpt}</p>
           </motion.div>
         </div>
       </Section>
@@ -1048,19 +1048,19 @@ export default function BlogPost({ params }: BlogPostPageProps) {
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Share this article</h3>
                   <div className="flex items-center gap-4">
-                    <button className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors">
+                    <button className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
                       </svg>
                       Twitter
                     </button>
-                    <button className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors">
+                    <button className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                       </svg>
                       LinkedIn
                     </button>
-                    <button className="flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors">
+                    <button className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
                           strokeLinecap="round"
@@ -1075,7 +1075,7 @@ export default function BlogPost({ params }: BlogPostPageProps) {
                 </div>
                 <Link
                   href="/blog"
-                  className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300"
+                  className="bg-gray-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors duration-300 shadow-lg hover:shadow-xl"
                 >
                   ← Back to Blog
                 </Link>
@@ -1095,7 +1095,7 @@ export default function BlogPost({ params }: BlogPostPageProps) {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold mb-4 text-gray-900">Related Articles</h2>
+            <h2 className="text-3xl font-bold mb-4 text-gray-900 bg-gradient-to-r from-gray-900 to-black bg-clip-text text-transparent">Related Articles</h2>
             <p className="text-lg text-gray-600">Continue exploring our technical insights</p>
           </motion.div>
 
@@ -1121,7 +1121,7 @@ export default function BlogPost({ params }: BlogPostPageProps) {
                         className="object-cover group-hover:scale-110 transition-transform duration-300"
                       />
                       <div className="absolute top-4 left-4">
-                        <span className="bg-white/90 backdrop-blur-sm text-blue-600 px-3 py-1 rounded-full text-xs font-bold">
+                        <span className="bg-white/90 backdrop-blur-sm text-gray-600 px-3 py-1 rounded-full text-xs font-bold">
                           {relatedPost.category}
                         </span>
                       </div>
@@ -1134,7 +1134,7 @@ export default function BlogPost({ params }: BlogPostPageProps) {
                         <span>•</span>
                         <span>{relatedPost.readTime}</span>
                       </div>
-                      <h3 className="text-lg font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                      <h3 className="text-lg font-bold text-gray-900 mb-3 group-hover:text-gray-600 transition-colors line-clamp-2">
                         {relatedPost.title}
                       </h3>
                       <p className="text-gray-600 text-sm line-clamp-3">{relatedPost.excerpt}</p>
