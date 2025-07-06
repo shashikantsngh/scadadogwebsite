@@ -1,26 +1,25 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import Section from "@/components/Section"
-import Image from "next/image"
-import Link from "next/link"
+import { motion } from "framer-motion";
+import Section from "@/components/Section";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Solutions() {
   const products = [
     {
       id: 1,
-      name: "ScadaConnect Pro",
-      slug: "scadaconnect-pro",
+      name: "Fetch",
+      slug: "fetch",
       category: "Data Integration Platform",
       description:
         "Enterprise-grade data integration platform that seamlessly connects industrial systems with modern IT infrastructure.",
       features: [
-        "Multi-protocol support (Modbus, OPC-UA, Ethernet/IP)",
-        "Real-time data streaming and processing",
-        "Cloud and on-premise deployment options",
-        "Advanced security and encryption",
-        "Scalable architecture for enterprise environments",
-        "Built-in data historian and analytics",
+        "Industrial IoT Adapter Library: Supports legacy and modern equipment via downloadable adapters",
+        "Offline Mode & Edge Buffering: Captures data behind firewalls with store-and-forward reliability",
+        "Machine Utilization Dashboards: Provides OEE, run-time, idle time, and downtime KPIs",
+        "Secure Licensing System: Supports both perpetual and subscription models with machine fingerprinting",
+        "API Integration: Export normalized data into Canary, OSIsoft PI, Ignition, or custom analytics systems",
       ],
       image: "/placeholder.svg?height=400&width=600",
       status: "Production Ready",
@@ -31,18 +30,17 @@ export default function Solutions() {
     },
     {
       id: 2,
-      name: "IntelliMaint AI",
-      slug: "intellimaint-ai",
+      name: "Scout",
+      slug: "scout",
       category: "Predictive Maintenance Suite",
       description:
         "AI-powered predictive maintenance solution that uses machine learning to predict equipment failures before they occur.",
       features: [
-        "Machine learning algorithms for failure prediction",
-        "Vibration and temperature analysis",
-        "Automated alert and notification system",
-        "Integration with existing CMMS systems",
-        "Mobile app for field technicians",
-        "ROI tracking and reporting dashboard",
+        "Validates names, structures, and attributes against ISA/IEC templates",
+        "AI-assisted inference of missing or undocumented tags from CSVs, drawings, and OEM docs",
+        "Creates structured OPC/SCADA UDTs compatible with Ignition, AVEVA, and GE",
+        "Full history of changes for compliance and traceability",
+        "Reuse or customize tag templates for inverters, BMS, transformers, etc.",
       ],
       image: "/placeholder.svg?height=400&width=600",
       status: "Production Ready",
@@ -51,57 +49,58 @@ export default function Solutions() {
       gradient: "from-gray-700 to-gray-900",
       icon: "🤖",
     },
-    {
-      id: 3,
-      name: "SecureOT Shield",
-      slug: "secureot-shield",
-      category: "OT Cybersecurity Platform",
-      description:
-        "Comprehensive cybersecurity solution designed specifically for operational technology environments.",
-      features: [
-        "Network segmentation and micro-segmentation",
-        "Real-time threat detection and response",
-        "Asset discovery and inventory management",
-        "Compliance reporting (NIST, IEC 62443)",
-        "Incident response automation",
-        "Security awareness training modules",
-      ],
-      image: "/placeholder.svg?height=400&width=600",
-      status: "Production Ready",
-      version: "v1.8",
-      clients: "12+ Critical Infrastructure Sites",
-      gradient: "from-gray-700 to-gray-900",
-      icon: "🛡️",
-    },
-    {
-      id: 4,
-      name: "DataFlow Analytics",
-      slug: "dataflow-analytics",
-      category: "Industrial Analytics Platform",
-      description: "Advanced analytics platform that transforms industrial data into actionable business intelligence.",
-      features: [
-        "Real-time and historical data analysis",
-        "Custom dashboard creation tools",
-        "Machine learning-based insights",
-        "KPI tracking and benchmarking",
-        "Automated report generation",
-        "Mobile-responsive interface",
-      ],
-      image: "/placeholder.svg?height=400&width=600",
-      status: "Production Ready",
-      version: "v2.5",
-      clients: "30+ Operations Centers",
-      gradient: "from-gray-700 to-gray-900",
-      icon: "📊",
-    },
-  ]
+    // {
+    //   id: 3,
+    //   name: "SecureOT Shield",
+    //   slug: "secureot-shield",
+    //   category: "OT Cybersecurity Platform",
+    //   description:
+    //     "Comprehensive cybersecurity solution designed specifically for operational technology environments.",
+    //   features: [
+    //     "Network segmentation and micro-segmentation",
+    //     "Real-time threat detection and response",
+    //     "Asset discovery and inventory management",
+    //     "Compliance reporting (NIST, IEC 62443)",
+    //     "Incident response automation",
+    //     "Security awareness training modules",
+    //   ],
+    //   image: "/placeholder.svg?height=400&width=600",
+    //   status: "Production Ready",
+    //   version: "v1.8",
+    //   clients: "12+ Critical Infrastructure Sites",
+    //   gradient: "from-gray-700 to-gray-900",
+    //   icon: "🛡️",
+    // },
+    // {
+    //   id: 4,
+    //   name: "DataFlow Analytics",
+    //   slug: "dataflow-analytics",
+    //   category: "Industrial Analytics Platform",
+    //   description: "Advanced analytics platform that transforms industrial data into actionable business intelligence.",
+    //   features: [
+    //     "Real-time and historical data analysis",
+    //     "Custom dashboard creation tools",
+    //     "Machine learning-based insights",
+    //     "KPI tracking and benchmarking",
+    //     "Automated report generation",
+    //     "Mobile-responsive interface",
+    //   ],
+    //   image: "/placeholder.svg?height=400&width=600",
+    //   status: "Production Ready",
+    //   version: "v2.5",
+    //   clients: "30+ Operations Centers",
+    //   gradient: "from-gray-700 to-gray-900",
+    //   icon: "📊",
+    // },
+  ];
 
   const solutionsInDevelopment = [
     {
       id: 5,
       name: "EdgeAI Processor",
       category: "Edge Computing Solution",
-      description: "Lightweight AI processing unit for real-time decision making at the edge of industrial networks.",
+      description:
+        "Lightweight AI processing unit for real-time decision making at the edge of industrial networks.",
       features: [
         "Real-time AI inference at the edge",
         "Low-latency decision making",
@@ -142,7 +141,8 @@ export default function Solutions() {
       name: "CloudBridge Gateway",
       slug: "cloudbridge-gateway",
       category: "IoT Gateway Solution",
-      description: "Secure gateway solution for connecting legacy industrial equipment to modern cloud platforms.",
+      description:
+        "Secure gateway solution for connecting legacy industrial equipment to modern cloud platforms.",
       features: [
         "Protocol translation and bridging",
         "Secure cloud connectivity",
@@ -178,7 +178,7 @@ export default function Solutions() {
       icon: "🥽",
       progress: 15,
     },
-  ]
+  ];
 
   const customSolutions = [
     {
@@ -207,7 +207,8 @@ export default function Solutions() {
     },
     {
       title: "Industrial IoT Implementation",
-      description: "End-to-end IoT solutions that connect your equipment to the digital ecosystem.",
+      description:
+        "End-to-end IoT solutions that connect your equipment to the digital ecosystem.",
       icon: "🌐",
       capabilities: [
         "Sensor integration and deployment",
@@ -218,7 +219,8 @@ export default function Solutions() {
     },
     {
       title: "Process Optimization",
-      description: "Data-driven process optimization solutions that improve efficiency and reduce operational costs.",
+      description:
+        "Data-driven process optimization solutions that improve efficiency and reduce operational costs.",
       icon: "⚙️",
       capabilities: [
         "Process analysis and modeling",
@@ -227,7 +229,7 @@ export default function Solutions() {
         "Continuous improvement programs",
       ],
     },
-  ]
+  ];
 
   return (
     <div className="min-h-screen">
@@ -247,15 +249,22 @@ export default function Solutions() {
         <div className="absolute bottom-10 right-10 w-32 h-32 bg-gray-600/20 rounded-full blur-xl animate-pulse delay-1000"></div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
             <div className="inline-flex items-center bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-8 py-3 mb-8">
-              <span className="text-gray-200 text-sm font-medium">🚀 Innovation Portfolio</span>
+              <span className="text-gray-200 text-sm font-medium">
+                🚀 Innovation Portfolio
+              </span>
             </div>
             <h1 className="text-6xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-white via-gray-100 to-gray-200 bg-clip-text text-transparent">
               Our Solutions
             </h1>
             <p className="text-2xl text-gray-100 max-w-4xl mx-auto leading-relaxed">
-              Discover our comprehensive portfolio of industrial automation products and cutting-edge solutions
+              Discover our comprehensive portfolio of industrial automation
+              products and cutting-edge solutions
             </p>
           </motion.div>
         </div>
@@ -272,11 +281,16 @@ export default function Solutions() {
             className="text-center mb-16"
           >
             <div className="inline-flex items-center bg-green-50 border border-green-200 rounded-full px-6 py-2 mb-6">
-              <span className="text-green-600 text-sm font-medium">✅ Production Ready</span>
+              <span className="text-green-600 text-sm font-medium">
+                ✅ Production Ready
+              </span>
             </div>
-            <h2 className="text-4xl font-bold mb-4 text-gray-900">Our Products</h2>
+            <h2 className="text-4xl font-bold mb-4 text-gray-900">
+              Our Products
+            </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Battle-tested solutions deployed across industrial facilities worldwide
+              Battle-tested solutions deployed across industrial facilities
+              worldwide
             </p>
           </motion.div>
 
@@ -297,9 +311,13 @@ export default function Solutions() {
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-80`}></div>
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-80`}
+                  ></div>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-7xl filter drop-shadow-lg">{product.icon}</div>
+                    <div className="text-7xl filter drop-shadow-lg">
+                      {product.icon}
+                    </div>
                   </div>
 
                   {/* Status Badge */}
@@ -313,8 +331,12 @@ export default function Solutions() {
                 <div className="p-8">
                   <div className="flex items-center justify-between mb-4">
                     <div>
-                      <h3 className="text-2xl font-bold text-gray-900 mb-1">{product.name}</h3>
-                      <p className="text-gray-600 font-medium">{product.category}</p>
+                      <h3 className="text-2xl font-bold text-gray-900 mb-1">
+                        {product.name}
+                      </h3>
+                      <p className="text-gray-600 font-medium">
+                        {product.category}
+                      </p>
                     </div>
                     <div className="text-right text-sm text-gray-500">
                       <div>{product.version}</div>
@@ -322,16 +344,27 @@ export default function Solutions() {
                     </div>
                   </div>
 
-                  <p className="text-gray-600 leading-relaxed mb-6">{product.description}</p>
+                  <p className="text-gray-600 leading-relaxed mb-6">
+                    {product.description}
+                  </p>
 
                   <div className="space-y-3 mb-6">
-                    <h4 className="font-semibold text-gray-900">Key Features:</h4>
-                    {product.features.slice(0, 4).map((feature, featureIndex) => (
-                      <div key={featureIndex} className="flex items-center gap-3">
-                        <div className="w-2 h-2 bg-gradient-to-r from-gray-700 to-gray-900 rounded-full flex-shrink-0"></div>
-                        <span className="text-gray-700 text-sm">{feature}</span>
-                      </div>
-                    ))}
+                    <h4 className="font-semibold text-gray-900">
+                      Key Features:
+                    </h4>
+                    {product.features
+                      .slice(0, 4)
+                      .map((feature, featureIndex) => (
+                        <div
+                          key={featureIndex}
+                          className="flex items-center gap-3"
+                        >
+                          <div className="w-2 h-2 bg-gradient-to-r from-gray-700 to-gray-900 rounded-full flex-shrink-0"></div>
+                          <span className="text-gray-700 text-sm">
+                            {feature}
+                          </span>
+                        </div>
+                      ))}
                     {product.features.length > 4 && (
                       <div className="text-gray-600 text-sm font-medium">
                         +{product.features.length - 4} more features
@@ -368,11 +401,16 @@ export default function Solutions() {
             className="text-center mb-16"
           >
             <div className="inline-flex items-center bg-orange-50 border border-orange-200 rounded-full px-6 py-2 mb-6">
-              <span className="text-orange-600 text-sm font-medium">🚧 In Development</span>
+              <span className="text-orange-600 text-sm font-medium">
+                🚧 In Development
+              </span>
             </div>
-            <h2 className="text-4xl font-bold mb-4 text-gray-900">Future Solutions</h2>
+            <h2 className="text-4xl font-bold mb-4 text-gray-900">
+              Future Solutions
+            </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Next-generation solutions currently in development and testing phases
+              Next-generation solutions currently in development and testing
+              phases
             </p>
           </motion.div>
 
@@ -393,9 +431,13 @@ export default function Solutions() {
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className={`absolute inset-0 bg-gradient-to-br ${solution.gradient} opacity-70`}></div>
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${solution.gradient} opacity-70`}
+                  ></div>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-6xl filter drop-shadow-lg">{solution.icon}</div>
+                    <div className="text-6xl filter drop-shadow-lg">
+                      {solution.icon}
+                    </div>
                   </div>
 
                   {/* Status Badge */}
@@ -409,21 +451,31 @@ export default function Solutions() {
                 <div className="p-8">
                   <div className="flex items-center justify-between mb-4">
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-1">{solution.name}</h3>
-                      <p className="text-gray-600 font-medium text-sm">{solution.category}</p>
+                      <h3 className="text-xl font-bold text-gray-900 mb-1">
+                        {solution.name}
+                      </h3>
+                      <p className="text-gray-600 font-medium text-sm">
+                        {solution.category}
+                      </p>
                     </div>
                     <div className="text-right text-sm text-gray-500">
                       <div>Expected: {solution.expectedRelease}</div>
                     </div>
                   </div>
 
-                  <p className="text-gray-600 leading-relaxed mb-6">{solution.description}</p>
+                  <p className="text-gray-600 leading-relaxed mb-6">
+                    {solution.description}
+                  </p>
 
                   {/* Progress Bar */}
                   <div className="mb-6">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium text-gray-700">Development Progress</span>
-                      <span className="text-sm font-bold text-gray-600">{solution.progress}%</span>
+                      <span className="text-sm font-medium text-gray-700">
+                        Development Progress
+                      </span>
+                      <span className="text-sm font-bold text-gray-600">
+                        {solution.progress}%
+                      </span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
@@ -434,13 +486,22 @@ export default function Solutions() {
                   </div>
 
                   <div className="space-y-2 mb-6">
-                    <h4 className="font-semibold text-gray-900 text-sm">Planned Features:</h4>
-                    {solution.features.slice(0, 3).map((feature, featureIndex) => (
-                      <div key={featureIndex} className="flex items-center gap-3">
-                        <div className="w-1.5 h-1.5 bg-gradient-to-r from-gray-700 to-gray-900 rounded-full flex-shrink-0"></div>
-                        <span className="text-gray-700 text-sm">{feature}</span>
-                      </div>
-                    ))}
+                    <h4 className="font-semibold text-gray-900 text-sm">
+                      Planned Features:
+                    </h4>
+                    {solution.features
+                      .slice(0, 3)
+                      .map((feature, featureIndex) => (
+                        <div
+                          key={featureIndex}
+                          className="flex items-center gap-3"
+                        >
+                          <div className="w-1.5 h-1.5 bg-gradient-to-r from-gray-700 to-gray-900 rounded-full flex-shrink-0"></div>
+                          <span className="text-gray-700 text-sm">
+                            {feature}
+                          </span>
+                        </div>
+                      ))}
                   </div>
 
                   <button className="w-full bg-gradient-to-r from-gray-800 to-black text-white px-6 py-3 rounded-xl font-semibold hover:from-gray-700 hover:to-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105">
@@ -464,11 +525,16 @@ export default function Solutions() {
             className="text-center mb-16"
           >
             <div className="inline-flex items-center bg-purple-50 border border-purple-200 rounded-full px-6 py-2 mb-6">
-              <span className="text-purple-600 text-sm font-medium">🎯 Custom Solutions</span>
+              <span className="text-purple-600 text-sm font-medium">
+                🎯 Custom Solutions
+              </span>
             </div>
-            <h2 className="text-4xl font-bold mb-4 text-gray-900">Tailored Solutions</h2>
+            <h2 className="text-4xl font-bold mb-4 text-gray-900">
+              Tailored Solutions
+            </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Custom-built solutions designed specifically for your unique industrial requirements
+              Custom-built solutions designed specifically for your unique
+              industrial requirements
             </p>
           </motion.div>
 
@@ -487,14 +553,20 @@ export default function Solutions() {
                     <span className="text-3xl">{solution.icon}</span>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900">{solution.title}</h3>
+                    <h3 className="text-xl font-bold text-gray-900">
+                      {solution.title}
+                    </h3>
                   </div>
                 </div>
 
-                <p className="text-gray-600 leading-relaxed mb-6">{solution.description}</p>
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  {solution.description}
+                </p>
 
                 <div className="space-y-3">
-                  <h4 className="font-semibold text-gray-900">Our Capabilities:</h4>
+                  <h4 className="font-semibold text-gray-900">
+                    Our Capabilities:
+                  </h4>
                   {solution.capabilities.map((capability, capIndex) => (
                     <div key={capIndex} className="flex items-center gap-3">
                       <div className="w-2 h-2 bg-gradient-to-r from-gray-700 to-gray-900 rounded-full flex-shrink-0"></div>
@@ -517,10 +589,12 @@ export default function Solutions() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-bold mb-6">Ready to Explore Our Solutions?</h2>
+            <h2 className="text-4xl font-bold mb-6">
+              Ready to Explore Our Solutions?
+            </h2>
             <p className="text-xl mb-8 text-gray-100 max-w-3xl mx-auto">
-              Whether you need a production-ready product or a custom solution, we're here to help transform your
-              industrial operations.
+              Whether you need a production-ready product or a custom solution,
+              we're here to help transform your industrial operations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -540,5 +614,5 @@ export default function Solutions() {
         </div>
       </Section>
     </div>
-  )
+  );
 }

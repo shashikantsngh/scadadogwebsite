@@ -8,45 +8,42 @@ import { notFound } from "next/navigation"
 
 // Solution data - in a real app, this would come from a CMS or database
 const solutions = {
-  "scadaconnect-pro": {
+  "fetch": { //scadaconnect-pro
     id: 1,
-    name: "ScadaConnect Pro",
-    category: "Data Integration Platform",
+    name: "Fetch",
+    category: "Machine Utilization & IoT Adapter Platform",
     description:
       "Enterprise-grade data integration platform that seamlessly connects industrial systems with modern IT infrastructure.",
     longDescription: `
-ScadaConnect Pro is our flagship data integration platform designed for enterprise-scale industrial operations. Built from the ground up to handle the complexities of modern manufacturing environments, it provides seamless connectivity between operational technology (OT) and information technology (IT) systems.
-
-The platform supports over 300 industrial protocols and can handle millions of data points in real-time, making it the perfect solution for large-scale manufacturing facilities, power plants, and process industries.
-    `,
+Fetch is SCADADOG’s plug-and-play edge data platform that connects industrial machines to cloud analytics systems with minimal configuration. Designed for manufacturers and energy operators, Fetch standardizes machine data across diverse protocols (Modbus, OPC-UA, MQTT, Siemens, Haas, Fanuc, Heidenhain, etc.) into a unified format for real-time utilization monitoring.`,
     features: [
       {
-        title: "Multi-Protocol Support",
-        description: "Native support for Modbus, OPC-UA, Ethernet/IP, PROFINET, DNP3, and 300+ other protocols",
+        title: "Industrial IoT Adapter Library",
+        description: "Supports legacy and modern equipment via downloadable adapters",
         icon: "🔌",
       },
       {
-        title: "Real-time Data Streaming",
-        description: "Sub-millisecond data processing with guaranteed delivery and automatic failover",
+        title: "Offline Mode & Edge Buffering",
+        description: " Captures data behind firewalls with store-and-forward reliability",
         icon: "⚡",
       },
       {
-        title: "Cloud & On-Premise Deployment",
-        description: "Flexible deployment options including hybrid cloud, on-premise, and edge computing",
+        title: "Machine Utilization Dashboards",
+        description: "Provides OEE, run-time, idle time, and downtime KPIs",
         icon: "☁️",
       },
       {
-        title: "Advanced Security",
-        description: "End-to-end encryption, role-based access control, and compliance with industrial standards",
+        title: "Secure Licensing System",
+        description: "Supports both perpetual and subscription models with machine fingerprinting",
         icon: "🔒",
       },
       {
-        title: "Scalable Architecture",
-        description: "Horizontally scalable from single machines to enterprise-wide deployments",
+        title: "API Integration",
+        description: " Export normalized data into Canary, OSIsoft PI, Ignition, or custom analytics systems",
         icon: "📈",
       },
       {
-        title: "Built-in Analytics",
+        title: "Built-in Analytics  *dummy",
         description: "Integrated data historian, real-time analytics, and machine learning capabilities",
         icon: "📊",
       },
@@ -61,18 +58,18 @@ The platform supports over 300 industrial protocols and can handle millions of d
     },
     useCases: [
       {
-        title: "Manufacturing Excellence",
-        description: "Connect production lines, quality systems, and ERP for complete visibility",
+        title: "Discrete manufacturing",
+        description: "CNC, lathes, PLC-controlled machines",
         industries: ["Automotive", "Electronics", "Pharmaceuticals"],
       },
       {
-        title: "Energy Management",
-        description: "Integrate power generation, distribution, and consumption monitoring",
+        title: "Renewable energy",
+        description: "Solar, BESS, and inverter fleet runtime metrics",
         industries: ["Utilities", "Oil & Gas", "Renewable Energy"],
       },
       {
         title: "Process Optimization",
-        description: "Real-time process monitoring and optimization for continuous improvement",
+        description: "Fleet-wide machine performance comparison",
         industries: ["Chemical", "Food & Beverage", "Mining"],
       },
     ],
@@ -122,45 +119,45 @@ The platform supports over 300 industrial protocols and can handle millions of d
       },
     ],
   },
-  "intellimaint-ai": {
+  "scout": {
     id: 2,
-    name: "IntelliMaint AI",
-    category: "Predictive Maintenance Suite",
+    name: "Scout",
+    category: "Tag & Asset Management Application",
     description:
       "AI-powered predictive maintenance solution that uses machine learning to predict equipment failures before they occur.",
     longDescription: `
-IntelliMaint AI revolutionizes maintenance operations by leveraging advanced machine learning algorithms to predict equipment failures before they happen. Our solution analyzes vibration patterns, temperature fluctuations, and operational data to provide accurate failure predictions with up to 95% accuracy.
+Scout is SCADADOG’s smart tag governance tool, purpose-built for SCADA engineers and energy asset managers. It standardizes and manages data point definitions (tags) across large distributed fleets, ensuring compliance with ISA-95, IEC-61850, and customer-specific naming guidelines.
 
 The platform has helped our clients reduce unplanned downtime by an average of 40% and maintenance costs by 30%, while extending equipment life by 15-20%.
     `,
     features: [
       {
-        title: "Machine Learning Algorithms",
-        description: "Advanced ML models trained on millions of data points for accurate failure prediction",
+        title: "Tag Linting Engine:",
+        description: "Validates names, structures, and attributes against ISA/IEC templates",
         icon: "🤖",
       },
       {
-        title: "Vibration & Temperature Analysis",
-        description: "Real-time analysis of sensor data to detect early signs of equipment degradation",
+        title: "Automated Tag Suggestions",
+        description: " AI-assisted inference of missing or undocumented tags from CSVs, drawings, and OEM docs",
         icon: "📡",
       },
       {
-        title: "Automated Alert System",
-        description: "Intelligent alerting with severity levels and recommended actions",
+        title: "UDT Generator",
+        description: "Creates structured OPC/SCADA UDTs compatible with Ignition, AVEVA, and GE",
         icon: "🚨",
       },
       {
-        title: "CMMS Integration",
-        description: "Seamless integration with existing maintenance management systems",
+        title: "Change Tracking & Auditing",
+        description: "Full history of changes for compliance and traceability",
         icon: "🔧",
       },
       {
-        title: "Mobile Field App",
-        description: "Native mobile app for technicians with offline capabilities",
+        title: "Asset Templates Library",
+        description: "Reuse or customize tag templates for inverters, BMS, transformers, etc.",
         icon: "📱",
       },
       {
-        title: "ROI Tracking",
+        title: "ROI Tracking  * dummy",
         description: "Comprehensive reporting and ROI tracking dashboard",
         icon: "💰",
       },
@@ -501,9 +498,9 @@ export default function SolutionPage({ params }: SolutionPageProps) {
                 <button className="bg-white text-gray-900 px-8 py-4 rounded-xl font-semibold hover:bg-gray-50 transition-colors duration-300 shadow-lg">
                   Request Demo
                 </button>
-                <button className="border-2 border-white/30 bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-gray-900 transition-all duration-300">
+                {/* <button className="border-2 border-white/30 bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-gray-900 transition-all duration-300">
                   Download Datasheet
-                </button>
+                </button> */}
               </div>
 
               <div className="flex items-center gap-8 text-gray-200">
