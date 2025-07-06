@@ -195,29 +195,34 @@ export default function Contact() {
           <div className="space-y-6">
             {[
               {
-                question: "What types of industrial systems do you work with?",
+                question: "What does SCADADOG specialize in?",
                 answer:
-                  "We work with a wide range of industrial systems including SCADA, PLC, HMI, DCS, and various industrial protocols like Modbus, OPC-UA, Ethernet/IP, and more.",
+                  "SCADADOG provides modern SCADA integration services, specializing in asset tagging, data standardization, edge gateway deployments, and software adapters for industrial and energy systems. We help clients reduce onboarding time, improve data quality, and meet compliance standards.",
               },
               {
-                question: "How quickly can you respond to support requests?",
+                question: "Can SCADADOG help with legacy equipment and protocols?",
                 answer:
-                  "We respond to support requests within 1 hour during business hours. For critical production issues, we offer emergency support with 2-hour response times.",
+                  "Yes. We support a wide range of industrial protocols—including Modbus, OPC-UA, MQTT, Siemens, Fanuc, and Haas—through downloadable adapters. Our Fetch platform enables legacy machine integration into modern data platforms without the need for costly upgrades.",
               },
               {
-                question: "Do you provide on-site services?",
+                question: "What industries does SCADADOG serve?",
                 answer:
-                  "Yes, we provide on-site services for system installation, commissioning, and complex troubleshooting. We serve clients nationwide from our Florida base.",
+                  "We serve clients in renewable energy (solar, BESS, inverters), discrete manufacturing, utilities, and heavy industry. Our solutions are designed for any operation needing better visibility and control of machine and site-level data.",
               },
               {
-                question: "Can you integrate with our existing systems?",
+                question: "Do you offer custom solutions or only off-the-shelf tools?",
                 answer:
-                  "We specialize in integrating new solutions with existing industrial infrastructure while maintaining operational continuity.",
+                  "Both. SCADADOG offers ready-to-deploy products like Fetch (for machine utilization) and Scout (for tag governance), but we also provide tailored consulting, adapter development, and engineering support to meet unique site requirements.",
               },
               {
-                question: "What security measures do you implement?",
+                question: "How do I get started with SCADADOG?",
                 answer:
-                  "We implement comprehensive cybersecurity measures including network segmentation, access control, threat detection, and compliance management specifically designed for OT environments.",
+                  "You can schedule a free consultation with our team using the contact form or email us at info@scadadog.com. We’ll help you assess your current architecture and recommend a phased integration or standardization plan.",
+              },
+              {
+                question: "Can SCADADOG support government and regulated industries?",
+                answer:
+                  "Yes. We’ve worked with clients in NERC-CIP environments, support NAICS-compliant documentation, and provide past performance references for government or RFP-driven engagements.",
               },
             ].map((faq, index) => (
               <motion.div
