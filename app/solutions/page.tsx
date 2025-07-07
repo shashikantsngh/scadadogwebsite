@@ -21,12 +21,11 @@ export default function Solutions() {
         "Secure Licensing System: Supports both perpetual and subscription models with machine fingerprinting",
         "API Integration: Export normalized data into Canary, OSIsoft PI, Ignition, or custom analytics systems",
       ],
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/fetch-bg.jpg?height=400&width=600",
       status: "Production Ready",
       version: "v3.2",
       clients: "25+ Industrial Facilities",
       gradient: "from-gray-700 to-gray-900",
-      icon: "🔗",
     },
     {
       id: 2,
@@ -42,12 +41,11 @@ export default function Solutions() {
         "Full history of changes for compliance and traceability",
         "Reuse or customize tag templates for inverters, BMS, transformers, etc.",
       ],
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/scout-bg.jpg?height=400&width=600",
       status: "Production Ready",
       version: "v2.1",
       clients: "15+ Manufacturing Plants",
       gradient: "from-gray-700 to-gray-900",
-      icon: "🤖",
     },
     // {
     //   id: 3,
@@ -237,12 +235,12 @@ export default function Solutions() {
       <Section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=800&width=1600"
+            src="/solutions-bg.jpg?height=800&width=1600"
             alt="Solutions background"
             fill
             className="object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-800/70 to-black/80"></div>
+          {/* <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-800/70 to-black/80"></div> */}
         </div>
 
         <div className="absolute top-10 left-10 w-20 h-20 bg-gray-400/20 rounded-full blur-xl animate-pulse"></div>
@@ -311,14 +309,14 @@ export default function Solutions() {
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div
+                  {/* <div
                     className={`absolute inset-0 bg-gradient-to-br ${product.gradient} opacity-80`}
-                  ></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
+                  ></div> */}
+                  {/* <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-7xl filter drop-shadow-lg">
                       {product.icon}
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Status Badge */}
                   <div className="absolute top-4 right-4">

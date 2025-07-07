@@ -90,7 +90,7 @@ Fetch is SCADADOG’s plug-and-play edge data platform that connects industrial 
         features: ["Unlimited tags", "Custom protocols", "ML/AI capabilities", "Dedicated support"],
       },
     },
-    image: "/placeholder.svg?height=600&width=1200",
+    image: "/fetch-bg.jpg?height=600&width=1200",
     gallery: [
       "/placeholder.svg?height=400&width=600",
       "/placeholder.svg?height=400&width=600",
@@ -100,8 +100,7 @@ Fetch is SCADADOG’s plug-and-play edge data platform that connects industrial 
     status: "Production Ready",
     version: "v3.2",
     clients: "25+ Industrial Facilities",
-    gradient: "from-blue-500 to-indigo-600",
-    icon: "🔗",
+    gradient: "bg-gradient-to-br from-gray-900/20 via-gray-800 to-black/50",
     testimonials: [
       {
         quote:
@@ -204,7 +203,7 @@ The platform has helped our clients reduce unplanned downtime by an average of 4
         features: ["Unlimited assets", "Custom ML models", "API access", "Dedicated support"],
       },
     },
-    image: "/placeholder.svg?height=600&width=1200",
+    image: "/scout-bg.jpg?height=600&width=1200",
     gallery: [
       "/placeholder.svg?height=400&width=600",
       "/placeholder.svg?height=400&width=600",
@@ -214,8 +213,7 @@ The platform has helped our clients reduce unplanned downtime by an average of 4
     status: "Production Ready",
     version: "v2.1",
     clients: "15+ Manufacturing Plants",
-    gradient: "from-green-500 to-teal-600",
-    icon: "🤖",
+    gradient: "bg-gradient-to-br from-gray-900/20 via-gray-800 to-black/50",
     testimonials: [
       {
         quote: "IntelliMaint AI helped us reduce unplanned downtime by 45%. The ROI was achieved in just 8 months.",
@@ -479,7 +477,7 @@ export default function SolutionPage({ params }: SolutionPageProps) {
             fill
             className="object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-800/70 to-black/80"></div>
+          {/* <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-800/70 to-black/80"></div> */}
         </div>
 
         <div className="absolute top-10 left-10 w-80 h-80 bg-gray-400/20 rounded-full blur-3xl animate-pulse"></div>
@@ -523,11 +521,12 @@ export default function SolutionPage({ params }: SolutionPageProps) {
               <div
                 className={`relative w-full h-96 bg-gradient-to-br ${solution.gradient} rounded-3xl overflow-hidden shadow-2xl`}
               >
-                <div className="absolute inset-0 flex items-center justify-center">
+                
+                {/* <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-9xl filter drop-shadow-lg">{solution.icon}</div>
-                </div>
+                </div> */}
                 <div className="absolute top-6 right-6">
-                  <span className="bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                  <span className="bg-gray-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
                     {solution.status}
                   </span>
                 </div>
