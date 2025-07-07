@@ -9,16 +9,16 @@ export default function Blog() {
   const blogPosts = [
     {
       id: 1,
-      title: "How I Bypassed GE's Fancy Software…",
+      title: "How I Bypassed GE’s Fancy Software with...",
       excerpt:
-        "A deep dive into overcoming proprietary software limitations and creating custom solutions for industrial automation systems with practical code examples.",
+        "GE’s turbine controls were bypassed using virtual I/O and custom software to spoof wind vane signals, enabling precise wake steering without compromising warranties or systems.",
       date: "2024-01-15",
       category: "Industrial Automation",
-      readTime: "8 min read",
-      image: "/placeholder.svg?height=300&width=500",
+      readTime: "15 min read",
+      image: "/blogs/image1.jpeg?height=300&width=500",
       author: "ScadaDog Team",
       featured: true,
-      slug: "how-i-bypassed-ges-fancy-software", 
+      slug: "how-i-bypassed-ges-fancy-software-with-virtual-jumper-wires", 
     },
     {
       id: 2,

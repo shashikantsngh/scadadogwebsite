@@ -8,145 +8,78 @@ import { notFound } from "next/navigation"
 
 // Blog post data - in a real app, this would come from a CMS or database
 const blogPosts = {
-  "how-i-bypassed-ges-fancy-software": {
+  "how-i-bypassed-ges-fancy-software-with-virtual-jumper-wires": {
     id: 1,
-    title: "How I Bypassed GE's Fancy Software…",
+    title: "How I Bypassed GE’s Fancy Software with virtual Jumper Wires",
     excerpt:
-      "A deep dive into overcoming proprietary software limitations and creating custom solutions for industrial automation systems with practical code examples.",
+      "GE’s turbine controls were bypassed using virtual I/O and custom software to spoof wind vane signals, enabling precise wake steering without compromising warranties or systems.",
     content: `
-# How I Bypassed GE's Fancy Software and Built a Better Solution
-
-When working with industrial automation systems, you often encounter proprietary software that promises the world but delivers frustration. This is the story of how we overcame GE's limitations and built a superior solution for our client.
-
-## The Challenge
-
-Our client, a major manufacturing facility, was struggling with GE's proprietary SCADA software. The system was:
-
-- **Expensive** - Licensing costs were through the roof
-- **Inflexible** - Customization required expensive professional services
-- **Unreliable** - Frequent crashes during critical operations
-- **Outdated** - User interface from the early 2000s
-
-## The Solution Approach
-
-Instead of continuing to fight with the existing system, we decided to build a custom solution that would:
-
-1. **Integrate directly with existing PLCs** using standard protocols
-2. **Provide a modern, responsive interface** built with web technologies
-3. **Offer real-time data visualization** with customizable dashboards
-4. **Include predictive analytics** for proactive maintenance
-
-## Technical Implementation
-
-### Protocol Integration
-
-We used Python and the \`pymodbus\` library to communicate directly with the PLCs:
-
-\`\`\`python
-from pymodbus.client.sync import ModbusTcpClient
-import time
-import json
-
-class PLCConnector:
-    def __init__(self, host, port=502):
-        self.client = ModbusTcpClient(host, port)
-        self.connected = False
+    TLDR; GE’s PLC logic forces outputs on the Digital Output modules that are not in use in order to block other logic running on the same PLC. I bypassed it using virtual IO module and a custom software running on the PLC to spoof the signal of a windvane and control the turbines wake steering.
     
-    def connect(self):
-        self.connected = self.client.connect()
-        return self.connected
-    
-    def read_holding_registers(self, address, count):
-        if not self.connected:
-            return None
-        
-        result = self.client.read_holding_registers(address, count)
-        if result.isError():
-            return None
-        
-        return result.registers
-\`\`\`
+    Our story begins with an idea. Can a wind turbines wake reduce the power output of a wind turbine behind it?
+![My Wind Farm](/blogs/turbines.jpeg)
 
-### Real-time Data Processing
+According to researchers at the National Research Energy Labs (NREL), it could. It could have an effect of up to 14%, according to the paper we published in 2019. My contribution to the seminole study was very trivial. In fact I didn’t even know it was being crafted at the time. My job was to deliver the engineering solution and the data needed for the study. A much more straightforward thing to achieve for an engineer with little knowledge of the science at the time. My goal was to somehow make it possible to steer the wake of one turbine around the face of the other.
 
-We implemented a real-time data processing pipeline using Node.js and WebSockets:
+## My Brilliant Boss
+He used a tiny plastic novelty wind turbine model he had on his desk, and a pencil. He propped them up and explained how wake steering works. After the hand waving, he leaned back on his squeaky office chair, and took a look outside of his window. He stared into the empty parking lot and pieced together his plan to use the wind vane to hijack the controls of a multi-million dollar piece of machinery.
 
-\`\`\`javascript
-const WebSocket = require('ws');
-const ModbusRTU = require("modbus-serial");
+The problem is that GE didn’t want anyone messing around with the controls alogirthm that they worked so hard on to build. It was designed to follow the optimal wind direction to output the most power the turbine can. And for sure, trying to reprogram it would void the warranty on the equipment. So instead the answer must be to trick the wind vane sensor that the optimal direction the wind is coming from is not where it thinks it is. This was obvious to my Boss because he saw wind turbines in the past steering all over the place when the wind vane was damaged.
 
-class DataProcessor {
-    constructor() {
-        this.clients = new Set();
-        this.modbusClient = new ModbusRTU();
-    }
-    
-    async startDataCollection() {
-        setInterval(async () => {
-            try {
-                const data = await this.collectPLCData();
-                this.broadcastToClients(data);
-            } catch (error) {
-                console.error('Data collection error:', error);
-            }
-        }, 1000); // Collect data every second
-    }
-    
-    broadcastToClients(data) {
-        this.clients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify(data));
-            }
-        });
-    }
-}
-\`\`\`
+## So Now What?
 
-## Results and Benefits
+The same model wind vane was installed on most of the GE wind turbines.
+![Hybrid XT Push-Pull Vane](/blogs/technical-drawing.jpeg)
 
-The custom solution delivered impressive results:
+The specific model was the Hybrid XT Push-Pull Vane. This meant that I had two cables from the wind vane (Yellow, White) that send a degree signal to the GE control software.
+![Hybrid XT Push-Pull Vane](/blogs/circuit-operation.jpeg)
 
-### Performance Improvements
-- **99.9% uptime** compared to 95% with the GE system
-- **Sub-second response times** for all operations
-- **50% reduction** in system maintenance time
+The wires are inserted into a digital input module on the Bachmann Process PLC installed on the GE ESS wind turbines. For a full list of parts on a GE ESS wind turbine see here.
 
-### Cost Savings
-- **$200,000 annual savings** on licensing fees
-- **75% reduction** in support costs
-- **ROI achieved in 8 months**
+![Hybrid XT Push-Pull Vane](/blogs/bachman-plc.jpeg)
 
-### User Experience
-- **Modern, intuitive interface** that operators love
-- **Mobile-responsive design** for remote monitoring
-- **Customizable dashboards** for different user roles
+# Wind Vane Details
 
-## Key Lessons Learned
+The Model 7894 Push-Pull Hybrid XT Vane is designed as a direct replacement for IceFree™3 wind vanes, compatible with NPN and PNP controllers. It provides two output signals in push-pull format, allowing current sourcing and sinking for wide compatibility.
 
-1. **Don't be afraid to challenge proprietary solutions** - Sometimes building custom is the right answer
-2. **Standard protocols are your friend** - Modbus, OPC-UA, and Ethernet/IP provide excellent interoperability
-3. **Modern web technologies** can deliver superior user experiences in industrial environments
-4. **Real-time data processing** is crucial for operational efficiency
+![Hybrid XT Push-Pull Vane](/blogs/wind-vane.jpeg)
+Wind Vane Dithering Control https://www.manualslib.com/manual/1639611/Nrg-Systems-Hybrid-Xt-Vane.html?page=25#manual
 
-## Technical Architecture
 
-Our final architecture consisted of:
+# Output signals:
+• Yaw Right / Yaw Left (VL) → White wire
+• Upwind / Downwind (VR90) → Yellow wire
 
-- **Data Collection Layer**: Python services running on industrial PCs
-- **Processing Layer**: Node.js backend with Redis for caching
-- **Presentation Layer**: React frontend with real-time WebSocket connections
-- **Database Layer**: InfluxDB for time-series data storage
+Most wind vanes are under-damped, causing them to move erratically due to turbulence. Some turbine control systems rely on this motion (dithering) to estimate the average wind direction by measuring the time spent in left vs. right positions. The Model 7894 XT vane has a stable output, reducing erratic movements and improving wind direction tracking. It generates a compatible dithered signal for controllers that require dithering.
 
-## Conclusion
+The duty cycle of the PWM output signal is used to indicate wind direction:
+• 0–160 degrees → 100% duty cycle
+• 180 degrees → 50% duty cycle
+• 200–359 degrees → 0% duty cycle
+When the vane detects correct wind alignment, the output duty cycle stabilizes. This method is more accurate and a stable tracking of wind direction compared to under-damped sensors.
 
-By thinking outside the box and leveraging modern technologies, we were able to deliver a solution that far exceeded the capabilities of the expensive proprietary system. The key was understanding the underlying protocols and building a solution tailored to the specific needs of the operation.
+## What About the Controller?
 
-This project reinforced our belief that the best industrial automation solutions often come from combining deep domain knowledge with modern software development practices.
+So even though I have these signal wires I still need to be able to somehow spoof them. The key here lied in a clever idea. I cant take all of the credit to be honest. I was in Boston sitting in a training session with an instructor that was going over the details of the Bachmann PLC.
 
----
+After trying out a very European coffee from a European break room, with some very polite germans I returned back to the conference room. The 5 day training was held in the Boston branch office no the Bachmman headquarters in germany. Either way they had a very talented developer explain the intricate layers of control and flexibility the Bachmann PLC has. He mentioned the debugging capabilities and even a very interesting feature that allowed a user to simulate IO’s in real time.
 
-*Want to learn more about custom industrial automation solutions? [Contact our team](/contact) to discuss your specific challenges.*
-    `,
+I asked, “Can I create a virtual IO card that looks like a real signal to the software?”. With a very matter of fact look on his face he mentioned that it is designed to mimic a real IO device, and as far as the software is concerned it is a real signal from an external sensor. I then went on to ask details about spoofing signals, and how I could use a configuration file to boot up the virtual IO.
+
+After testing, and troubleshooting on a local PLC at my desk I was able to spoof a signal. I made sure that the inputs expected by GE software running on the Bachmann PLC came from a virtual input module, I did this by changing the module ID of the real module and assigning the ID to the virtual module. The next step was to create another piece of software that ran on the Bachmann PLC alongside the GE Software. This code would pass all the inputs from the physical module to the GE Software by feeding the physical inputs to the virtual input module. I tested the software and made sure that it would boot up and wouldn’t cause any issues with the GE Software. Finally, I edited my program to modify the two inputs from the wind vane by adjusting the VR90/VL values so that the final output would provide a wind direction offset in the amount I desired.
+
+## Final Steps
+To put it all together I had to create an installation script that did the following:
+
+• Connect to Bachmann PLC
+• Add/Configure a virtual IO
+• Swap ID of Digital Input Module, and Virtual Module
+• Install “Custom Wake Steering ByPass” software program
+• Start up the “Custom Wake Steering ByPass”
+• Save settings and reboot the Bachmann PLC
+
+I wrote the script as a batch file that could run through a list of IP addresses at the Site (Wind Turbine IP addresses), and establish a SSH terminal with the PLC. I completed the steps using terminal commands defined by Bachmann’s operator terminal menu. I then initiated file transfers for the “Custom Wake Steering ByPass” program installation. Finally the changes are saved and a reboot is issued. I also created a step where I checked it was running once the PLC booted back up.
+---`,
     date: "2024-01-15",
     category: "Industrial Automation",
     readTime: "8 min read",
@@ -155,763 +88,763 @@ This project reinforced our belief that the best industrial automation solutions
     featured: true,
     tags: ["SCADA", "Python", "Modbus", "Custom Development", "Industrial Automation"],
   },
-  "building-integration-for-datadog": {
-    id: 2,
-    title: "Building an Integration for DataDog…",
-    excerpt:
-      "Step-by-step guide to creating seamless integrations between industrial systems and modern monitoring platforms with real-world examples.",
-    content: `
-# Building an Integration for DataDog: Bridging Industrial and IT Monitoring
+//   "building-integration-for-datadog": {
+//     id: 2,
+//     title: "Building an Integration for DataDog…",
+//     excerpt:
+//       "Step-by-step guide to creating seamless integrations between industrial systems and modern monitoring platforms with real-world examples.",
+//     content: `
+// # Building an Integration for DataDog: Bridging Industrial and IT Monitoring
 
-Modern industrial operations require visibility across both operational technology (OT) and information technology (IT) systems. This post details how we built a custom integration between industrial SCADA systems and DataDog's monitoring platform.
+// Modern industrial operations require visibility across both operational technology (OT) and information technology (IT) systems. This post details how we built a custom integration between industrial SCADA systems and DataDog's monitoring platform.
 
-## The Business Case
+// ## The Business Case
 
-Our client needed to:
-- **Monitor industrial equipment** alongside IT infrastructure
-- **Correlate OT and IT metrics** for better troubleshooting
-- **Leverage DataDog's alerting** for industrial alarms
-- **Create unified dashboards** for operations teams
+// Our client needed to:
+// - **Monitor industrial equipment** alongside IT infrastructure
+// - **Correlate OT and IT metrics** for better troubleshooting
+// - **Leverage DataDog's alerting** for industrial alarms
+// - **Create unified dashboards** for operations teams
 
-## Architecture Overview
+// ## Architecture Overview
 
-The integration consists of several key components:
+// The integration consists of several key components:
 
-1. **Data Collectors** - Services that gather data from industrial systems
-2. **Data Transformers** - Convert industrial data to DataDog metrics format
-3. **API Gateway** - Secure communication with DataDog
-4. **Configuration Management** - Dynamic metric configuration
+// 1. **Data Collectors** - Services that gather data from industrial systems
+// 2. **Data Transformers** - Convert industrial data to DataDog metrics format
+// 3. **API Gateway** - Secure communication with DataDog
+// 4. **Configuration Management** - Dynamic metric configuration
 
-## Implementation Details
+// ## Implementation Details
 
-### Data Collection from SCADA Systems
+// ### Data Collection from SCADA Systems
 
-We used OPC-UA to collect data from the SCADA server:
+// We used OPC-UA to collect data from the SCADA server:
 
-\`\`\`python
-from opcua import Client
-import asyncio
-import logging
+// \`\`\`python
+// from opcua import Client
+// import asyncio
+// import logging
 
-class OPCUACollector:
-    def __init__(self, endpoint_url):
-        self.client = Client(endpoint_url)
-        self.subscription = None
-        self.metrics = {}
+// class OPCUACollector:
+//     def __init__(self, endpoint_url):
+//         self.client = Client(endpoint_url)
+//         self.subscription = None
+//         self.metrics = {}
     
-    async def connect(self):
-        try:
-            await self.client.connect()
-            logging.info(f"Connected to OPC-UA server: {self.client.server_url}")
-            return True
-        except Exception as e:
-            logging.error(f"Failed to connect: {e}")
-            return False
+//     async def connect(self):
+//         try:
+//             await self.client.connect()
+//             logging.info(f"Connected to OPC-UA server: {self.client.server_url}")
+//             return True
+//         except Exception as e:
+//             logging.error(f"Failed to connect: {e}")
+//             return False
     
-    async def subscribe_to_variables(self, node_ids):
-        if not self.subscription:
-            self.subscription = await self.client.create_subscription(
-                period=1000,  # 1 second
-                handler=self.data_change_handler
-            )
+//     async def subscribe_to_variables(self, node_ids):
+//         if not self.subscription:
+//             self.subscription = await self.client.create_subscription(
+//                 period=1000,  # 1 second
+//                 handler=self.data_change_handler
+//             )
         
-        for node_id in node_ids:
-            node = self.client.get_node(node_id)
-            await self.subscription.subscribe_data_change(node)
+//         for node_id in node_ids:
+//             node = self.client.get_node(node_id)
+//             await self.subscription.subscribe_data_change(node)
     
-    def data_change_handler(self, node, val, data):
-        # Process the data change
-        metric_name = self.get_metric_name(node)
-        self.metrics[metric_name] = {
-            'value': val,
-            'timestamp': data.monitored_item.Value.SourceTimestamp,
-            'quality': data.monitored_item.Value.StatusCode
-        }
-\`\`\`
+//     def data_change_handler(self, node, val, data):
+//         # Process the data change
+//         metric_name = self.get_metric_name(node)
+//         self.metrics[metric_name] = {
+//             'value': val,
+//             'timestamp': data.monitored_item.Value.SourceTimestamp,
+//             'quality': data.monitored_item.Value.StatusCode
+//         }
+// \`\`\`
 
-### DataDog Integration
+// ### DataDog Integration
 
-We created a service to send metrics to DataDog:
+// We created a service to send metrics to DataDog:
 
-\`\`\`python
-import requests
-import time
-from datadog import initialize, api
+// \`\`\`python
+// import requests
+// import time
+// from datadog import initialize, api
 
-class DataDogIntegration:
-    def __init__(self, api_key, app_key):
-        options = {
-            'api_key': api_key,
-            'app_key': app_key
-        }
-        initialize(**options)
+// class DataDogIntegration:
+//     def __init__(self, api_key, app_key):
+//         options = {
+//             'api_key': api_key,
+//             'app_key': app_key
+//         }
+//         initialize(**options)
     
-    def send_metrics(self, metrics_data):
-        series = []
+//     def send_metrics(self, metrics_data):
+//         series = []
         
-        for metric_name, data in metrics_data.items():
-            series.append({
-                'metric': f'industrial.{metric_name}',
-                'points': [(int(time.time()), data['value'])],
-                'tags': [
-                    f'equipment:{data.get("equipment", "unknown")}',
-                    f'location:{data.get("location", "unknown")}',
-                    f'quality:{data.get("quality", "good")}'
-                ]
-            })
+//         for metric_name, data in metrics_data.items():
+//             series.append({
+//                 'metric': f'industrial.{metric_name}',
+//                 'points': [(int(time.time()), data['value'])],
+//                 'tags': [
+//                     f'equipment:{data.get("equipment", "unknown")}',
+//                     f'location:{data.get("location", "unknown")}',
+//                     f'quality:{data.get("quality", "good")}'
+//                 ]
+//             })
         
-        try:
-            api.Metric.send(series)
-            return True
-        except Exception as e:
-            logging.error(f"Failed to send metrics: {e}")
-            return False
+//         try:
+//             api.Metric.send(series)
+//             return True
+//         except Exception as e:
+//             logging.error(f"Failed to send metrics: {e}")
+//             return False
     
-    def create_custom_dashboard(self, dashboard_config):
-        dashboard = api.Dashboard.create(
-            title=dashboard_config['title'],
-            description=dashboard_config['description'],
-            graphs=dashboard_config['graphs'],
-            template_variables=dashboard_config.get('template_variables', [])
-        )
-        return dashboard
-\`\`\`
+//     def create_custom_dashboard(self, dashboard_config):
+//         dashboard = api.Dashboard.create(
+//             title=dashboard_config['title'],
+//             description=dashboard_config['description'],
+//             graphs=dashboard_config['graphs'],
+//             template_variables=dashboard_config.get('template_variables', [])
+//         )
+//         return dashboard
+// \`\`\`
 
-## Configuration Management
+// ## Configuration Management
 
-We implemented a flexible configuration system:
+// We implemented a flexible configuration system:
 
-\`\`\`yaml
-# config.yaml
-data_sources:
-  - name: "main_scada"
-    type: "opcua"
-    endpoint: "opc.tcp://192.168.1.100:4840"
-    metrics:
-      - node_id: "ns=2;i=1001"
-        name: "reactor_temperature"
-        equipment: "reactor_01"
-        location: "plant_a"
-        unit: "celsius"
-      - node_id: "ns=2;i=1002"
-        name: "pump_pressure"
-        equipment: "pump_01"
-        location: "plant_a"
-        unit: "psi"
+// \`\`\`yaml
+// # config.yaml
+// data_sources:
+//   - name: "main_scada"
+//     type: "opcua"
+//     endpoint: "opc.tcp://192.168.1.100:4840"
+//     metrics:
+//       - node_id: "ns=2;i=1001"
+//         name: "reactor_temperature"
+//         equipment: "reactor_01"
+//         location: "plant_a"
+//         unit: "celsius"
+//       - node_id: "ns=2;i=1002"
+//         name: "pump_pressure"
+//         equipment: "pump_01"
+//         location: "plant_a"
+//         unit: "psi"
 
-datadog:
-  api_key: "your_api_key_here"
-  app_key: "your_app_key_here"
-  metric_prefix: "industrial"
+// datadog:
+//   api_key: "your_api_key_here"
+//   app_key: "your_app_key_here"
+//   metric_prefix: "industrial"
   
-dashboards:
-  - name: "Plant Operations"
-    metrics:
-      - "industrial.reactor_temperature"
-      - "industrial.pump_pressure"
-    alerts:
-      - metric: "industrial.reactor_temperature"
-        threshold: 150
-        operator: ">"
-        message: "Reactor temperature critical!"
-\`\`\`
+// dashboards:
+//   - name: "Plant Operations"
+//     metrics:
+//       - "industrial.reactor_temperature"
+//       - "industrial.pump_pressure"
+//     alerts:
+//       - metric: "industrial.reactor_temperature"
+//         threshold: 150
+//         operator: ">"
+//         message: "Reactor temperature critical!"
+// \`\`\`
 
-## Real-time Data Processing
+// ## Real-time Data Processing
 
-We implemented a real-time processing pipeline:
+// We implemented a real-time processing pipeline:
 
-\`\`\`python
-import asyncio
-from concurrent.futures import ThreadPoolExecutor
-import queue
+// \`\`\`python
+// import asyncio
+// from concurrent.futures import ThreadPoolExecutor
+// import queue
 
-class RealTimeProcessor:
-    def __init__(self, collectors, integrations):
-        self.collectors = collectors
-        self.integrations = integrations
-        self.data_queue = queue.Queue()
-        self.executor = ThreadPoolExecutor(max_workers=4)
+// class RealTimeProcessor:
+//     def __init__(self, collectors, integrations):
+//         self.collectors = collectors
+//         self.integrations = integrations
+//         self.data_queue = queue.Queue()
+//         self.executor = ThreadPoolExecutor(max_workers=4)
     
-    async def start_processing(self):
-        # Start data collection tasks
-        collection_tasks = [
-            asyncio.create_task(collector.start_collection())
-            for collector in self.collectors
-        ]
+//     async def start_processing(self):
+//         # Start data collection tasks
+//         collection_tasks = [
+//             asyncio.create_task(collector.start_collection())
+//             for collector in self.collectors
+//         ]
         
-        # Start data processing task
-        processing_task = asyncio.create_task(self.process_data())
+//         # Start data processing task
+//         processing_task = asyncio.create_task(self.process_data())
         
-        # Wait for all tasks
-        await asyncio.gather(*collection_tasks, processing_task)
+//         # Wait for all tasks
+//         await asyncio.gather(*collection_tasks, processing_task)
     
-    async def process_data(self):
-        while True:
-            try:
-                # Get data from collectors
-                metrics_batch = {}
-                for collector in self.collectors:
-                    metrics_batch.update(collector.get_latest_metrics())
+//     async def process_data(self):
+//         while True:
+//             try:
+//                 # Get data from collectors
+//                 metrics_batch = {}
+//                 for collector in self.collectors:
+//                     metrics_batch.update(collector.get_latest_metrics())
                 
-                if metrics_batch:
-                    # Send to integrations
-                    for integration in self.integrations:
-                        await self.send_to_integration(integration, metrics_batch)
+//                 if metrics_batch:
+//                     # Send to integrations
+//                     for integration in self.integrations:
+//                         await self.send_to_integration(integration, metrics_batch)
                 
-                await asyncio.sleep(10)  # Process every 10 seconds
+//                 await asyncio.sleep(10)  # Process every 10 seconds
                 
-            except Exception as e:
-                logging.error(f"Processing error: {e}")
-                await asyncio.sleep(5)
+//             except Exception as e:
+//                 logging.error(f"Processing error: {e}")
+//                 await asyncio.sleep(5)
     
-    async def send_to_integration(self, integration, metrics):
-        loop = asyncio.get_event_loop()
-        await loop.run_in_executor(
-            self.executor,
-            integration.send_metrics,
-            metrics
-        )
-\`\`\`
+//     async def send_to_integration(self, integration, metrics):
+//         loop = asyncio.get_event_loop()
+//         await loop.run_in_executor(
+//             self.executor,
+//             integration.send_metrics,
+//             metrics
+//         )
+// \`\`\`
 
-## Custom DataDog Dashboards
+// ## Custom DataDog Dashboards
 
-We created specialized dashboards for industrial monitoring:
+// We created specialized dashboards for industrial monitoring:
 
-\`\`\`python
-def create_industrial_dashboard():
-    dashboard_config = {
-        'title': 'Industrial Operations Dashboard',
-        'description': 'Real-time monitoring of industrial equipment',
-        'graphs': [
-            {
-                'title': 'Equipment Temperature Trends',
-                'definition': {
-                    'requests': [
-                        {
-                            'q': 'avg:industrial.reactor_temperature{*} by {equipment}',
-                            'display_type': 'line'
-                        }
-                    ],
-                    'viz': 'timeseries'
-                }
-            },
-            {
-                'title': 'Pressure Monitoring',
-                'definition': {
-                    'requests': [
-                        {
-                            'q': 'avg:industrial.pump_pressure{*} by {location}',
-                            'display_type': 'line'
-                        }
-                    ],
-                    'viz': 'timeseries'
-                }
-            },
-            {
-                'title': 'Equipment Status',
-                'definition': {
-                    'requests': [
-                        {
-                            'q': 'avg:industrial.equipment_status{*} by {equipment}',
-                            'display_type': 'bars'
-                        }
-                    ],
-                    'viz': 'query_value'
-                }
-            }
-        ],
-        'template_variables': [
-            {
-                'name': 'equipment',
-                'prefix': 'equipment',
-                'default': '*'
-            },
-            {
-                'name': 'location',
-                'prefix': 'location',
-                'default': '*'
-            }
-        ]
-    }
+// \`\`\`python
+// def create_industrial_dashboard():
+//     dashboard_config = {
+//         'title': 'Industrial Operations Dashboard',
+//         'description': 'Real-time monitoring of industrial equipment',
+//         'graphs': [
+//             {
+//                 'title': 'Equipment Temperature Trends',
+//                 'definition': {
+//                     'requests': [
+//                         {
+//                             'q': 'avg:industrial.reactor_temperature{*} by {equipment}',
+//                             'display_type': 'line'
+//                         }
+//                     ],
+//                     'viz': 'timeseries'
+//                 }
+//             },
+//             {
+//                 'title': 'Pressure Monitoring',
+//                 'definition': {
+//                     'requests': [
+//                         {
+//                             'q': 'avg:industrial.pump_pressure{*} by {location}',
+//                             'display_type': 'line'
+//                         }
+//                     ],
+//                     'viz': 'timeseries'
+//                 }
+//             },
+//             {
+//                 'title': 'Equipment Status',
+//                 'definition': {
+//                     'requests': [
+//                         {
+//                             'q': 'avg:industrial.equipment_status{*} by {equipment}',
+//                             'display_type': 'bars'
+//                         }
+//                     ],
+//                     'viz': 'query_value'
+//                 }
+//             }
+//         ],
+//         'template_variables': [
+//             {
+//                 'name': 'equipment',
+//                 'prefix': 'equipment',
+//                 'default': '*'
+//             },
+//             {
+//                 'name': 'location',
+//                 'prefix': 'location',
+//                 'default': '*'
+//             }
+//         ]
+//     }
     
-    return api.Dashboard.create(**dashboard_config)
-\`\`\`
+//     return api.Dashboard.create(**dashboard_config)
+// \`\`\`
 
-## Results and Benefits
+// ## Results and Benefits
 
-The integration delivered significant value:
+// The integration delivered significant value:
 
-### Operational Benefits
-- **Unified monitoring** across OT and IT systems
-- **Faster incident response** with correlated alerts
-- **Better visibility** into equipment performance
-- **Proactive maintenance** through trend analysis
+// ### Operational Benefits
+// - **Unified monitoring** across OT and IT systems
+// - **Faster incident response** with correlated alerts
+// - **Better visibility** into equipment performance
+// - **Proactive maintenance** through trend analysis
 
-### Technical Benefits
-- **Scalable architecture** handling 10,000+ metrics
-- **99.9% data delivery** reliability
-- **Sub-minute latency** for critical alerts
-- **Easy configuration** for new equipment
+// ### Technical Benefits
+// - **Scalable architecture** handling 10,000+ metrics
+// - **99.9% data delivery** reliability
+// - **Sub-minute latency** for critical alerts
+// - **Easy configuration** for new equipment
 
-## Lessons Learned
+// ## Lessons Learned
 
-1. **Protocol standardization** is crucial for scalability
-2. **Data quality validation** prevents false alarms
-3. **Flexible configuration** enables rapid deployment
-4. **Monitoring the monitor** - instrument your integration
+// 1. **Protocol standardization** is crucial for scalability
+// 2. **Data quality validation** prevents false alarms
+// 3. **Flexible configuration** enables rapid deployment
+// 4. **Monitoring the monitor** - instrument your integration
 
-## Future Enhancements
+// ## Future Enhancements
 
-We're planning several improvements:
-- **Machine learning** for anomaly detection
-- **Automated root cause analysis**
-- **Integration with maintenance systems**
-- **Mobile alerts** for field technicians
+// We're planning several improvements:
+// - **Machine learning** for anomaly detection
+// - **Automated root cause analysis**
+// - **Integration with maintenance systems**
+// - **Mobile alerts** for field technicians
 
-## Conclusion
+// ## Conclusion
 
-Building custom integrations between industrial systems and modern monitoring platforms opens up new possibilities for operational excellence. The key is understanding both domains and creating bridges that preserve the strengths of each system.
+// Building custom integrations between industrial systems and modern monitoring platforms opens up new possibilities for operational excellence. The key is understanding both domains and creating bridges that preserve the strengths of each system.
 
----
+// ---
 
-*Interested in building similar integrations? [Contact us](/contact) to discuss your monitoring and integration needs.*
-    `,
-    date: "2024-01-08",
-    category: "System Integration",
-    readTime: "12 min read",
-    image: "/placeholder.svg?height=600&width=1200",
-    author: "ScadaDog Team",
-    featured: true,
-    tags: ["DataDog", "Integration", "OPC-UA", "Monitoring", "Python"],
-  },
-  "legacy-integrations-hacking-defunct-secondwind-scada": {
-    id: 3,
-    title: "Legacy Integrations: Hacking a Defunct SecondWind SCADA",
-    excerpt:
-      "Modernizing legacy SCADA systems while maintaining operational continuity and extracting valuable historical data from obsolete systems.",
-    content: `
-# Legacy Integrations: Hacking a Defunct SecondWind SCADA System
+// *Interested in building similar integrations? [Contact us](/contact) to discuss your monitoring and integration needs.*
+//     `,
+//     date: "2024-01-08",
+//     category: "System Integration",
+//     readTime: "12 min read",
+//     image: "/placeholder.svg?height=600&width=1200",
+//     author: "ScadaDog Team",
+//     featured: true,
+//     tags: ["DataDog", "Integration", "OPC-UA", "Monitoring", "Python"],
+//   },
+//   "legacy-integrations-hacking-defunct-secondwind-scada": {
+//     id: 3,
+//     title: "Legacy Integrations: Hacking a Defunct SecondWind SCADA",
+//     excerpt:
+//       "Modernizing legacy SCADA systems while maintaining operational continuity and extracting valuable historical data from obsolete systems.",
+//     content: `
+// # Legacy Integrations: Hacking a Defunct SecondWind SCADA System
 
-When SecondWind Technologies went out of business, they left behind thousands of wind turbines running on proprietary SCADA systems with no official support. This is the story of how we reverse-engineered their protocol and built a modern replacement system.
+// When SecondWind Technologies went out of business, they left behind thousands of wind turbines running on proprietary SCADA systems with no official support. This is the story of how we reverse-engineered their protocol and built a modern replacement system.
 
-## The Challenge
+// ## The Challenge
 
-Our client operated a wind farm with 50 turbines, all controlled by SecondWind's proprietary SCADA system. When the company folded:
+// Our client operated a wind farm with 50 turbines, all controlled by SecondWind's proprietary SCADA system. When the company folded:
 
-- **No technical support** was available
-- **Proprietary protocols** were undocumented
-- **Historical data** was trapped in custom databases
-- **Replacement parts** were impossible to source
-- **System failures** meant lost revenue
+// - **No technical support** was available
+// - **Proprietary protocols** were undocumented
+// - **Historical data** was trapped in custom databases
+// - **Replacement parts** were impossible to source
+// - **System failures** meant lost revenue
 
-## The Investigation
+// ## The Investigation
 
-### Protocol Analysis
+// ### Protocol Analysis
 
-We started by analyzing network traffic between the SCADA server and turbines:
+// We started by analyzing network traffic between the SCADA server and turbines:
 
-\`\`\`python
-import scapy.all as scapy
-import struct
-import binascii
+// \`\`\`python
+// import scapy.all as scapy
+// import struct
+// import binascii
 
-class SecondWindProtocolAnalyzer:
-    def __init__(self):
-        self.packet_patterns = {}
-        self.command_mappings = {}
+// class SecondWindProtocolAnalyzer:
+//     def __init__(self):
+//         self.packet_patterns = {}
+//         self.command_mappings = {}
     
-    def capture_packets(self, interface, filter_str):
-        packets = scapy.sniff(
-            iface=interface,
-            filter=filter_str,
-            count=1000,
-            timeout=300
-        )
+//     def capture_packets(self, interface, filter_str):
+//         packets = scapy.sniff(
+//             iface=interface,
+//             filter=filter_str,
+//             count=1000,
+//             timeout=300
+//         )
         
-        for packet in packets:
-            self.analyze_packet(packet)
+//         for packet in packets:
+//             self.analyze_packet(packet)
     
-    def analyze_packet(self, packet):
-        if packet.haslayer(scapy.TCP):
-            payload = bytes(packet[scapy.TCP].payload)
-            if len(payload) > 0:
-                self.decode_payload(payload)
+//     def analyze_packet(self, packet):
+//         if packet.haslayer(scapy.TCP):
+//             payload = bytes(packet[scapy.TCP].payload)
+//             if len(payload) > 0:
+//                 self.decode_payload(payload)
     
-    def decode_payload(self, payload):
-        # SecondWind used a custom binary protocol
-        if len(payload) >= 8:
-            header = struct.unpack('>HHI', payload[:8])
-            command_id = header[0]
-            data_length = header[1]
-            timestamp = header[2]
+//     def decode_payload(self, payload):
+//         # SecondWind used a custom binary protocol
+//         if len(payload) >= 8:
+//             header = struct.unpack('>HHI', payload[:8])
+//             command_id = header[0]
+//             data_length = header[1]
+//             timestamp = header[2]
             
-            if command_id not in self.command_mappings:
-                self.command_mappings[command_id] = []
+//             if command_id not in self.command_mappings:
+//                 self.command_mappings[command_id] = []
             
-            self.command_mappings[command_id].append({
-                'timestamp': timestamp,
-                'data': payload[8:8+data_length],
-                'raw': binascii.hexlify(payload)
-            })
-\`\`\`
+//             self.command_mappings[command_id].append({
+//                 'timestamp': timestamp,
+//                 'data': payload[8:8+data_length],
+//                 'raw': binascii.hexlify(payload)
+//             })
+// \`\`\`
 
-### Database Reverse Engineering
+// ### Database Reverse Engineering
 
-The historical data was stored in a proprietary format. We had to reverse-engineer the database structure:
+// The historical data was stored in a proprietary format. We had to reverse-engineer the database structure:
 
-\`\`\`python
-import sqlite3
-import struct
-from datetime import datetime
+// \`\`\`python
+// import sqlite3
+// import struct
+// from datetime import datetime
 
-class SecondWindDBExtractor:
-    def __init__(self, db_path):
-        self.db_path = db_path
-        self.conn = sqlite3.connect(db_path)
-        self.schema = self.analyze_schema()
+// class SecondWindDBExtractor:
+//     def __init__(self, db_path):
+//         self.db_path = db_path
+//         self.conn = sqlite3.connect(db_path)
+//         self.schema = self.analyze_schema()
     
-    def analyze_schema(self):
-        cursor = self.conn.cursor()
-        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-        tables = cursor.fetchall()
+//     def analyze_schema(self):
+//         cursor = self.conn.cursor()
+//         cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+//         tables = cursor.fetchall()
         
-        schema = {}
-        for table in tables:
-            table_name = table[0]
-            cursor.execute(f"PRAGMA table_info({table_name});")
-            columns = cursor.fetchall()
-            schema[table_name] = columns
+//         schema = {}
+//         for table in tables:
+//             table_name = table[0]
+//             cursor.execute(f"PRAGMA table_info({table_name});")
+//             columns = cursor.fetchall()
+//             schema[table_name] = columns
         
-        return schema
+//         return schema
     
-    def extract_turbine_data(self, turbine_id, start_date, end_date):
-        query = """
-        SELECT timestamp, wind_speed, power_output, rotor_rpm, 
-               nacelle_direction, temperature, vibration_x, vibration_y
-        FROM turbine_data 
-        WHERE turbine_id = ? AND timestamp BETWEEN ? AND ?
-        ORDER BY timestamp
-        """
+//     def extract_turbine_data(self, turbine_id, start_date, end_date):
+//         query = """
+//         SELECT timestamp, wind_speed, power_output, rotor_rpm, 
+//                nacelle_direction, temperature, vibration_x, vibration_y
+//         FROM turbine_data 
+//         WHERE turbine_id = ? AND timestamp BETWEEN ? AND ?
+//         ORDER BY timestamp
+//         """
         
-        cursor = self.conn.cursor()
-        cursor.execute(query, (turbine_id, start_date, end_date))
+//         cursor = self.conn.cursor()
+//         cursor.execute(query, (turbine_id, start_date, end_date))
         
-        data = []
-        for row in cursor.fetchall():
-            # Convert proprietary timestamp format
-            timestamp = self.convert_timestamp(row[0])
-            data.append({
-                'timestamp': timestamp,
-                'wind_speed': row[1] / 100.0,  # Stored as centimeters/sec
-                'power_output': row[2],
-                'rotor_rpm': row[3] / 10.0,
-                'nacelle_direction': row[4],
-                'temperature': row[5] - 273.15,  # Convert from Kelvin
-                'vibration_x': struct.unpack('f', row[6])[0],
-                'vibration_y': struct.unpack('f', row[7])[0]
-            })
+//         data = []
+//         for row in cursor.fetchall():
+//             # Convert proprietary timestamp format
+//             timestamp = self.convert_timestamp(row[0])
+//             data.append({
+//                 'timestamp': timestamp,
+//                 'wind_speed': row[1] / 100.0,  # Stored as centimeters/sec
+//                 'power_output': row[2],
+//                 'rotor_rpm': row[3] / 10.0,
+//                 'nacelle_direction': row[4],
+//                 'temperature': row[5] - 273.15,  # Convert from Kelvin
+//                 'vibration_x': struct.unpack('f', row[6])[0],
+//                 'vibration_y': struct.unpack('f', row[7])[0]
+//             })
         
-        return data
+//         return data
     
-    def convert_timestamp(self, sw_timestamp):
-        # SecondWind used a custom epoch starting from 2000-01-01
-        epoch_start = datetime(2000, 1, 1)
-        return epoch_start + timedelta(seconds=sw_timestamp)
-\`\`\`
+//     def convert_timestamp(self, sw_timestamp):
+//         # SecondWind used a custom epoch starting from 2000-01-01
+//         epoch_start = datetime(2000, 1, 1)
+//         return epoch_start + timedelta(seconds=sw_timestamp)
+// \`\`\`
 
-## Building the Replacement System
+// ## Building the Replacement System
 
-### Modern Protocol Implementation
+// ### Modern Protocol Implementation
 
-We implemented a modern replacement using standard protocols:
+// We implemented a modern replacement using standard protocols:
 
-\`\`\`python
-from pymodbus.server.sync import StartTcpServer
-from pymodbus.datastore import ModbusSequentialDataBlock
-from pymodbus.datastore import ModbusSlaveContext, ModbusServerContext
-import threading
-import time
+// \`\`\`python
+// from pymodbus.server.sync import StartTcpServer
+// from pymodbus.datastore import ModbusSequentialDataBlock
+// from pymodbus.datastore import ModbusSlaveContext, ModbusServerContext
+// import threading
+// import time
 
-class TurbineModbusServer:
-    def __init__(self, turbine_data):
-        self.turbine_data = turbine_data
-        self.datastore = self.create_datastore()
-        self.context = ModbusServerContext(slaves=self.datastore, single=True)
+// class TurbineModbusServer:
+//     def __init__(self, turbine_data):
+//         self.turbine_data = turbine_data
+//         self.datastore = self.create_datastore()
+//         self.context = ModbusServerContext(slaves=self.datastore, single=True)
     
-    def create_datastore(self):
-        # Map turbine parameters to Modbus registers
-        holding_registers = ModbusSequentialDataBlock(0, [0] * 1000)
-        input_registers = ModbusSequentialDataBlock(0, [0] * 1000)
+//     def create_datastore(self):
+//         # Map turbine parameters to Modbus registers
+//         holding_registers = ModbusSequentialDataBlock(0, [0] * 1000)
+//         input_registers = ModbusSequentialDataBlock(0, [0] * 1000)
         
-        # Wind speed (register 0-1, float32)
-        wind_speed_int = struct.unpack('>HH', struct.pack('>f', self.turbine_data.get('wind_speed', 0.0)))
-        holding_registers.setValues(0, wind_speed_int)
+//         # Wind speed (register 0-1, float32)
+//         wind_speed_int = struct.unpack('>HH', struct.pack('>f', self.turbine_data.get('wind_speed', 0.0)))
+//         holding_registers.setValues(0, wind_speed_int)
         
-        # Power output (register 2-3, float32)
-        power_int = struct.unpack('>HH', struct.pack('>f', self.turbine_data.get('power_output', 0.0)))
-        holding_registers.setValues(2, power_int)
+//         # Power output (register 2-3, float32)
+//         power_int = struct.unpack('>HH', struct.pack('>f', self.turbine_data.get('power_output', 0.0)))
+//         holding_registers.setValues(2, power_int)
         
-        # Rotor RPM (register 4)
-        holding_registers.setValues(4, [int(self.turbine_data.get('rotor_rpm', 0))])
+//         # Rotor RPM (register 4)
+//         holding_registers.setValues(4, [int(self.turbine_data.get('rotor_rpm', 0))])
         
-        return ModbusSlaveContext(
-            di=ModbusSequentialDataBlock(0, [0] * 100),
-            co=ModbusSequentialDataBlock(0, [0] * 100),
-            hr=holding_registers,
-            ir=input_registers
-        )
+//         return ModbusSlaveContext(
+//             di=ModbusSequentialDataBlock(0, [0] * 100),
+//             co=ModbusSequentialDataBlock(0, [0] * 100),
+//             hr=holding_registers,
+//             ir=input_registers
+//         )
     
-    def start_server(self, port=502):
-        StartTcpServer(self.context, address=("0.0.0.0", port))
-\`\`\`
+//     def start_server(self, port=502):
+//         StartTcpServer(self.context, address=("0.0.0.0", port))
+// \`\`\`
 
-### Data Migration Pipeline
+// ### Data Migration Pipeline
 
-We built a comprehensive data migration system:
+// We built a comprehensive data migration system:
 
-\`\`\`python
-import pandas as pd
-from influxdb import InfluxDBClient
-import json
+// \`\`\`python
+// import pandas as pd
+// from influxdb import InfluxDBClient
+// import json
 
-class DataMigrationPipeline:
-    def __init__(self, source_db, target_influx):
-        self.source = SecondWindDBExtractor(source_db)
-        self.target = InfluxDBClient(
-            host=target_influx['host'],
-            port=target_influx['port'],
-            username=target_influx['username'],
-            password=target_influx['password'],
-            database=target_influx['database']
-        )
+// class DataMigrationPipeline:
+//     def __init__(self, source_db, target_influx):
+//         self.source = SecondWindDBExtractor(source_db)
+//         self.target = InfluxDBClient(
+//             host=target_influx['host'],
+//             port=target_influx['port'],
+//             username=target_influx['username'],
+//             password=target_influx['password'],
+//             database=target_influx['database']
+//         )
     
-    def migrate_turbine_data(self, turbine_ids, start_date, end_date):
-        for turbine_id in turbine_ids:
-            print(f"Migrating data for turbine {turbine_id}...")
+//     def migrate_turbine_data(self, turbine_ids, start_date, end_date):
+//         for turbine_id in turbine_ids:
+//             print(f"Migrating data for turbine {turbine_id}...")
             
-            # Extract data from SecondWind database
-            raw_data = self.source.extract_turbine_data(
-                turbine_id, start_date, end_date
-            )
+//             # Extract data from SecondWind database
+//             raw_data = self.source.extract_turbine_data(
+//                 turbine_id, start_date, end_date
+//             )
             
-            # Convert to InfluxDB format
-            influx_points = []
-            for record in raw_data:
-                point = {
-                    "measurement": "turbine_metrics",
-                    "tags": {
-                        "turbine_id": str(turbine_id),
-                        "location": self.get_turbine_location(turbine_id)
-                    },
-                    "time": record['timestamp'].isoformat(),
-                    "fields": {
-                        "wind_speed": record['wind_speed'],
-                        "power_output": record['power_output'],
-                        "rotor_rpm": record['rotor_rpm'],
-                        "nacelle_direction": record['nacelle_direction'],
-                        "temperature": record['temperature'],
-                        "vibration_x": record['vibration_x'],
-                        "vibration_y": record['vibration_y']
-                    }
-                }
-                influx_points.append(point)
+//             # Convert to InfluxDB format
+//             influx_points = []
+//             for record in raw_data:
+//                 point = {
+//                     "measurement": "turbine_metrics",
+//                     "tags": {
+//                         "turbine_id": str(turbine_id),
+//                         "location": self.get_turbine_location(turbine_id)
+//                     },
+//                     "time": record['timestamp'].isoformat(),
+//                     "fields": {
+//                         "wind_speed": record['wind_speed'],
+//                         "power_output": record['power_output'],
+//                         "rotor_rpm": record['rotor_rpm'],
+//                         "nacelle_direction": record['nacelle_direction'],
+//                         "temperature": record['temperature'],
+//                         "vibration_x": record['vibration_x'],
+//                         "vibration_y": record['vibration_y']
+//                     }
+//                 }
+//                 influx_points.append(point)
             
-            # Batch write to InfluxDB
-            batch_size = 1000
-            for i in range(0, len(influx_points), batch_size):
-                batch = influx_points[i:i+batch_size]
-                self.target.write_points(batch)
+//             # Batch write to InfluxDB
+//             batch_size = 1000
+//             for i in range(0, len(influx_points), batch_size):
+//                 batch = influx_points[i:i+batch_size]
+//                 self.target.write_points(batch)
             
-            print(f"Migrated {len(influx_points)} records for turbine {turbine_id}")
+//             print(f"Migrated {len(influx_points)} records for turbine {turbine_id}")
     
-    def validate_migration(self, turbine_id, sample_date):
-        # Compare source and target data for validation
-        source_data = self.source.extract_turbine_data(
-            turbine_id, sample_date, sample_date
-        )
+//     def validate_migration(self, turbine_id, sample_date):
+//         # Compare source and target data for validation
+//         source_data = self.source.extract_turbine_data(
+//             turbine_id, sample_date, sample_date
+//         )
         
-        target_query = f"""
-        SELECT * FROM turbine_metrics 
-        WHERE turbine_id = '{turbine_id}' 
-        AND time >= '{sample_date}' 
-        AND time < '{sample_date + timedelta(days=1)}'
-        """
+//         target_query = f"""
+//         SELECT * FROM turbine_metrics 
+//         WHERE turbine_id = '{turbine_id}' 
+//         AND time >= '{sample_date}' 
+//         AND time < '{sample_date + timedelta(days=1)}'
+//         """
         
-        target_data = self.target.query(target_query)
+//         target_data = self.target.query(target_query)
         
-        return len(source_data) == len(list(target_data.get_points()))
-\`\`\`
+//         return len(source_data) == len(list(target_data.get_points()))
+// \`\`\`
 
-## Modern SCADA Interface
+// ## Modern SCADA Interface
 
-We built a modern web-based SCADA interface:
+// We built a modern web-based SCADA interface:
 
-\`\`\`javascript
-// React component for turbine monitoring
-import React, { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import WebSocket from 'ws';
+// \`\`\`javascript
+// // React component for turbine monitoring
+// import React, { useState, useEffect } from 'react';
+// import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+// import WebSocket from 'ws';
 
-const TurbineMonitor = ({ turbineId }) => {
-    const [turbineData, setTurbineData] = useState([]);
-    const [realTimeData, setRealTimeData] = useState({});
-    const [ws, setWs] = useState(null);
+// const TurbineMonitor = ({ turbineId }) => {
+//     const [turbineData, setTurbineData] = useState([]);
+//     const [realTimeData, setRealTimeData] = useState({});
+//     const [ws, setWs] = useState(null);
 
-    useEffect(() => {
-        // Establish WebSocket connection for real-time data
-        const websocket = new WebSocket(\`ws://localhost:8080/turbine/\${turbineId}\`);
+//     useEffect(() => {
+//         // Establish WebSocket connection for real-time data
+//         const websocket = new WebSocket(\`ws://localhost:8080/turbine/\${turbineId}\`);
         
-        websocket.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            setRealTimeData(data);
+//         websocket.onmessage = (event) => {
+//             const data = JSON.parse(event.data);
+//             setRealTimeData(data);
             
-            // Update chart data
-            setTurbineData(prevData => {
-                const newData = [...prevData, {
-                    timestamp: new Date(data.timestamp).toLocaleTimeString(),
-                    windSpeed: data.wind_speed,
-                    powerOutput: data.power_output,
-                    rotorRpm: data.rotor_rpm
-                }];
+//             // Update chart data
+//             setTurbineData(prevData => {
+//                 const newData = [...prevData, {
+//                     timestamp: new Date(data.timestamp).toLocaleTimeString(),
+//                     windSpeed: data.wind_speed,
+//                     powerOutput: data.power_output,
+//                     rotorRpm: data.rotor_rpm
+//                 }];
                 
-                // Keep only last 100 points
-                return newData.slice(-100);
-            });
-        };
+//                 // Keep only last 100 points
+//                 return newData.slice(-100);
+//             });
+//         };
         
-        setWs(websocket);
+//         setWs(websocket);
         
-        return () => {
-            websocket.close();
-        };
-    }, [turbineId]);
+//         return () => {
+//             websocket.close();
+//         };
+//     }, [turbineId]);
 
-    return (
-        <div className="turbine-monitor">
-            <h2>Turbine {turbineId} - Live Monitoring</h2>
+//     return (
+//         <div className="turbine-monitor">
+//             <h2>Turbine {turbineId} - Live Monitoring</h2>
             
-            <div className="metrics-grid">
-                <div className="metric-card">
-                    <h3>Wind Speed</h3>
-                    <span className="metric-value">
-                        {realTimeData.wind_speed?.toFixed(1)} m/s
-                    </span>
-                </div>
+//             <div className="metrics-grid">
+//                 <div className="metric-card">
+//                     <h3>Wind Speed</h3>
+//                     <span className="metric-value">
+//                         {realTimeData.wind_speed?.toFixed(1)} m/s
+//                     </span>
+//                 </div>
                 
-                <div className="metric-card">
-                    <h3>Power Output</h3>
-                    <span className="metric-value">
-                        {realTimeData.power_output?.toFixed(0)} kW
-                    </span>
-                </div>
+//                 <div className="metric-card">
+//                     <h3>Power Output</h3>
+//                     <span className="metric-value">
+//                         {realTimeData.power_output?.toFixed(0)} kW
+//                     </span>
+//                 </div>
                 
-                <div className="metric-card">
-                    <h3>Rotor RPM</h3>
-                    <span className="metric-value">
-                        {realTimeData.rotor_rpm?.toFixed(1)}
-                    </span>
-                </div>
-            </div>
+//                 <div className="metric-card">
+//                     <h3>Rotor RPM</h3>
+//                     <span className="metric-value">
+//                         {realTimeData.rotor_rpm?.toFixed(1)}
+//                     </span>
+//                 </div>
+//             </div>
             
-            <div className="chart-container">
-                <LineChart width={800} height={400} data={turbineData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="timestamp" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="windSpeed" stroke="#8884d8" name="Wind Speed (m/s)" />
-                    <Line type="monotone" dataKey="powerOutput" stroke="#82ca9d" name="Power Output (kW)" />
-                    <Line type="monotone" dataKey="rotorRpm" stroke="#ffc658" name="Rotor RPM" />
-                </LineChart>
-            </div>
-        </div>
-    );
-};
+//             <div className="chart-container">
+//                 <LineChart width={800} height={400} data={turbineData}>
+//                     <CartesianGrid strokeDasharray="3 3" />
+//                     <XAxis dataKey="timestamp" />
+//                     <YAxis />
+//                     <Tooltip />
+//                     <Legend />
+//                     <Line type="monotone" dataKey="windSpeed" stroke="#8884d8" name="Wind Speed (m/s)" />
+//                     <Line type="monotone" dataKey="powerOutput" stroke="#82ca9d" name="Power Output (kW)" />
+//                     <Line type="monotone" dataKey="rotorRpm" stroke="#ffc658" name="Rotor RPM" />
+//                 </LineChart>
+//             </div>
+//         </div>
+//     );
+// };
 
-export default TurbineMonitor;
-\`\`\`
+// export default TurbineMonitor;
+// \`\`\`
 
-## Results and Impact
+// ## Results and Impact
 
-The modernization project delivered exceptional results:
+// The modernization project delivered exceptional results:
 
-### Technical Achievements
-- **100% data recovery** from legacy systems
-- **Zero downtime** during migration
-- **Modern protocols** (Modbus TCP, OPC-UA)
-- **Web-based interface** accessible from anywhere
-- **Real-time monitoring** with sub-second updates
+// ### Technical Achievements
+// - **100% data recovery** from legacy systems
+// - **Zero downtime** during migration
+// - **Modern protocols** (Modbus TCP, OPC-UA)
+// - **Web-based interface** accessible from anywhere
+// - **Real-time monitoring** with sub-second updates
 
-### Business Benefits
-- **$500K saved** vs. replacing all turbines
-- **Increased uptime** from 92% to 98.5%
-- **Reduced maintenance costs** by 40%
-- **Extended equipment life** by 10+ years
-- **Improved operator efficiency** by 60%
+// ### Business Benefits
+// - **$500K saved** vs. replacing all turbines
+// - **Increased uptime** from 92% to 98.5%
+// - **Reduced maintenance costs** by 40%
+// - **Extended equipment life** by 10+ years
+// - **Improved operator efficiency** by 60%
 
-### Data Insights
-- **10 years of historical data** preserved and accessible
-- **Predictive maintenance** algorithms implemented
-- **Performance optimization** based on historical trends
-- **Regulatory compliance** maintained
+// ### Data Insights
+// - **10 years of historical data** preserved and accessible
+// - **Predictive maintenance** algorithms implemented
+// - **Performance optimization** based on historical trends
+// - **Regulatory compliance** maintained
 
-## Lessons Learned
+// ## Lessons Learned
 
-1. **Documentation is crucial** - Always document proprietary systems
-2. **Network analysis** can reveal protocol secrets
-3. **Gradual migration** reduces risk
-4. **Standard protocols** ensure future compatibility
-5. **Data validation** is essential during migration
+// 1. **Documentation is crucial** - Always document proprietary systems
+// 2. **Network analysis** can reveal protocol secrets
+// 3. **Gradual migration** reduces risk
+// 4. **Standard protocols** ensure future compatibility
+// 5. **Data validation** is essential during migration
 
-## Technical Challenges Overcome
+// ## Technical Challenges Overcome
 
-### Protocol Reverse Engineering
-- **Binary protocol analysis** using packet capture
-- **Checksum algorithms** discovered through pattern analysis
-- **Command structure** mapped through systematic testing
-- **Error handling** implemented based on observed behavior
+// ### Protocol Reverse Engineering
+// - **Binary protocol analysis** using packet capture
+// - **Checksum algorithms** discovered through pattern analysis
+// - **Command structure** mapped through systematic testing
+// - **Error handling** implemented based on observed behavior
 
-### Data Format Conversion
-- **Proprietary timestamps** converted to standard formats
-- **Unit conversions** applied (metric vs. imperial)
-- **Data validation** rules implemented
-- **Missing data** interpolation strategies
+// ### Data Format Conversion
+// - **Proprietary timestamps** converted to standard formats
+// - **Unit conversions** applied (metric vs. imperial)
+// - **Data validation** rules implemented
+// - **Missing data** interpolation strategies
 
-### System Integration
-- **Legacy hardware** interfaced with modern systems
-- **Network security** implemented without disrupting operations
-- **Backup systems** maintained during transition
-- **User training** provided for new interfaces
+// ### System Integration
+// - **Legacy hardware** interfaced with modern systems
+// - **Network security** implemented without disrupting operations
+// - **Backup systems** maintained during transition
+// - **User training** provided for new interfaces
 
-## Future Enhancements
+// ## Future Enhancements
 
-We're continuing to improve the system:
+// We're continuing to improve the system:
 
-- **Machine learning** for predictive maintenance
-- **Advanced analytics** for performance optimization
-- **Mobile applications** for field technicians
-- **Integration** with energy trading systems
-- **Automated reporting** for regulatory compliance
+// - **Machine learning** for predictive maintenance
+// - **Advanced analytics** for performance optimization
+// - **Mobile applications** for field technicians
+// - **Integration** with energy trading systems
+// - **Automated reporting** for regulatory compliance
 
-## Conclusion
+// ## Conclusion
 
-Reverse engineering legacy systems requires patience, technical skill, and creative problem-solving. By understanding the underlying protocols and data structures, we were able to breathe new life into a "dead" system and provide our client with a modern, maintainable solution.
+// Reverse engineering legacy systems requires patience, technical skill, and creative problem-solving. By understanding the underlying protocols and data structures, we were able to breathe new life into a "dead" system and provide our client with a modern, maintainable solution.
 
-The key to success was treating this not just as a technical challenge, but as a business problem that required preserving valuable operational data while enabling future growth.
+// The key to success was treating this not just as a technical challenge, but as a business problem that required preserving valuable operational data while enabling future growth.
 
----
+// ---
 
-*Facing similar legacy system challenges? [Contact our team](/contact) to discuss modernization strategies for your industrial systems.*
-    `,
-    date: "2023-12-22",
-    category: "Legacy Systems",
-    readTime: "15 min read",
-    image: "/placeholder.svg?height=600&width=1200",
-    author: "ScadaDog Team",
-    featured: true,
-    tags: ["Legacy Systems", "Reverse Engineering", "SCADA", "Wind Energy", "Data Migration"],
-  },
+// *Facing similar legacy system challenges? [Contact our team](/contact) to discuss modernization strategies for your industrial systems.*
+//     `,
+//     date: "2023-12-22",
+//     category: "Legacy Systems",
+//     readTime: "15 min read",
+//     image: "/placeholder.svg?height=600&width=1200",
+//     author: "ScadaDog Team",
+//     featured: true,
+//     tags: ["Legacy Systems", "Reverse Engineering", "SCADA", "Wind Energy", "Data Migration"],
+//   },
 }
 
 interface BlogPostPageProps {
@@ -1000,7 +933,7 @@ export default function BlogPost({ params }: BlogPostPageProps) {
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-8 not-prose">
               {post.tags?.map((tag) => (
-                <span key={tag} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                <span key={tag} className="bg-gray-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                   {tag}
                 </span>
               ))}
@@ -1032,6 +965,16 @@ export default function BlogPost({ params }: BlogPostPageProps) {
                         return `<li class="mb-2"><strong class="text-gray-900">${match[1]}</strong> - ${match[2]}</li>`
                       }
                       return `<p class="mb-4 text-gray-700 leading-relaxed">${line}</p>`
+                    } else if (line.startsWith("![") && line.includes("](")) {
+                      const [, alt, src] = line.match(/!\[(.*?)\]\((.*?)\)/)!;
+                      return `
+    <div class="my-8 flex justify-center">
+      <img
+        src="${src}"
+        alt="${alt}"
+        class="rounded-lg shadow-md max-w-full"
+      />
+    </div>`;
                     } else if (line.trim() === "") {
                       return "<br>"
                     } else {
