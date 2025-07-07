@@ -17,7 +17,7 @@ const blogPosts = {
     TLDR; GE’s PLC logic forces outputs on the Digital Output modules that are not in use in order to block other logic running on the same PLC. I bypassed it using virtual IO module and a custom software running on the PLC to spoof the signal of a windvane and control the turbines wake steering.
     
     Our story begins with an idea. Can a wind turbines wake reduce the power output of a wind turbine behind it?
-![My Wind Farm](/blogs/turbines.jpeg)
+![https://www.empireengineering.co.uk/exploring-wake-losses-in-offshore-wind/](/blogs/turbines.jpeg)
 
 According to researchers at the National Research Energy Labs (NREL), it could. It could have an effect of up to 14%, according to the paper we published in 2019. My contribution to the seminole study was very trivial. In fact I didn’t even know it was being crafted at the time. My job was to deliver the engineering solution and the data needed for the study. A much more straightforward thing to achieve for an engineer with little knowledge of the science at the time. My goal was to somehow make it possible to steer the wake of one turbine around the face of the other.
 
@@ -36,14 +36,13 @@ The specific model was the Hybrid XT Push-Pull Vane. This meant that I had two c
 
 The wires are inserted into a digital input module on the Bachmann Process PLC installed on the GE ESS wind turbines. For a full list of parts on a GE ESS wind turbine see here.
 
-![Hybrid XT Push-Pull Vane](/blogs/bachman-plc.jpeg)
+![Bachmann PLC with a Digital Input Module](/blogs/bachman-plc.jpeg)
 
 # Wind Vane Details
 
 The Model 7894 Push-Pull Hybrid XT Vane is designed as a direct replacement for IceFree™3 wind vanes, compatible with NPN and PNP controllers. It provides two output signals in push-pull format, allowing current sourcing and sinking for wide compatibility.
 
-![Hybrid XT Push-Pull Vane](/blogs/wind-vane.jpeg)
-Wind Vane Dithering Control https://www.manualslib.com/manual/1639611/Nrg-Systems-Hybrid-Xt-Vane.html?page=25#manual
+![Wind Vane Dithering Control https://www.manualslib.com/manual/1639611/Nrg-Systems-Hybrid-Xt-Vane.html?page=25#manual](/blogs/wind-vane.jpeg)
 
 
 # Output signals:
@@ -88,763 +87,136 @@ I wrote the script as a batch file that could run through a list of IP addresses
     featured: true,
     tags: ["SCADA", "Python", "Modbus", "Custom Development", "Industrial Automation"],
   },
-//   "building-integration-for-datadog": {
-//     id: 2,
-//     title: "Building an Integration for DataDog…",
-//     excerpt:
-//       "Step-by-step guide to creating seamless integrations between industrial systems and modern monitoring platforms with real-world examples.",
-//     content: `
-// # Building an Integration for DataDog: Bridging Industrial and IT Monitoring
-
-// Modern industrial operations require visibility across both operational technology (OT) and information technology (IT) systems. This post details how we built a custom integration between industrial SCADA systems and DataDog's monitoring platform.
-
-// ## The Business Case
-
-// Our client needed to:
-// - **Monitor industrial equipment** alongside IT infrastructure
-// - **Correlate OT and IT metrics** for better troubleshooting
-// - **Leverage DataDog's alerting** for industrial alarms
-// - **Create unified dashboards** for operations teams
-
-// ## Architecture Overview
-
-// The integration consists of several key components:
-
-// 1. **Data Collectors** - Services that gather data from industrial systems
-// 2. **Data Transformers** - Convert industrial data to DataDog metrics format
-// 3. **API Gateway** - Secure communication with DataDog
-// 4. **Configuration Management** - Dynamic metric configuration
-
-// ## Implementation Details
-
-// ### Data Collection from SCADA Systems
-
-// We used OPC-UA to collect data from the SCADA server:
-
-// \`\`\`python
-// from opcua import Client
-// import asyncio
-// import logging
-
-// class OPCUACollector:
-//     def __init__(self, endpoint_url):
-//         self.client = Client(endpoint_url)
-//         self.subscription = None
-//         self.metrics = {}
-    
-//     async def connect(self):
-//         try:
-//             await self.client.connect()
-//             logging.info(f"Connected to OPC-UA server: {self.client.server_url}")
-//             return True
-//         except Exception as e:
-//             logging.error(f"Failed to connect: {e}")
-//             return False
-    
-//     async def subscribe_to_variables(self, node_ids):
-//         if not self.subscription:
-//             self.subscription = await self.client.create_subscription(
-//                 period=1000,  # 1 second
-//                 handler=self.data_change_handler
-//             )
-        
-//         for node_id in node_ids:
-//             node = self.client.get_node(node_id)
-//             await self.subscription.subscribe_data_change(node)
-    
-//     def data_change_handler(self, node, val, data):
-//         # Process the data change
-//         metric_name = self.get_metric_name(node)
-//         self.metrics[metric_name] = {
-//             'value': val,
-//             'timestamp': data.monitored_item.Value.SourceTimestamp,
-//             'quality': data.monitored_item.Value.StatusCode
-//         }
-// \`\`\`
-
-// ### DataDog Integration
-
-// We created a service to send metrics to DataDog:
-
-// \`\`\`python
-// import requests
-// import time
-// from datadog import initialize, api
-
-// class DataDogIntegration:
-//     def __init__(self, api_key, app_key):
-//         options = {
-//             'api_key': api_key,
-//             'app_key': app_key
-//         }
-//         initialize(**options)
-    
-//     def send_metrics(self, metrics_data):
-//         series = []
-        
-//         for metric_name, data in metrics_data.items():
-//             series.append({
-//                 'metric': f'industrial.{metric_name}',
-//                 'points': [(int(time.time()), data['value'])],
-//                 'tags': [
-//                     f'equipment:{data.get("equipment", "unknown")}',
-//                     f'location:{data.get("location", "unknown")}',
-//                     f'quality:{data.get("quality", "good")}'
-//                 ]
-//             })
-        
-//         try:
-//             api.Metric.send(series)
-//             return True
-//         except Exception as e:
-//             logging.error(f"Failed to send metrics: {e}")
-//             return False
-    
-//     def create_custom_dashboard(self, dashboard_config):
-//         dashboard = api.Dashboard.create(
-//             title=dashboard_config['title'],
-//             description=dashboard_config['description'],
-//             graphs=dashboard_config['graphs'],
-//             template_variables=dashboard_config.get('template_variables', [])
-//         )
-//         return dashboard
-// \`\`\`
-
-// ## Configuration Management
-
-// We implemented a flexible configuration system:
-
-// \`\`\`yaml
-// # config.yaml
-// data_sources:
-//   - name: "main_scada"
-//     type: "opcua"
-//     endpoint: "opc.tcp://192.168.1.100:4840"
-//     metrics:
-//       - node_id: "ns=2;i=1001"
-//         name: "reactor_temperature"
-//         equipment: "reactor_01"
-//         location: "plant_a"
-//         unit: "celsius"
-//       - node_id: "ns=2;i=1002"
-//         name: "pump_pressure"
-//         equipment: "pump_01"
-//         location: "plant_a"
-//         unit: "psi"
-
-// datadog:
-//   api_key: "your_api_key_here"
-//   app_key: "your_app_key_here"
-//   metric_prefix: "industrial"
-  
-// dashboards:
-//   - name: "Plant Operations"
-//     metrics:
-//       - "industrial.reactor_temperature"
-//       - "industrial.pump_pressure"
-//     alerts:
-//       - metric: "industrial.reactor_temperature"
-//         threshold: 150
-//         operator: ">"
-//         message: "Reactor temperature critical!"
-// \`\`\`
-
-// ## Real-time Data Processing
-
-// We implemented a real-time processing pipeline:
-
-// \`\`\`python
-// import asyncio
-// from concurrent.futures import ThreadPoolExecutor
-// import queue
-
-// class RealTimeProcessor:
-//     def __init__(self, collectors, integrations):
-//         self.collectors = collectors
-//         self.integrations = integrations
-//         self.data_queue = queue.Queue()
-//         self.executor = ThreadPoolExecutor(max_workers=4)
-    
-//     async def start_processing(self):
-//         # Start data collection tasks
-//         collection_tasks = [
-//             asyncio.create_task(collector.start_collection())
-//             for collector in self.collectors
-//         ]
-        
-//         # Start data processing task
-//         processing_task = asyncio.create_task(self.process_data())
-        
-//         # Wait for all tasks
-//         await asyncio.gather(*collection_tasks, processing_task)
-    
-//     async def process_data(self):
-//         while True:
-//             try:
-//                 # Get data from collectors
-//                 metrics_batch = {}
-//                 for collector in self.collectors:
-//                     metrics_batch.update(collector.get_latest_metrics())
-                
-//                 if metrics_batch:
-//                     # Send to integrations
-//                     for integration in self.integrations:
-//                         await self.send_to_integration(integration, metrics_batch)
-                
-//                 await asyncio.sleep(10)  # Process every 10 seconds
-                
-//             except Exception as e:
-//                 logging.error(f"Processing error: {e}")
-//                 await asyncio.sleep(5)
-    
-//     async def send_to_integration(self, integration, metrics):
-//         loop = asyncio.get_event_loop()
-//         await loop.run_in_executor(
-//             self.executor,
-//             integration.send_metrics,
-//             metrics
-//         )
-// \`\`\`
-
-// ## Custom DataDog Dashboards
-
-// We created specialized dashboards for industrial monitoring:
-
-// \`\`\`python
-// def create_industrial_dashboard():
-//     dashboard_config = {
-//         'title': 'Industrial Operations Dashboard',
-//         'description': 'Real-time monitoring of industrial equipment',
-//         'graphs': [
-//             {
-//                 'title': 'Equipment Temperature Trends',
-//                 'definition': {
-//                     'requests': [
-//                         {
-//                             'q': 'avg:industrial.reactor_temperature{*} by {equipment}',
-//                             'display_type': 'line'
-//                         }
-//                     ],
-//                     'viz': 'timeseries'
-//                 }
-//             },
-//             {
-//                 'title': 'Pressure Monitoring',
-//                 'definition': {
-//                     'requests': [
-//                         {
-//                             'q': 'avg:industrial.pump_pressure{*} by {location}',
-//                             'display_type': 'line'
-//                         }
-//                     ],
-//                     'viz': 'timeseries'
-//                 }
-//             },
-//             {
-//                 'title': 'Equipment Status',
-//                 'definition': {
-//                     'requests': [
-//                         {
-//                             'q': 'avg:industrial.equipment_status{*} by {equipment}',
-//                             'display_type': 'bars'
-//                         }
-//                     ],
-//                     'viz': 'query_value'
-//                 }
-//             }
-//         ],
-//         'template_variables': [
-//             {
-//                 'name': 'equipment',
-//                 'prefix': 'equipment',
-//                 'default': '*'
-//             },
-//             {
-//                 'name': 'location',
-//                 'prefix': 'location',
-//                 'default': '*'
-//             }
-//         ]
-//     }
-    
-//     return api.Dashboard.create(**dashboard_config)
-// \`\`\`
-
-// ## Results and Benefits
-
-// The integration delivered significant value:
-
-// ### Operational Benefits
-// - **Unified monitoring** across OT and IT systems
-// - **Faster incident response** with correlated alerts
-// - **Better visibility** into equipment performance
-// - **Proactive maintenance** through trend analysis
-
-// ### Technical Benefits
-// - **Scalable architecture** handling 10,000+ metrics
-// - **99.9% data delivery** reliability
-// - **Sub-minute latency** for critical alerts
-// - **Easy configuration** for new equipment
-
-// ## Lessons Learned
-
-// 1. **Protocol standardization** is crucial for scalability
-// 2. **Data quality validation** prevents false alarms
-// 3. **Flexible configuration** enables rapid deployment
-// 4. **Monitoring the monitor** - instrument your integration
-
-// ## Future Enhancements
-
-// We're planning several improvements:
-// - **Machine learning** for anomaly detection
-// - **Automated root cause analysis**
-// - **Integration with maintenance systems**
-// - **Mobile alerts** for field technicians
-
-// ## Conclusion
-
-// Building custom integrations between industrial systems and modern monitoring platforms opens up new possibilities for operational excellence. The key is understanding both domains and creating bridges that preserve the strengths of each system.
-
-// ---
-
-// *Interested in building similar integrations? [Contact us](/contact) to discuss your monitoring and integration needs.*
-//     `,
-//     date: "2024-01-08",
-//     category: "System Integration",
-//     readTime: "12 min read",
-//     image: "/placeholder.svg?height=600&width=1200",
-//     author: "ScadaDog Team",
-//     featured: true,
-//     tags: ["DataDog", "Integration", "OPC-UA", "Monitoring", "Python"],
-//   },
-//   "legacy-integrations-hacking-defunct-secondwind-scada": {
-//     id: 3,
-//     title: "Legacy Integrations: Hacking a Defunct SecondWind SCADA",
-//     excerpt:
-//       "Modernizing legacy SCADA systems while maintaining operational continuity and extracting valuable historical data from obsolete systems.",
-//     content: `
-// # Legacy Integrations: Hacking a Defunct SecondWind SCADA System
-
-// When SecondWind Technologies went out of business, they left behind thousands of wind turbines running on proprietary SCADA systems with no official support. This is the story of how we reverse-engineered their protocol and built a modern replacement system.
-
-// ## The Challenge
-
-// Our client operated a wind farm with 50 turbines, all controlled by SecondWind's proprietary SCADA system. When the company folded:
-
-// - **No technical support** was available
-// - **Proprietary protocols** were undocumented
-// - **Historical data** was trapped in custom databases
-// - **Replacement parts** were impossible to source
-// - **System failures** meant lost revenue
-
-// ## The Investigation
-
-// ### Protocol Analysis
-
-// We started by analyzing network traffic between the SCADA server and turbines:
-
-// \`\`\`python
-// import scapy.all as scapy
-// import struct
-// import binascii
-
-// class SecondWindProtocolAnalyzer:
-//     def __init__(self):
-//         self.packet_patterns = {}
-//         self.command_mappings = {}
-    
-//     def capture_packets(self, interface, filter_str):
-//         packets = scapy.sniff(
-//             iface=interface,
-//             filter=filter_str,
-//             count=1000,
-//             timeout=300
-//         )
-        
-//         for packet in packets:
-//             self.analyze_packet(packet)
-    
-//     def analyze_packet(self, packet):
-//         if packet.haslayer(scapy.TCP):
-//             payload = bytes(packet[scapy.TCP].payload)
-//             if len(payload) > 0:
-//                 self.decode_payload(payload)
-    
-//     def decode_payload(self, payload):
-//         # SecondWind used a custom binary protocol
-//         if len(payload) >= 8:
-//             header = struct.unpack('>HHI', payload[:8])
-//             command_id = header[0]
-//             data_length = header[1]
-//             timestamp = header[2]
-            
-//             if command_id not in self.command_mappings:
-//                 self.command_mappings[command_id] = []
-            
-//             self.command_mappings[command_id].append({
-//                 'timestamp': timestamp,
-//                 'data': payload[8:8+data_length],
-//                 'raw': binascii.hexlify(payload)
-//             })
-// \`\`\`
-
-// ### Database Reverse Engineering
-
-// The historical data was stored in a proprietary format. We had to reverse-engineer the database structure:
-
-// \`\`\`python
-// import sqlite3
-// import struct
-// from datetime import datetime
-
-// class SecondWindDBExtractor:
-//     def __init__(self, db_path):
-//         self.db_path = db_path
-//         self.conn = sqlite3.connect(db_path)
-//         self.schema = self.analyze_schema()
-    
-//     def analyze_schema(self):
-//         cursor = self.conn.cursor()
-//         cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-//         tables = cursor.fetchall()
-        
-//         schema = {}
-//         for table in tables:
-//             table_name = table[0]
-//             cursor.execute(f"PRAGMA table_info({table_name});")
-//             columns = cursor.fetchall()
-//             schema[table_name] = columns
-        
-//         return schema
-    
-//     def extract_turbine_data(self, turbine_id, start_date, end_date):
-//         query = """
-//         SELECT timestamp, wind_speed, power_output, rotor_rpm, 
-//                nacelle_direction, temperature, vibration_x, vibration_y
-//         FROM turbine_data 
-//         WHERE turbine_id = ? AND timestamp BETWEEN ? AND ?
-//         ORDER BY timestamp
-//         """
-        
-//         cursor = self.conn.cursor()
-//         cursor.execute(query, (turbine_id, start_date, end_date))
-        
-//         data = []
-//         for row in cursor.fetchall():
-//             # Convert proprietary timestamp format
-//             timestamp = self.convert_timestamp(row[0])
-//             data.append({
-//                 'timestamp': timestamp,
-//                 'wind_speed': row[1] / 100.0,  # Stored as centimeters/sec
-//                 'power_output': row[2],
-//                 'rotor_rpm': row[3] / 10.0,
-//                 'nacelle_direction': row[4],
-//                 'temperature': row[5] - 273.15,  # Convert from Kelvin
-//                 'vibration_x': struct.unpack('f', row[6])[0],
-//                 'vibration_y': struct.unpack('f', row[7])[0]
-//             })
-        
-//         return data
-    
-//     def convert_timestamp(self, sw_timestamp):
-//         # SecondWind used a custom epoch starting from 2000-01-01
-//         epoch_start = datetime(2000, 1, 1)
-//         return epoch_start + timedelta(seconds=sw_timestamp)
-// \`\`\`
-
-// ## Building the Replacement System
-
-// ### Modern Protocol Implementation
-
-// We implemented a modern replacement using standard protocols:
-
-// \`\`\`python
-// from pymodbus.server.sync import StartTcpServer
-// from pymodbus.datastore import ModbusSequentialDataBlock
-// from pymodbus.datastore import ModbusSlaveContext, ModbusServerContext
-// import threading
-// import time
-
-// class TurbineModbusServer:
-//     def __init__(self, turbine_data):
-//         self.turbine_data = turbine_data
-//         self.datastore = self.create_datastore()
-//         self.context = ModbusServerContext(slaves=self.datastore, single=True)
-    
-//     def create_datastore(self):
-//         # Map turbine parameters to Modbus registers
-//         holding_registers = ModbusSequentialDataBlock(0, [0] * 1000)
-//         input_registers = ModbusSequentialDataBlock(0, [0] * 1000)
-        
-//         # Wind speed (register 0-1, float32)
-//         wind_speed_int = struct.unpack('>HH', struct.pack('>f', self.turbine_data.get('wind_speed', 0.0)))
-//         holding_registers.setValues(0, wind_speed_int)
-        
-//         # Power output (register 2-3, float32)
-//         power_int = struct.unpack('>HH', struct.pack('>f', self.turbine_data.get('power_output', 0.0)))
-//         holding_registers.setValues(2, power_int)
-        
-//         # Rotor RPM (register 4)
-//         holding_registers.setValues(4, [int(self.turbine_data.get('rotor_rpm', 0))])
-        
-//         return ModbusSlaveContext(
-//             di=ModbusSequentialDataBlock(0, [0] * 100),
-//             co=ModbusSequentialDataBlock(0, [0] * 100),
-//             hr=holding_registers,
-//             ir=input_registers
-//         )
-    
-//     def start_server(self, port=502):
-//         StartTcpServer(self.context, address=("0.0.0.0", port))
-// \`\`\`
-
-// ### Data Migration Pipeline
-
-// We built a comprehensive data migration system:
-
-// \`\`\`python
-// import pandas as pd
-// from influxdb import InfluxDBClient
-// import json
-
-// class DataMigrationPipeline:
-//     def __init__(self, source_db, target_influx):
-//         self.source = SecondWindDBExtractor(source_db)
-//         self.target = InfluxDBClient(
-//             host=target_influx['host'],
-//             port=target_influx['port'],
-//             username=target_influx['username'],
-//             password=target_influx['password'],
-//             database=target_influx['database']
-//         )
-    
-//     def migrate_turbine_data(self, turbine_ids, start_date, end_date):
-//         for turbine_id in turbine_ids:
-//             print(f"Migrating data for turbine {turbine_id}...")
-            
-//             # Extract data from SecondWind database
-//             raw_data = self.source.extract_turbine_data(
-//                 turbine_id, start_date, end_date
-//             )
-            
-//             # Convert to InfluxDB format
-//             influx_points = []
-//             for record in raw_data:
-//                 point = {
-//                     "measurement": "turbine_metrics",
-//                     "tags": {
-//                         "turbine_id": str(turbine_id),
-//                         "location": self.get_turbine_location(turbine_id)
-//                     },
-//                     "time": record['timestamp'].isoformat(),
-//                     "fields": {
-//                         "wind_speed": record['wind_speed'],
-//                         "power_output": record['power_output'],
-//                         "rotor_rpm": record['rotor_rpm'],
-//                         "nacelle_direction": record['nacelle_direction'],
-//                         "temperature": record['temperature'],
-//                         "vibration_x": record['vibration_x'],
-//                         "vibration_y": record['vibration_y']
-//                     }
-//                 }
-//                 influx_points.append(point)
-            
-//             # Batch write to InfluxDB
-//             batch_size = 1000
-//             for i in range(0, len(influx_points), batch_size):
-//                 batch = influx_points[i:i+batch_size]
-//                 self.target.write_points(batch)
-            
-//             print(f"Migrated {len(influx_points)} records for turbine {turbine_id}")
-    
-//     def validate_migration(self, turbine_id, sample_date):
-//         # Compare source and target data for validation
-//         source_data = self.source.extract_turbine_data(
-//             turbine_id, sample_date, sample_date
-//         )
-        
-//         target_query = f"""
-//         SELECT * FROM turbine_metrics 
-//         WHERE turbine_id = '{turbine_id}' 
-//         AND time >= '{sample_date}' 
-//         AND time < '{sample_date + timedelta(days=1)}'
-//         """
-        
-//         target_data = self.target.query(target_query)
-        
-//         return len(source_data) == len(list(target_data.get_points()))
-// \`\`\`
-
-// ## Modern SCADA Interface
-
-// We built a modern web-based SCADA interface:
-
-// \`\`\`javascript
-// // React component for turbine monitoring
-// import React, { useState, useEffect } from 'react';
-// import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-// import WebSocket from 'ws';
-
-// const TurbineMonitor = ({ turbineId }) => {
-//     const [turbineData, setTurbineData] = useState([]);
-//     const [realTimeData, setRealTimeData] = useState({});
-//     const [ws, setWs] = useState(null);
-
-//     useEffect(() => {
-//         // Establish WebSocket connection for real-time data
-//         const websocket = new WebSocket(\`ws://localhost:8080/turbine/\${turbineId}\`);
-        
-//         websocket.onmessage = (event) => {
-//             const data = JSON.parse(event.data);
-//             setRealTimeData(data);
-            
-//             // Update chart data
-//             setTurbineData(prevData => {
-//                 const newData = [...prevData, {
-//                     timestamp: new Date(data.timestamp).toLocaleTimeString(),
-//                     windSpeed: data.wind_speed,
-//                     powerOutput: data.power_output,
-//                     rotorRpm: data.rotor_rpm
-//                 }];
-                
-//                 // Keep only last 100 points
-//                 return newData.slice(-100);
-//             });
-//         };
-        
-//         setWs(websocket);
-        
-//         return () => {
-//             websocket.close();
-//         };
-//     }, [turbineId]);
-
-//     return (
-//         <div className="turbine-monitor">
-//             <h2>Turbine {turbineId} - Live Monitoring</h2>
-            
-//             <div className="metrics-grid">
-//                 <div className="metric-card">
-//                     <h3>Wind Speed</h3>
-//                     <span className="metric-value">
-//                         {realTimeData.wind_speed?.toFixed(1)} m/s
-//                     </span>
-//                 </div>
-                
-//                 <div className="metric-card">
-//                     <h3>Power Output</h3>
-//                     <span className="metric-value">
-//                         {realTimeData.power_output?.toFixed(0)} kW
-//                     </span>
-//                 </div>
-                
-//                 <div className="metric-card">
-//                     <h3>Rotor RPM</h3>
-//                     <span className="metric-value">
-//                         {realTimeData.rotor_rpm?.toFixed(1)}
-//                     </span>
-//                 </div>
-//             </div>
-            
-//             <div className="chart-container">
-//                 <LineChart width={800} height={400} data={turbineData}>
-//                     <CartesianGrid strokeDasharray="3 3" />
-//                     <XAxis dataKey="timestamp" />
-//                     <YAxis />
-//                     <Tooltip />
-//                     <Legend />
-//                     <Line type="monotone" dataKey="windSpeed" stroke="#8884d8" name="Wind Speed (m/s)" />
-//                     <Line type="monotone" dataKey="powerOutput" stroke="#82ca9d" name="Power Output (kW)" />
-//                     <Line type="monotone" dataKey="rotorRpm" stroke="#ffc658" name="Rotor RPM" />
-//                 </LineChart>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default TurbineMonitor;
-// \`\`\`
-
-// ## Results and Impact
-
-// The modernization project delivered exceptional results:
-
-// ### Technical Achievements
-// - **100% data recovery** from legacy systems
-// - **Zero downtime** during migration
-// - **Modern protocols** (Modbus TCP, OPC-UA)
-// - **Web-based interface** accessible from anywhere
-// - **Real-time monitoring** with sub-second updates
-
-// ### Business Benefits
-// - **$500K saved** vs. replacing all turbines
-// - **Increased uptime** from 92% to 98.5%
-// - **Reduced maintenance costs** by 40%
-// - **Extended equipment life** by 10+ years
-// - **Improved operator efficiency** by 60%
-
-// ### Data Insights
-// - **10 years of historical data** preserved and accessible
-// - **Predictive maintenance** algorithms implemented
-// - **Performance optimization** based on historical trends
-// - **Regulatory compliance** maintained
-
-// ## Lessons Learned
-
-// 1. **Documentation is crucial** - Always document proprietary systems
-// 2. **Network analysis** can reveal protocol secrets
-// 3. **Gradual migration** reduces risk
-// 4. **Standard protocols** ensure future compatibility
-// 5. **Data validation** is essential during migration
-
-// ## Technical Challenges Overcome
-
-// ### Protocol Reverse Engineering
-// - **Binary protocol analysis** using packet capture
-// - **Checksum algorithms** discovered through pattern analysis
-// - **Command structure** mapped through systematic testing
-// - **Error handling** implemented based on observed behavior
-
-// ### Data Format Conversion
-// - **Proprietary timestamps** converted to standard formats
-// - **Unit conversions** applied (metric vs. imperial)
-// - **Data validation** rules implemented
-// - **Missing data** interpolation strategies
-
-// ### System Integration
-// - **Legacy hardware** interfaced with modern systems
-// - **Network security** implemented without disrupting operations
-// - **Backup systems** maintained during transition
-// - **User training** provided for new interfaces
-
-// ## Future Enhancements
-
-// We're continuing to improve the system:
-
-// - **Machine learning** for predictive maintenance
-// - **Advanced analytics** for performance optimization
-// - **Mobile applications** for field technicians
-// - **Integration** with energy trading systems
-// - **Automated reporting** for regulatory compliance
-
-// ## Conclusion
-
-// Reverse engineering legacy systems requires patience, technical skill, and creative problem-solving. By understanding the underlying protocols and data structures, we were able to breathe new life into a "dead" system and provide our client with a modern, maintainable solution.
-
-// The key to success was treating this not just as a technical challenge, but as a business problem that required preserving valuable operational data while enabling future growth.
-
-// ---
-
-// *Facing similar legacy system challenges? [Contact our team](/contact) to discuss modernization strategies for your industrial systems.*
-//     `,
-//     date: "2023-12-22",
-//     category: "Legacy Systems",
-//     readTime: "15 min read",
-//     image: "/placeholder.svg?height=600&width=1200",
-//     author: "ScadaDog Team",
-//     featured: true,
-//     tags: ["Legacy Systems", "Reverse Engineering", "SCADA", "Wind Energy", "Data Migration"],
-//   },
+  "building-an-integration-for-the-datadog-marketplace": {
+    id: 2,
+    title: "Building an Integration for the DataDog Marketplace",
+    excerpt:
+      "Built a DataDog Marketplace integration by navigating partner approval, custom repo setup, CLI tooling, and code reviews—offering scalable observability for DevOps and SecOps teams.",
+    content: `
+## Building an Integration for the DataDog Marketplace
+
+Are you Planning to Build a DataDog Integration ? Maybe My Experience can Answer Some Questions.
+
+Our mission is to empower businesses with intelligent, secure, and scalable automation solutions that drive operational excellence and foster growth. We achieve this by leveraging our expertise in both OT and IT, enabling us to deliver comprehensive, end-to-end solutions tailored to your unique needs.
+## Intro
+A few years ago in 2018 I began using DataDog’s Observability platform in the workplace. I noticed the simplicity and intuitive UI and said ‘…alright not bad’ . It wasn't long until I dealt with their customer service and thats when I realized this company had something special going on. I invested as soon as they went IPO in 2019. They have been growing steadily like I knew they would. I was recently motivated to build an integration for a market that they have yet to address. Before I started the process I was a bit unaware of what I was going to encounter. I am writing the post I wish I had read when I started my journey a few months ago.
+## Background
+A few years ago in 2018 I began using DataDog’s Observability platform in the workplace. I noticed the simplicity and intuitive UI and said ‘…alright not bad’ . It wasn't long until I dealt with their customer service and thats when I realized this company had something special going on. I invested as soon as they went IPO in 2019. They have been growing steadily like I knew they would. I was recently motivated to build an integration for a market that they have yet to address. Before I started the process I was a bit unaware of what I was going to encounter. I am writing the post I wish I had read when I started my journey a few months ago.
+A custom check is great for a unique application , but if its something others can benefit from like a generic application then developers can build a DataDog Custom Agent-Integration. The integration is a bit more polished than a local custom check and requires a few more hoops to jump through. Its always great to just check the public DataDog Integration GitHub Repo to see if your integration doesn’t already exist.
+The next level is a Marketplace Integration. It is just a custom integration that is committed to the private repo called “DatDog/Marketplace”. (more on deploying this later). DataDog Technology Partners are given access to these repos to develop their offering. Some extra steps involved are figuring out the pricing and licensing agreements.
+## Background
+A few years ago in 2018 I began using DataDog’s Observability platform in the workplace. I noticed the simplicity and intuitive UI and said ‘…alright not bad’ . It wasn't long until I dealt with their customer service and thats when I realized this company had something special going on. I invested as soon as they went IPO in 2019. They have been growing steadily like I knew they would. I was recently motivated to build an integration for a market that they have yet to address. Before I started the process I was a bit unaware of what I was going to encounter. I am writing the post I wish I had read when I started my journey a few months ago.
+## Process Steps
+1. Connected with DataDog Sales and pitched my integration idea. They rescheduled a meeting to discuss the Marketplace.
+2. Connected with DataDog Technology Partner program team , pitched my integration idea and got approval to start as a  Technology Partner.
+3. Received confirmation emails and had to login into the Technology Partner portal with my account details. I then followed the steps to request a sandbox account.
+4. Received an email with confirmation that my account was ready to use and then logged into www.datadog.hq to access the console for our sandbox account.
+5. I then created a Github account linked to a new Github Organization account so that my team and I could use it to develop our integration. We sent the development accounts to our development team contact. After a couple days we had access to the ‘DataDog/marketplace’ repo.
+6. Cloned the ‘datadog/marketplace’ repo
+7. Read through the developer guide for integration setup. It was a bit confusing at first but the main take away is that the ddev cli utility has built in functions to guide you through the setup of a new integration and validate it as much as possible. The integration can be setup completely in a docker container and tested. The tooling isn’t that bad but it does require some careful reading.
+8. Created a PR request on the ‘datadog/marketplace’ that tried to merge the the new folder we built with the integration in it.
+9. We worked back and forth on all of the nuances we got wrong. I spent a lot of time copying from other completed integrations and leveraging some ideas as what the format should be.
+10. We created vectorized logos, screenshots, and supporting documentation
+11.A DataDog dashboard was created on the console that had all the widgets to present the metrics. Then a JSON file of the dashboard was exported (pretty printed) and stored with the integration.
+12. A legal document EULA outlined the terms of usage for the integration.
+13. I was surprised how thorough the code review was. They provided feedback from python syntax to layout of the readme.md
+## In Review
+So far the process has been smooth. I admire the extensive documentation and the focus on developer support. I sometimes have to figure out the nuance details on my own like any ‘real programmer’ would but I do feel like any major roadblocks could be solved by either reaching out to the team or diving into existing code from other integrators.
+I have seen DataDog re-invest in new features over the years and its marketplace seems like its going to be very well supported. DataDogs development framework lends itself to great external collaboration. I predict that they will have many more offerings and continue to perfect the developer support.
+I asked many founders and integrators how they felt about marketplace offerings. The overwhelming response has been “Its better to control your own destiny” . For most people this is the right approach. I do see a benefit to partnering with DataDog’s marketplace to reach a growing market of DevOps and SecOps professionals and build a proof of concept that can be distributed rapidly. I may one day develop a more performant product outside of the DataDog Integration. But I would still want to provide inter-operability to this growing platform.    `,
+    date: "2024-01-08",
+    category: "System Integration",
+    readTime: "12 min read",
+    image: "/placeholder.svg?height=600&width=1200",
+    author: "ScadaDog Team",
+    featured: true,
+    tags: ["DataDog", "Integration", "OPC-UA", "Monitoring", "Python"],
+  },
+  "legacy-integrations-hacking-defunct-secondwind-scada": {
+    id: 3,
+    title: "Legacy Integrations: Hacking a Defunct SecondWind SCADA",
+    excerpt:
+      "TLDR: Automating GUI interactions for a defunct SCADA HMI allowed us to make the wind farm dynamically dispatch-able. This allowed us to make money on an older site by renegotiating the PPA without upgrading investing in a new SCADA system.",
+    content: `
+# Legacy Integrations : Hacking a Defunct SecondWind SCADA
+
+TLDR: Automating GUI interactions for a defunct SCADA HMI allowed us to make the wind farm dynamically dispatch-able. This allowed us to make money on an older site by renegotiating the PPA without upgrading investing in a new SCADA system.
+## Where it began…
+There was a company that sold a SCADA (Supervisory Control and Data Acquisition) application called SecondWind specifically for the control and operation of wind turbines at a wind farm. By 2010 the system was severely outdated but owners of the SCADA application where locked into it because of its proprietary communication to the control systems on the wind turbine. A snippet from an outdated press release can be seen below:
+“Our ADMS Wind SCADA and Wind Turbine Monitoring Systems are excellent technologies with a significant purpose in today’s growing renewable energy market,” said Second Wind CEO Larry Letteney. (see article here)
+They where bought out by another company, CG-automation, that stopped supporting the application in any meaningful way. The application ran on Windows 2003 and polled a series of wind turbine controllers sequentially to draw the state of the turbine on a GUI (Graphical User Interface) that had text-boxes, and buttons to send back control signals in order to manage individual turbine states and the sites over-all power output.yzing network traffic between the SCADA server and turbines:
+## How It Worked
+When a wind farm is bought or built there is usually a contract to secure a certain amount of power from that wind farm over the course of some time. It is called a Power Purchase Agreement (PPA) . The PPA’s are common but there are merchant style wind farms who are not setup with a contract (I wont be discussing those much here). The PPA for this wind farm included the method to dispatch the site through a phone call. (Yes, a phone call). The operators would receive a phone call from the Independent Service Operator (ISO), a regulatory body that manages the approved output of energy produced on the grid, and then they would remote into the HMI (Human Machine Interface) and enter the set-point requested by the ISO. The ability to follow the set-point within a certain amount of time gave some leeway to this outdated process. For the most part it worked.
+## Challenges
+The site came up for PPA renewal. The ISO now had an API (application programmable interface) and was providing incentives to operators who would set up new PPA’s without the need for phone calls. So the question was asked to the SCADA controls team : Can we dispatch this SecondWind site dynamically through the use of an API, without spending any money upgrading the site or its out-dated SCADA application?
+
+The initial reaction of my manager was, “No! We wont support that.” . But, then he spoke to his new employee who came over from IT and asked is there something we can do? I immediately said, “Yes”. All I needed was an agent that could automate the manual entry of an integer into the HMI’s set-point input-box. I would then simulate the proper button clicks to approve the change. The agent would receive the set-points through an API client that would route the signal from an internet facing business network down into the control network at the site. (Easy, peasey) Here where some things to consider :
+1. Older Version of Microsoft Windows
+2. Multiple versions of the SecondWind HMI
+3. Locating windows GUI form using Spy++
+4. Running along-side a Human Dispatcher (Raise Conditions)
+5. End-to-End testing between a Business Network and Control Network
+6. Operating (ICS) Industrial Control Systems with a hacky solution : Safety , Safety, Safety!
+## Creating an API Client 
+The ISO provided an API endpoint. I was hoping it was REST but it turned out to be a complicated SOAP endpoint. After hours of XML I built a contract in .NET to to handle the calls and set the appropriate polling rate to be every 15 minutes. (This is typical for most power markets). The response contained the timestamp and set-point. A handshake process was required to validate the set-point was received. I would reply with the set-point feedback with another prebuilt soap POST. The communication of this API client would require a secure certificate that was issued by the ISO. Every API submission had to be first validated by sending the security information as well. The way these API’s are set up can vary. Luckily we had example clients from the ISO and it was pretty easy to test this part of the project
+The API client was hosted in our datacenter at the time. I added a few other features outside of just being a client :
+1. Only one of its kind can be running on the machine at any given time , this prevented double set-points to be sent to the site.
+2. Rolling log files to validate any set-point sent and to track if there was any errors.
+3. Email notifications on any errors.
+4. Watchdog service to monitor the API client if it every had issues as a precaution, also it would send email notification if the API did not reply every 15 minutes with a set-point.
+5. Distribution of redundant services across multiple servers with a RabbitMQ topic to validate that at least one service is running.
+
+## Routing Into A Control Network
+Most Wind Farm operators will have a tiered network architecture. A business layer, control layer and device layer. They are seperated by firewalls and other security measures. Getting my signal from a datacenter server on the business layer all the way to the control network was not too bad.
+Most sites already have these systems in place to send signals to a Park PLC (Programmable Logic Controller). The Park PLC (in this case a Modicon M1) can do several tasks but one of the basic tasks is to send signals directly to the wind turbines to reset faults or apply some type of site control on-top of what the SCADA is meant to do. These PLC’s use standard protocols to receive values (Modbus, OPC, DNP3). The ISO’s set-point was sent to the PLC using Modbus over ethernet. The API client server was whitelisted by the network team to send a signal down into the Park PLC.
+![Modicon M1 CPU Momentum from Schneider Electric ](/blogs/modicon-m1-cpu.jpeg)
+
+By sending the signal through the Modbus protocol I could reduce the attack vectors for a cyber criminal since its relatively difficult to “root” a PLC with Modbus traffic. Modbus is an open protocol and relatively easy to build apps against. (check out a great dotnet library for it).
+
+The set-point would be embedded in a Modbus protocol tcp packet using 2 Modbus ‘holding’ registers, 16-bits each, to send a 32-bit set-point value. Other Modbus settings need to be considered such as bit-order and endianness. (more on Modbus)
+
+The PLC is then programmed using Schneider Electric’s Unity Pro IDE. Something that I didn’t realize at first is that all of these PLC brands will have specific programmers. They usually are designed with specific chipsets that require a licensed utility to re-program them. (great for safety and vendor-lock-in)
+
+![Unity Pro XL ScreenShot from PLCTutorials](/blogs/unity-pro-xl.jpeg)
+
+The Unity program allows the user to connect to a PLC on the network and load new programming logic to the PLC. Once loaded the PLC will reboot and run its program managing all the IO and logic. For this project all I had to do was use the PLC to route my signal back to the SecondWind host computer on the control network. The PLC has two network cards (incoming from business layer) and a control layer network card. The Modbus/TCP register is read on every scan of the PLC logic (in milliseconds) and is then moved over to another Modbus/TCP connection on a control network IP address. Similar communication can be done for Modbus (serial) through a function block. Or create a custom TCP pack and send it over ethernet using functions blocks.
+
+![Modbus Server Example on Unity Pro, Image from PLC Support](/blogs/modbus-server-example-on-unity-pro.jpeg)
+
+## Integrating with SecondWind HMI
+As mentioned before the set-point is captured with an API and routed into a PLC then relayed over Modbus to the host computer running the SecondWind HMI. At this point the agent I built running on the HMI is a hosting a Modbus server. The Modbus server is part of the agent that is accepting Modbus data on a pre-defined register. It captures the values on multiple holding registers and converts it into an int32 value. (Remember the feedback signal?) The agent also returns values to the PLC as a feedback set-point value.
+The agent is built to take the set-point and then log the value it is reading as it changes. On a change of the set-point on the Modbus register it runs a routine to insert the value into the HMI’s SecondWind GUI. The goal here is to run through a series of commands that will emulate a user on the computer that clicks through the form and inserts the set-point. (This is also known as Robotic Process Automation, RPA .)
+
+## Lets identify the clicks…
+The SecondWind application could only run on Windows 2003, this presented some challenges. I had to upgrade the local .NET 1.1 framework to build an agent that could support the libraries I wanted to use. After much research around compatibility issues I built the courage to continue with it. I then used a Windows Interop and Windows Handler libraries to be able to grab access to the hWnd (handler) of the SecondWind form control.
+1. Detect the process that is running “SecondWind” . This allowed me to make sure the app is running and identify the Process ID (PID).
+2. Using the PID grab on to the windows form handle (hWnd).
+3. Detect the name of the windows form , this gave me the title of the application. I used this to determine the version of the form I was dealing with. ie. “SWI Supervisory Computer 2.1.0” , or “SWI Supervisory Computer 2.1.2”
+4. This is when I needed to use an old Microsoft utility called “Spy++”. It allowed me to detect the forms and its sub controls . By walking through the windows handler (hWnd) , I could pick out which object in the array to create another handle for and then finally access the property of the control object like an input-box.
+
+![Example of Spy++](/blogs/example-of-spypp.jpeg)
+
+The code I wrote is still proprietary so unfortunately I cant give away to much of the details but the idea is pretty simple. With the access to the form properties it is relatively easy to create a sequence of writing to to the input-box and clicking on the form buttons using the Windows Messaging library for the form controls. These methods have gotten a lot easier with the introduction of .NET 5.
+Additional features:
+1. Install the agent as a windows service
+2. Slow down the form interactions
+3. Create “writing and reading” sequence steps to validate what has been sent to the form .
+4. Make sure that only one target application is running
+5. Create different sequences for different versions of the target application ( form arrays/properties could be different and require another walkthrough with spy++).
+6. Build a redundant service to “watch” the first service and make sure its running.
+7. Implement a rolling-log file for error handling using Serilog. (rolling so that it doesn’t fill up the hard drive over time)
+8. Modbus feedback and heartbeat signal (incremental value) to validate the PLC is still accessible and communicating (polled ever 5 seconds).
+## Summary
+By applying some windows form automation and tying it to an API connection we where able to renegotiate a power purchase agreement and make a legacy SCADA application for a wind farm dynamically dispatch-able. Considerations around redundancy and reliability where taken into account. As similar systems around the country begin to age owner/operators need to stay address what methods will be put in place to remain competitive in the renewables market.
+    `,
+    date: "2023-12-22",
+    category: "Legacy Systems",
+    readTime: "15 min read",
+    image: "/placeholder.svg?height=600&width=1200",
+    author: "ScadaDog Team",
+    featured: true,
+    tags: ["Legacy Systems", "Reverse Engineering", "SCADA", "Wind Energy", "Data Migration"],
+  },
 }
 
 interface BlogPostPageProps {
@@ -968,12 +340,13 @@ export default function BlogPost({ params }: BlogPostPageProps) {
                     } else if (line.startsWith("![") && line.includes("](")) {
                       const [, alt, src] = line.match(/!\[(.*?)\]\((.*?)\)/)!;
                       return `
-    <div class="my-8 flex justify-center">
+    <div class="my-8 flex flex-col items-center">
       <img
         src="${src}"
         alt="${alt}"
         class="rounded-lg shadow-md max-w-full"
       />
+      <span class="mt-2 text-gray-500 text-sm">${alt}</span>
     </div>`;
                     } else if (line.trim() === "") {
                       return "<br>"
