@@ -65,12 +65,12 @@ export default function Services() {
       <Section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/placeholder.svg?height=800&width=1600"
+            src="/services-bg.jpg?height=800&width=1600"
             alt="Industrial services background"
             fill
             className="object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 to-gray-800/90"></div>
+          {/* <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 to-gray-800/90"></div> */}
         </div>
 
         {/* Animated background elements */}

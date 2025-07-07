@@ -205,21 +205,21 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                title: "Seamless SCADA Integration",
+                title: "IIoT Data Collection",
                 description: "Smart data acquisition from industrial systems with real-time processing",
-                image: "/services/seamless-scada-integration.jpg?height=300&width=400",
+                image: "/card1.jpeg?height=300&width=400",
                 gradient: "from-gray-500 to-gray-500",
               },
               {
-                title: "Next-Gen Gen AI Solutions",
+                title: "Application Development",
                 description: "Custom industrial software solutions tailored to your needs",
-                image: "/services/next-gen-gen-ai-solutions.jpg?height=300&width=400",
+                image: "/card2.jpeg?height=300&width=400",
                 gradient: "from-gray-500 to-gray-500",
               },
               {
-                title: "Smart Data Acquisition",
+                title: "Operational  Intelligence",
                 description: "Transform raw data into actionable insights and predictive analytics",
-                image: "/services/smart-data-acquisition.jpg?height=300&width=400",
+                image: "/card3.jpeg?height=300&width=400",
                 gradient: "from-gray-500 to-gray-500",
               }
             ].map((service, index) => (

@@ -9,7 +9,7 @@ export default function Contact() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <Section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden">
+      <Section className="relative bg-gradient-to-br from-gray-900/40 via-gray-800 to-black text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src="/contact-us-bg.jpg?height=800&width=1600"
