@@ -29,6 +29,13 @@ export default function BlogCard({ post, index }: BlogCardProps) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
 
+  // Extract initials from author name
+  const getInitials = (name: string) => {
+    const parts = name.trim().split(" ")
+    if (parts.length === 1) return parts[0][0]?.toUpperCase() || ""
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+  }
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 30 }}
@@ -68,7 +75,7 @@ export default function BlogCard({ post, index }: BlogCardProps) {
           {/* Author Avatar */}
           <div className="absolute bottom-4 left-4 flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-br from-gray-500 to-gray-600 rounded-full flex items-center justify-center">
-              <span className="text-white text-xs font-bold">SD</span>
+              <span className="text-white text-xs font-bold">{getInitials(post.author)}</span>
             </div>
             <span className="text-white text-sm font-medium">{post.author}</span>
           </div>

@@ -368,7 +368,7 @@ export default function Privacy() {
                         <div>
                           <div className="font-semibold text-gray-900">Email</div>
                           <a href="mailto:privacy@scadadog.com" className="text-gray-600 hover:text-gray-800">
-                            privacy@scadadog.com
+                            info@scadadog.com
                           </a>
                         </div>
                       </div>

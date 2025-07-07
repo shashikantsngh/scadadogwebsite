@@ -98,83 +98,78 @@ export default function Services() {
           <div className="grid lg:grid-cols-2 gap-12">
             {[
               {
-                title: "IIoT Data Collection",
+                title: "Seamless SCADA Integration",
                 description:
-                  "Smart Data Acquisition systems that seamlessly collect, process, and transmit data from industrial equipment and sensors with real-time analytics and edge computing capabilities.",
-                features: [
-                  "Real-time data streaming",
-                  "Edge computing capabilities",
-                  "Secure data transmission",
-                  "Scalable architecture",
-                ],
-                icon: "📊",
-                image: "/placeholder.svg?height=400&width=600",
+                  "We enable real-time monitoring and automation for industrial operations by integrating SCADA systems with advanced protocols like OPC-UA, Modbus, DNP3, and MQTT, ensuring seamless data flow and control.",
+                // features: [
+                //   "Real-time data streaming",
+                //   "Edge computing capabilities",
+                //   "Secure data transmission",
+                //   "Scalable architecture",
+                // ],
+                
+                image: "/services/seamless-scada-integration.jpg?height=400&width=600",
                 gradient: "from-gray-500 to-gray-700",
               },
               {
-                title: "Application Development",
+                title: "Next-Gen Gen AI Solutions",
                 description:
-                  "Custom industrial software solutions tailored to your specific operational needs with modern frameworks and industrial-grade reliability.",
-                features: ["Custom dashboards", "Mobile applications", "Web-based interfaces", "API development"],
-                icon: "💻",
-                image: "/placeholder.svg?height=400&width=600",
+                  "Our AI-driven analytics solutions enhance predictive maintenance and decision-making by leveraging intelligent data processing, helping industries optimize performance and reduce downtime.",
+                // features: ["Custom dashboards", "Mobile applications", "Web-based interfaces", "API development"],
+                image: "/services/next-gen-gen-ai-solutions.jpg?height=400&width=600",
                 gradient: "from-gray-500 to-gray-700",
               },
               {
-                title: "Operational Intelligence",
+                title: "Smart Data Acquisition",
                 description:
-                  "Transform raw operational data into actionable insights that drive efficiency, reduce costs, and enable informed decision-making across your organization.",
-                features: [
-                  "Advanced analytics",
-                  "Predictive maintenance",
-                  "Performance optimization",
-                  "Real-time monitoring",
-                ],
-                icon: "🧠",
-                image: "/placeholder.svg?height=400&width=600",
+                  "We specialize in collecting and processing industrial data from SCADA, PLCs, and sensors, ensuring seamless storage and accessibility in both cloud-based and on-premise historians.",
+                // features: [
+                //   "Advanced analytics",
+                //   "Predictive maintenance",
+                //   "Performance optimization",
+                //   "Real-time monitoring",
+                // ],
+                image: "/services/smart-data-acquisition.jpg?height=400&width=600",
                 gradient: "from-gray-500 to-gray-700",
               },
               {
-                title: "SCADA Integration",
+                title: "Secure & Reliable Systems",
                 description:
-                  "Seamless integration with existing SCADA systems to enhance functionality, improve connectivity, and modernize your industrial control systems.",
-                features: ["Protocol translation", "System modernization", "Data harmonization", "Legacy support"],
-                icon: "🔧",
-                image: "/placeholder.svg?height=400&width=600",
+                  "With a strong focus on cybersecurity, we implement end-to-end security measures for OT & IT networks while adopting Six Sigma frameworks to enhance operational efficiency.",
+                // features: ["Protocol translation", "System modernization", "Data harmonization", "Legacy support"],
+                image: "/services/secure-and-reliable-systems.jpg?height=400&width=600",
                 gradient: "from-gray-500 to-gray-700",
               },
               {
-                title: "Gen AI Solutions",
+                title: "Bridging Old & New Technologies",
                 description:
-                  "AI-powered automation and analytics solutions that bring machine learning intelligence to your industrial processes and operations.",
-                features: [
-                  "Machine learning models",
-                  "Automated decision making",
-                  "Pattern recognition",
-                  "Intelligent alerts",
-                ],
-                icon: "🤖",
-                image: "/placeholder.svg?height=400&width=600",
+                  "We help industries modernize their legacy systems by integrating them with advanced digital platforms, ensuring scalability, improved performance, and future-ready infrastructure.",
+                // features: [
+                //   "Machine learning models",
+                //   "Automated decision making",
+                //   "Pattern recognition",
+                //   "Intelligent alerts",
+                // ],
+                image: "/services/bridging-old-and-new-technologies.jpg?height=400&width=600",
                 gradient: "from-gray-500 to-gray-700",
               },
               {
-                title: "Secure Systems",
+                title: "Tailored for Your Industry",
                 description:
-                  "Comprehensive cybersecurity solutions designed specifically for industrial environments, protecting your OT networks from modern threats.",
-                features: ["Network segmentation", "Access control", "Threat detection", "Compliance management"],
-                icon: "🔒",
-                image: "/placeholder.svg?height=400&width=600",
+                  "From automation to AI-driven solutions, we develop customized strategies to meet industry-specific needs, serving sectors like energy, manufacturing, and industrial automation.",
+                // features: ["Network segmentation", "Access control", "Threat detection", "Compliance management"],
+                image: "/services/tailored-for-your-industry.jpg?height=400&width=600",
                 gradient: "from-gray-500 to-gray-700",
               },
-              {
-                title: "Legacy Modernization",
-                description:
-                  "Upgrade and modernize legacy systems while maintaining operational continuity, data integrity, and ensuring smooth transitions.",
-                features: ["System assessment", "Migration planning", "Gradual upgrades", "Training support"],
-                icon: "🔄",
-                image: "/placeholder.svg?height=400&width=600",
-                gradient: "from-gray-500 to-gray-700",
-              },
+              // {
+              //   title: "Legacy Modernization",
+              //   description:
+              //     "Upgrade and modernize legacy systems while maintaining operational continuity, data integrity, and ensuring smooth transitions.",
+              //   features: ["System assessment", "Migration planning", "Gradual upgrades", "Training support"],
+              //   icon: "🔄",
+              //   image: "/placeholder.svg?height=400&width=600",
+              //   gradient: "from-gray-500 to-gray-700",
+              // },
             ].map((service, index) => (
               <motion.div
                 key={service.title}
@@ -191,9 +186,9 @@ export default function Services() {
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-80`}></div>
+                  {/* <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-10`}></div> */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-7xl filter drop-shadow-lg">{service.icon}</div>
+                    {/* <div className="text-7xl filter drop-shadow-lg">{service.icon}</div> */}
                   </div>
                 </div>
 
@@ -203,16 +198,16 @@ export default function Services() {
                   </h3>
                   <p className="text-gray-600 leading-relaxed mb-6 text-lg">{service.description}</p>
 
-                  <div className="grid grid-cols-1 gap-3 mb-6">
+                  {/* <div className="grid grid-cols-1 gap-3 mb-6">
                     {service.features.map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-center gap-3">
                         <div className="w-3 h-3 bg-gradient-to-r from-gray-500 to-gray-700 rounded-full flex-shrink-0"></div>
                         <span className="text-gray-700 font-medium">{feature}</span>
                       </div>
                     ))}
-                  </div>
+                  </div> */}
 
-                  <div className="flex items-center text-gray-600 font-semibold group-hover:text-gray-800 transition-colors">
+                  {/* <div className="flex items-center text-gray-600 font-semibold group-hover:text-gray-800 transition-colors">
                     Learn More
                     <svg
                       className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform"
@@ -222,7 +217,7 @@ export default function Services() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
-                  </div>
+                  </div> */}
                 </div>
               </motion.div>
             ))}

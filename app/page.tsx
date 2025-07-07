@@ -205,21 +205,21 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                title: "IIoT Data Collection",
+                title: "Seamless SCADA Integration",
                 description: "Smart data acquisition from industrial systems with real-time processing",
-                image: "/card1.jpeg?height=300&width=400",
+                image: "/services/seamless-scada-integration.jpg?height=300&width=400",
                 gradient: "from-gray-500 to-gray-500",
               },
               {
-                title: "Application Development",
+                title: "Next-Gen Gen AI Solutions",
                 description: "Custom industrial software solutions tailored to your needs",
-                image: "/card2.jpeg?height=300&width=400",
+                image: "/services/next-gen-gen-ai-solutions.jpg?height=300&width=400",
                 gradient: "from-gray-500 to-gray-500",
               },
               {
-                title: "Operational  Intelligence",
+                title: "Smart Data Acquisition",
                 description: "Transform raw data into actionable insights and predictive analytics",
-                image: "/card3.jpeg?height=300&width=400",
+                image: "/services/smart-data-acquisition.jpg?height=300&width=400",
                 gradient: "from-gray-500 to-gray-500",
               }
             ].map((service, index) => (
@@ -238,7 +238,7 @@ export default function Home() {
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-80`}></div>
+                  {/* <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-80`}></div> */}
                   {/* <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-6xl filter drop-shadow-lg">{service.icon}</div>
                   </div> */}
@@ -248,7 +248,7 @@ export default function Home() {
                     {service.title}
                   </h3>
                   <p className="text-gray-600 leading-relaxed">{service.description}</p>
-                  <div className="mt-6 flex items-center text-gray-600 font-medium group-hover:text-gray-800 transition-colors">
+                  {/* <div className="mt-6 flex items-center text-gray-600 font-medium group-hover:text-gray-800 transition-colors">
                     Learn More
                     <svg
                       className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
@@ -258,7 +258,7 @@ export default function Home() {
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
-                  </div>
+                  </div> */}
                 </div>
               </motion.div>
             ))}
