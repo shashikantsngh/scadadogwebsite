@@ -68,7 +68,7 @@ export default function Services() {
             src="/services-bg.jpg?height=800&width=1600"
             alt="Industrial services background"
             fill
-            className="object-cover opacity-20"
+            className="object-cover object-[center_25%] opacity-20"
           />
           {/* <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 to-gray-800/90"></div> */}
         </div>

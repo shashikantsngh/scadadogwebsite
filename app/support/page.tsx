@@ -14,7 +14,7 @@ export default function Support() {
             src="/support-bg.jpg?height=800&width=1600"
             alt="Support team background"
             fill
-            className="object-cover opacity-20"
+            className="object-cover opacity-20 object-[center_25%]"
           />
           {/* <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 to-gray-800/90"></div> */}
         </div>

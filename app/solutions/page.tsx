@@ -238,7 +238,7 @@ export default function Solutions() {
             src="/solutions-bg.jpg?height=800&width=1600"
             alt="Solutions background"
             fill
-            className="object-cover opacity-20"
+            className="object-cover opacity-20 object-[center_30%]"
           />
           {/* <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-800/70 to-black/80"></div> */}
         </div>

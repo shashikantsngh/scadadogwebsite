@@ -15,7 +15,7 @@ export default function Contact() {
             src="/contact-us-bg.jpg?height=800&width=1600"
             alt="Contact us background"
             fill
-            className="object-cover opacity-20"
+            className="object-cover object-[center_15%] opacity-20"
           />
           {/* <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-gray-800/70 to-black/80"></div> */}
         </div>
