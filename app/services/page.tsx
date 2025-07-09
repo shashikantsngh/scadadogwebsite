@@ -108,7 +108,7 @@ export default function Services() {
                 //   "Scalable architecture",
                 // ],
                 
-                image: "/services/seamless-scada-integration.jpg?height=400&width=600",
+                image: "/services/seamless-scada-integration.webp?height=400&width=600",
                 gradient: "from-gray-500 to-gray-700",
               },
               {
@@ -116,7 +116,7 @@ export default function Services() {
                 description:
                   "Our AI-driven analytics solutions enhance predictive maintenance and decision-making by leveraging intelligent data processing, helping industries optimize performance and reduce downtime.",
                 // features: ["Custom dashboards", "Mobile applications", "Web-based interfaces", "API development"],
-                image: "/services/next-gen-gen-ai-solutions.jpg?height=400&width=600",
+                image: "/services/next-gen-gen-ai-solutions.webp?height=400&width=600",
                 gradient: "from-gray-500 to-gray-700",
               },
               {
@@ -129,7 +129,7 @@ export default function Services() {
                 //   "Performance optimization",
                 //   "Real-time monitoring",
                 // ],
-                image: "/services/smart-data-acquisition.jpg?height=400&width=600",
+                image: "/services/smart-data-acquisition.webp?height=400&width=600",
                 gradient: "from-gray-500 to-gray-700",
               },
               {
@@ -137,7 +137,7 @@ export default function Services() {
                 description:
                   "With a strong focus on cybersecurity, we implement end-to-end security measures for OT & IT networks while adopting Six Sigma frameworks to enhance operational efficiency.",
                 // features: ["Protocol translation", "System modernization", "Data harmonization", "Legacy support"],
-                image: "/services/secure-and-reliable-systems.jpg?height=400&width=600",
+                image: "/services/secure-and-reliable-systems.webp?height=400&width=600",
                 gradient: "from-gray-500 to-gray-700",
               },
               {
@@ -150,7 +150,7 @@ export default function Services() {
                 //   "Pattern recognition",
                 //   "Intelligent alerts",
                 // ],
-                image: "/services/bridging-old-and-new-technologies.jpg?height=400&width=600",
+                image: "/services/bridging-old-and-new-technologies.webp?height=400&width=600",
                 gradient: "from-gray-500 to-gray-700",
               },
               {
@@ -158,7 +158,7 @@ export default function Services() {
                 description:
                   "From automation to AI-driven solutions, we develop customized strategies to meet industry-specific needs, serving sectors like energy, manufacturing, and industrial automation.",
                 // features: ["Network segmentation", "Access control", "Threat detection", "Compliance management"],
-                image: "/services/tailored-for-your-industry.jpg?height=400&width=600",
+                image: "/services/tailored-for-your-industry.webp?height=400&width=600",
                 gradient: "from-gray-500 to-gray-700",
               },
               // {
