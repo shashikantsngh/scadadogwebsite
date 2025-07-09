@@ -384,12 +384,7 @@ export default function Home() {
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center text-center justify-items-center mx-auto">
               {[
                 { name: "CCE-logo", logo: "/clients/cce-logo-stacked.svg?height=80&width=120" },
-                { name: "nextra-energy", logo: "/clients/nextera-energy-logo.png" }, 
-                { name: "nextra-energy-1", logo: "/clients/nextera-energy-logo.png" },
-                { name: "CCE-logo-1", logo: "/clients/cce-logo-stacked.svg?height=80&width=120" },
-                { name: "nextra-energy-2", logo: "/clients/nextera-energy-logo.png" },
-                { name: "CCE-logo-3", logo: "/clients/cce-logo-stacked.svg?height=80&width=120" }
-
+                { name: "nextra-energy", logo: "/clients/nextera-energy-logo.png" }
               ].map((client, index) => (
                 <motion.div
                   key={client.name}
