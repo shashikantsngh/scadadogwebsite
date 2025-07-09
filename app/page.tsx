@@ -386,7 +386,7 @@ export default function Home() {
                 { name: "CCE-logo", logo: "/clients/cce-logo-stacked.svg?height=80&width=120" },
                 { name: "nextra-energy", logo: "/clients/nextera-energy-logo.png" },
                 { name: "plus-power", logo: "/clients/pluspower.webp" },
-                { name: "exowatt", logo: "/clients/exoeatt.avif" }
+                { name: "exowatt", logo: "/clients/exowatt.avif" }
               ].map((client, index) => (
                 <motion.div
                   key={client.name}
