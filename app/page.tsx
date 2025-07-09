@@ -77,7 +77,7 @@ export default function Home() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/hero.jpg?height=1080&width=1920"
+            src="/hero.webp?height=1080&width=1920"
             alt="Industrial automation background"
             fill
             className="object-cover opacity-20"

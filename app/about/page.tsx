@@ -11,7 +11,7 @@ export default function About() {
       <Section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/about-us-bg.jpg?height=800&width=1600"
+            src="/about-us-bg.webp?height=800&width=1600"
             alt="ScadaDog team background"
             fill
             className="object-cover opacity-20 object-[center_43%]"

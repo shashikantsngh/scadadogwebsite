@@ -90,7 +90,7 @@ Fetch is SCADADOG’s plug-and-play edge data platform that connects industrial 
         features: ["Unlimited tags", "Custom protocols", "ML/AI capabilities", "Dedicated support"],
       },
     },
-    image: "/fetch-bg.jpg?height=600&width=1200",
+    image: "/fetch-bg.webp?height=600&width=1200",
     gallery: [
       "/placeholder.svg?height=400&width=600",
       "/placeholder.svg?height=400&width=600",
