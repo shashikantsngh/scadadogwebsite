@@ -4,8 +4,11 @@ import { motion } from "framer-motion"
 import Section from "@/components/Section"
 import BlogCard from "@/components/BlogCard"
 import Image from "next/image"
+import { useState } from "react"
 
 export default function Blog() {
+  const [activeCategory, setActiveCategory] = useState("All")
+
   const blogPosts = [
     {
       id: 1,
@@ -87,15 +90,9 @@ export default function Blog() {
     // },
   ]
 
-  const categories = [
-    "All",
-    "Industrial Automation",
-    "System Integration",
-    "Legacy Systems",
-    "IIoT",
-    "Artificial Intelligence",
-    "Cybersecurity",
-  ]
+  // Dynamically generate categories from blog posts
+  const allCategories = blogPosts.map(post => post.category);
+  const uniqueCategories = ["All", ...new Set(allCategories)];
 
   return (
     <div className="min-h-screen">
@@ -140,10 +137,15 @@ export default function Blog() {
             viewport={{ once: true }}
             className="flex flex-wrap gap-4 justify-center"
           >
-            {categories.map((category) => (
+            {uniqueCategories.map((category: string) => (
               <button
                 key={category}
-                className="px-6 py-2 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-800 hover:text-white hover:border-gray-800 transition-colors duration-300"
+                onClick={() => setActiveCategory(category)}
+                className={`px-6 py-2 rounded-full border transition-colors duration-300 ${
+                  activeCategory === category
+                    ? "bg-gray-800 text-white border-gray-800"
+                    : "border-gray-300 text-gray-700 hover:bg-gray-800 hover:text-white hover:border-gray-800"
+                }`}
               >
                 {category}
               </button>
@@ -156,10 +158,19 @@ export default function Blog() {
       <Section className="bg-gray-50">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post, index) => (
-              <BlogCard key={post.id} post={post} index={index} />
-            ))}
+            {blogPosts
+              .filter((post) => activeCategory === "All" || post.category === activeCategory)
+              .map((post, index) => (
+                <BlogCard key={post.id} post={post} index={index} />
+              ))}
           </div>
+          
+          {blogPosts.filter((post) => activeCategory === "All" || post.category === activeCategory).length === 0 && (
+            <div className="text-center py-16">
+              <h3 className="text-2xl font-bold text-gray-700 mb-2">No posts found</h3>
+              <p className="text-gray-500">No posts available in the selected category.</p>
+            </div>
+          )}
         </div>
       </Section>
 

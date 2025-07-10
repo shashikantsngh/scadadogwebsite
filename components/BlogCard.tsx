@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
+import { useState } from "react"
 
 interface BlogPost {
   id: number
@@ -42,11 +43,11 @@ export default function BlogCard({ post, index }: BlogCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className={`group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer border border-gray-100 hover:scale-105 ${
+      className={`relative group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-pointer border border-gray-100 hover:scale-105 ${
         post.featured ? "ring-2 ring-blue-500/20" : ""
       }`}
     >
-      <Link href={`/blog/${slug}`}>
+      <Link href={`/blog/${slug}`} className="block h-full">
         <div className="relative overflow-hidden h-56">
           <Image
             src={post.image || "/placeholder.svg"}
@@ -130,32 +131,60 @@ export default function BlogCard({ post, index }: BlogCardProps) {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </div>
-
-            <div className="flex items-center gap-2">
-              <button className="p-2 text-gray-400 hover:text-red-500 transition-colors">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
-              </button>
-              <button className="p-2 text-gray-400 hover:text-blue-500 transition-colors">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367 2.684z"
-                  />
-                </svg>
-              </button>
-            </div>
           </div>
         </div>
       </Link>
+      
+      {/* Action buttons outside of Link to prevent navigation */}
+      <div className="absolute bottom-6 right-6 flex items-center gap-2">
+        {/* Non-functional like button */}
+        <button 
+          className="p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm text-gray-400 hover:text-red-500 transition-colors"
+          aria-label="Like post"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+            />
+          </svg>
+        </button>
+        
+        {/* Functional share button */}
+        <button 
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            // Share functionality
+            if (navigator.share) {
+              navigator.share({
+                title: post.title,
+                text: post.excerpt,
+                url: window.location.origin + '/blog/' + slug,
+              })
+              .catch((error) => console.log('Error sharing', error));
+            } else {
+              // Fallback - copy to clipboard
+              navigator.clipboard.writeText(window.location.origin + '/blog/' + slug)
+                .then(() => alert('Link copied to clipboard!'))
+                .catch((err) => console.error('Could not copy text: ', err));
+            }
+          }}
+          className="p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm text-gray-400 hover:text-blue-500 transition-colors"
+          aria-label="Share post"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367 2.684z"
+            />
+          </svg>
+        </button>
+      </div>
     </motion.article>
   )
 }

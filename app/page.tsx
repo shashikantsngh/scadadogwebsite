@@ -380,8 +380,8 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center text-center justify-items-center mx-auto">
+          <div className="max-w-5xl mx-auto">
+            <div className="flex flex-wrap justify-center items-center gap-8 mx-auto">
               {[
                 { name: "CCE-logo", logo: "/clients/cce-logo-stacked.svg?height=80&width=120" },
                 { name: "nextra-energy", logo: "/clients/nextera-energy-logo.png" },
@@ -394,9 +394,9 @@ export default function Home() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="group flex flex-col items-center justify-center text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
+                  className="group flex flex-col items-center justify-center text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 w-[180px] min-h-[100px]"
                 >
-                  <div className="w-[120px] h-[50px] flex items-center justify-center">
+                  <div className="w-full h-[50px] flex items-center justify-center">
                     <Image
                       src={client.logo}
                       alt={`${client.name} logo`}
@@ -555,7 +555,7 @@ export default function Home() {
       </Section>
 
       {/* Testimonials Carousel */}
-      <Section className="bg-white">
+      {/* <Section className="bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -575,7 +575,7 @@ export default function Home() {
 
           <TestimonialCarousel testimonials={testimonials} />
         </div>
-      </Section>
+      </Section> */}
 
       {/* Technology Stack */}
       {/* <Section className="bg-gray-50">
