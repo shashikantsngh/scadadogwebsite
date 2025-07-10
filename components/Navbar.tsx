@@ -42,13 +42,13 @@ export default function Navbar() {
           {/* Enhanced Logo */}
             <Link href="/" className="flex items-center group">
               <div className="relative">
-              <div className="w-12 h-12 flex items-center justify-center group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 overflow-hidden">
+              <div className="w-20 h-20 flex items-center justify-center group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 overflow-hidden">
                 <Image
                 src="/sd/SCADADOG-B1.svg"
                 alt="ScadaDog Logo"
-                width={80}
-                height={80}
-                className="w-20 h-10 object-contain"
+                width={140}
+                height={140}
+                className="w-28 h-20 object-contain"
                 />
               </div>
               <div className="absolute -inset-1 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
