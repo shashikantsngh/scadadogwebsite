@@ -203,7 +203,7 @@ The platform has helped our clients reduce unplanned downtime by an average of 4
         features: ["Unlimited assets", "Custom ML models", "API access", "Dedicated support"],
       },
     },
-    image: "/scout-bg.jpg?height=600&width=1200",
+    image: "/scout-bg.webp?height=600&width=1200",
     gallery: [
       "/placeholder.svg?height=400&width=600",
       "/placeholder.svg?height=400&width=600",

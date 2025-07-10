@@ -396,13 +396,15 @@ export default function Home() {
                   viewport={{ once: true }}
                   className="group flex flex-col items-center justify-center text-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100"
                 >
-                  <Image
-                    src={client.logo}
-                    alt={`${client.name} logo`}
-                    width={120}
-                    height={80}
-                    className="max-w-full h-auto opacity-60 group-hover:opacity-100 transition-opacity duration-300 filter grayscale group-hover:grayscale-0"
-                  />
+                  <div className="w-[120px] h-[50px] flex items-center justify-center">
+                    <Image
+                      src={client.logo}
+                      alt={`${client.name} logo`}
+                      width={120}
+                      height={80}
+                      className="object-contain max-h-[50px] w-auto opacity-60 group-hover:opacity-100 transition-opacity duration-300 filter grayscale group-hover:grayscale-0"
+                    />
+                  </div>
                 </motion.div>
               ))}
             </div>
