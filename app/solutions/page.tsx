@@ -278,9 +278,15 @@ export default function Solutions() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <div className="inline-flex items-center bg-green-50 border border-green-200 rounded-full px-6 py-2 mb-6">
+            {/* <div className="inline-flex items-center bg-green-50 border border-green-200 rounded-full px-6 py-2 mb-6">
               <span className="text-green-600 text-sm font-medium">
                 ✅ Production Ready
+              </span>
+            </div> */}
+
+             <div className="inline-flex items-center bg-orange-50 border border-orange-200 rounded-full px-6 py-2 mb-6">
+              <span className="text-orange-600 text-sm font-medium">
+                🚧 In Development
               </span>
             </div>
             <h2 className="text-4xl font-bold mb-4 text-gray-900">
@@ -319,11 +325,11 @@ export default function Solutions() {
                   </div> */}
 
                   {/* Status Badge */}
-                  <div className="absolute top-4 right-4">
+                  {/* <div className="absolute top-4 right-4">
                     <span className="bg-green-500 text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg">
                       {product.status}
                     </span>
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="p-8">
@@ -389,7 +395,7 @@ export default function Solutions() {
       </Section>
 
       {/* Solutions in Development */}
-      <Section className="bg-white">
+      {/* <Section className="bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -438,7 +444,6 @@ export default function Solutions() {
                     </div>
                   </div>
 
-                  {/* Status Badge */}
                   <div className="absolute top-4 right-4">
                     <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
                       {solution.status}
@@ -465,7 +470,6 @@ export default function Solutions() {
                     {solution.description}
                   </p>
 
-                  {/* Progress Bar */}
                   <div className="mb-6">
                     <div className="flex justify-between items-center mb-2">
                       <span className="text-sm font-medium text-gray-700">
@@ -510,10 +514,9 @@ export default function Solutions() {
             ))}
           </div>
         </div>
-      </Section>
+      </Section> */}
 
-      {/* Custom Solutions */}
-      <Section className="bg-gray-50">
+{/* <Section className="bg-gray-50">
         <div className="max-w-6xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -576,7 +579,7 @@ export default function Solutions() {
             ))}
           </div>
         </div>
-      </Section>
+      </Section> */}
 
       {/* CTA Section */}
       <Section className="bg-gray-900 text-white">

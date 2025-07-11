@@ -432,44 +432,44 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-12 items-center">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
                 name: "Canary Labs",
                 description: "Certified Partner for Industrial Data Historian Solutions",
-                logo: "/CertifiedBadge.png?height=120&width=200",
+                logo: "/CertifiedBadge.png",
                 badge: "Certified Partner",
                 color: "from-gray-600 to-gray-700",
-                height: 120,
-                width: 200,
               },
               {
                 name: "Ignition Integrator",
                 description: "Certified to deliver Ignition-based automation solutions",
-                logo: "/certi1.png?height=60&width=60",
+                logo: "/certi1.png",
                 badge: "Inductive Automation",
                 color: "from-gray-700 to-gray-800",
-                height:80,
-                width:80
-
               },
               {
                 name: "ISN Registered Contractor",
                 description: "Verified for safety, compliance, and performance.",
-                logo: "/certi2.png?height=60&width=60",
+                logo: "/certi2.png",
                 badge: "Verified Contractor",
                 color: "from-gray-500 to-gray-600",
-                height:120,
-                width:200
+              },
+              {
+                name: "ISN Registered Contractor",
+                description: "Verified for safety, compliance, and performance.",
+                logo: "/certi2.png",
+                badge: "Verified Contractor",
+                color: "from-gray-500 to-gray-600",
               },
             ].map((partner, index) => (
               <motion.div
-                key={partner.name}
+                key={partner.name + index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="group bg-gradient-to-br from-gray-50 to-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 text-center relative overflow-hidden"
+                className="group bg-gradient-to-br from-gray-50 to-white rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 text-center relative overflow-hidden h-full flex flex-col"
               >
                 {/* Background Pattern */}
                 <div className="absolute top-0 right-0 w-32 h-32 opacity-5">
@@ -478,37 +478,39 @@ export default function Home() {
 
                 {/* Certification Badge */}
                 <div
-                  className={`inline-flex items-center bg-gradient-to-r ${partner.color} text-white text-xs font-semibold px-4 py-2 rounded-full mb-6`}
+                  className={`inline-flex items-center bg-gradient-to-r ${partner.color} text-white text-xs font-semibold px-4 py-2 rounded-full mb-4`}
                 >
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path
                       fillRule="evenodd"
-                      d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4a1 1 0 001.414-1.414zm-4 4a1 1 0 010 2h8a1 1 0 010-2zm-4-4a1 1 0 012 0v8a1 1 0 01-2 0zm4 4h2a1 1 0 010 2v-2a1 1 0 01-2 0zm-4-4v2a1 1 0 012 0h-2a1 1 0 010-2zm4 4a1 1 0 002 0v-2a1 1 0 00-2 0zm-4 0h2a1 1 0 000 2v-2a1 1 0 00-2 0z"
+                      d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                       clipRule="evenodd"
                     />
                   </svg>
                   {partner.badge}
                 </div>
 
-                {/* Logo */}
-                <div className="relative h-24 mb-6 flex items-center justify-center">
+                {/* Logo Container - Fixed height */}
+                <div className="h-24 flex items-center justify-center mb-4">
                   <Image
-                    src={partner.logo || "/placeholder.svg"}
+                    src={partner.logo}
                     alt={`${partner.name} logo`}
-                    width={partner.width}
-                    height={partner.height}
-                    className="max-w-full h-auto opacity-70 group-hover:opacity-100 transition-opacity duration-300 filter grayscale group-hover:grayscale-0"
+                    width={150}
+                    height={80}
+                    className="max-h-20 w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300 filter grayscale group-hover:grayscale-0"
                   />
                 </div>
 
                 {/* Content */}
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-gray-700 transition-colors">
+                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-gray-700 transition-colors">
                   {partner.name}
                 </h3>
-                <p className="text-gray-600 leading-relaxed text-sm">{partner.description}</p>
+                <p className="text-gray-600 leading-relaxed text-sm flex-grow">
+                  {partner.description}
+                </p>
 
                 {/* Verification Icon */}
-                <div className="mt-6 flex justify-center">
+                <div className="mt-4 flex justify-center">
                   <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center">
                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                       <path

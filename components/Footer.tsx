@@ -26,14 +26,14 @@ export default function Footer() {
           >
             <div className="flex items-center space-x-3 mb-6">
               <div className="relative">
-                <div className="w-12 h-12 flex items-center justify-center shadow-lg">
+                <div className="w-28 h-20 flex items-center justify-center shadow-lg">
                   {/* <span className="text-white font-bold text-lg">SD</span> */}
                   <Image
                                  src="/sd/SCADADOG-B2.svg"
                                  alt="ScadaDog Logo"
-                                 width={80}
-                                 height={80}
-                                 className="w-20 h-10 object-contain"
+                                 width={140}
+                                 height={140}
+                                 className="w-28 h-20 object-contain"
                   />
                 </div>
                 <div className="absolute -inset-1 opacity-25"></div>
@@ -172,7 +172,9 @@ export default function Footer() {
               ].map((service) => (
                 <li key={service} className="text-gray-300 flex items-center">
                   <div className="w-2 h-2 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full mr-3 flex-shrink-0"></div>
+                  <Link href={'/services'}>
                   {service}
+                  </Link>
                 </li>
               ))}
             </ul>
