@@ -4,13 +4,13 @@ import type React from "react"
 
 import { useState } from "react"
 import { motion } from "framer-motion"
+import { ContactService } from "@/service/Contact"
 
 interface FormData {
   name: string
   email: string
   company: string
   phone: string
-  service: string
   message: string
 }
 
@@ -20,73 +20,113 @@ export default function ContactForm() {
     email: "",
     company: "",
     phone: "",
-    service: "",
     message: "",
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isResponse, setIsResponse] = useState("");
+  const [error, setError] = useState("");
 
-  const services = [
-    "IIoT Data Collection",
-    "SCADA Integration",
-    "Application Development",
-    "Operational Intelligence",
-    "Gen AI Solutions",
-    "Legacy Modernization",
-    "Cybersecurity",
-    "General Consultation",
-  ]
+  // const services = [
+  //   "IIoT Data Collection",
+  //   "SCADA Integration",
+  //   "Application Development",
+  //   "Operational Intelligence",
+  //   "Gen AI Solutions",
+  //   "Legacy Modernization",
+  //   "Cybersecurity",
+  //   "General Consultation",
+  // ]
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+    HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
-
+    });
+  };
+  
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError("");
+    const response = await ContactService.sendEmail(formData);
+    if (!response.success) {
+      setError(response.message || "Failed to send message. Please try again.");
+      setIsSubmitting(false);
+    } else {
+      setIsResponse(response.message || "Message sent Successfully!");
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+    }
+  };
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault()
+  //   setIsSubmitting(true)
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
+  //   // Simulate form submission
+  //   await new Promise((resolve) => setTimeout(resolve, 2000))
 
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        phone: "",
-        service: "",
-        message: "",
-      })
-    }, 3000)
-  }
+  //   setIsSubmitting(false)
+  //   setIsSubmitted(true)
+
+  //   // Reset form after 3 seconds
+  //   setTimeout(() => {
+  //     setIsSubmitted(false)
+  //     setFormData({
+  //       name: "",
+  //       email: "",
+  //       company: "",
+  //       phone: "",
+  //       service: "",
+  //       message: "",
+  //     })
+  //   }, 3000)
+  // }
 
   if (isSubmitted) {
     return (
-      <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-12">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="text-center py-12"
+      >
         <div className="w-20 h-20 bg-gradient-to-br from-gray-500 to-gray-600 rounded-full flex items-center justify-center mx-auto mb-6">
-          <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          <svg
+            className="w-10 h-10 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 13l4 4L19 7"
+            />
           </svg>
         </div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-4">Message Sent Successfully!</h3>
-        <p className="text-gray-600 text-lg">Thank you for contacting us. We'll get back to you within 24 hours.</p>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4">{isResponse || "Message sent successfully"} </h3>
+        <p className="text-gray-600 text-lg">
+          Thank you for contacting us. We&apos;ll get back to you within 24
+          hours.
+        </p>
       </motion.div>
-    )
+    );
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid md:grid-cols-2 gap-6">
         <div>
-          <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+          <label
+            htmlFor="name"
+            className="block text-sm font-semibold text-gray-700 mb-2"
+          >
             Full Name *
           </label>
           <input
@@ -214,10 +254,13 @@ export default function ContactForm() {
           </>
         )}
       </motion.button>
-
+      {error && (
+        <p className="text-sm text-red-500 text-center mt-4">{error}</p>
+      )}
       <p className="text-sm text-gray-500 text-center">
-        By submitting this form, you agree to our privacy policy and terms of service.
+        By submitting this form, you agree to our privacy policy and terms of
+        service.
       </p>
     </form>
-  )
+  );
 }
