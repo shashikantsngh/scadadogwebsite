@@ -439,28 +439,28 @@ export default function Home() {
                 description: "Certified Partner for Industrial Data Historian Solutions",
                 logo: "/CertifiedBadge.png",
                 badge: "Certified Partner",
-                color: "from-gray-600 to-gray-700",
+                color: "from-gray-500 to-gray-800",
               },
               {
                 name: "Ignition Integrator",
                 description: "Certified to deliver Ignition-based automation solutions",
                 logo: "/certi1.png",
                 badge: "Inductive Automation",
-                color: "from-gray-700 to-gray-800",
+                color: "from-gray-500 to-gray-800",
               },
               {
                 name: "ISN Registered Contractor",
                 description: "Verified for safety, compliance, and performance.",
                 logo: "/certi2.png",
                 badge: "Verified Contractor",
-                color: "from-gray-500 to-gray-600",
+                color: "from-gray-500 to-gray-800",
               },
               {
                 name: "AWS Network Partner",
                 description: "Recognized member of the AWS Partner Network, enabling scalable, secure, and innovative cloud solutions across industrie.",
                 logo: "/aws-partner.png",
                 badge: "Verified Partner",
-                color: "from-gray-500 to-gray-600",
+                color: "from-gray-500 to-gray-800",
               },
             ].map((partner, index) => (
               <motion.div
@@ -497,7 +497,7 @@ export default function Home() {
                     alt={`${partner.name} logo`}
                     width={150}
                     height={80}
-                    className="max-h-20 w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300 filter grayscale group-hover:grayscale-0"
+                    className="max-h-[150px] w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity duration-300 filter grayscale group-hover:grayscale-0"
                   />
                 </div>
 
