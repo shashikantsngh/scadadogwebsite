@@ -456,10 +456,10 @@ export default function Home() {
                 color: "from-gray-500 to-gray-600",
               },
               {
-                name: "ISN Registered Contractor",
-                description: "Verified for safety, compliance, and performance.",
-                logo: "/certi2.png",
-                badge: "Verified Contractor",
+                name: "AWS Network Partner",
+                description: "Recognized member of the AWS Partner Network, enabling scalable, secure, and innovative cloud solutions across industrie.",
+                logo: "/aws-partner.png",
+                badge: "Verified Partner",
                 color: "from-gray-500 to-gray-600",
               },
             ].map((partner, index) => (
@@ -526,7 +526,7 @@ export default function Home() {
           </div>
 
           {/* Additional Certifications */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.8 }}
@@ -552,7 +552,7 @@ export default function Home() {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </motion.div> */}
         </div>
       </Section>
 

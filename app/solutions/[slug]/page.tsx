@@ -5,6 +5,7 @@ import Section from "@/components/Section"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import React, { useState } from "react"
 
 // Solution data - in a real app, this would come from a CMS or database
 const solutions = {
@@ -657,45 +658,77 @@ export default function SolutionPage({ params }: SolutionPageProps) {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {Object.entries(solution.pricing).map(([key, plan], index) => (
-              <motion.div
-                key={key}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className={`bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border ${
-                  key === "professional" ? "border-gray-500 ring-2 ring-gray-500/20" : "border-gray-100"
-                }`}
-              >
-                {key === "professional" && (
-                  <div className="bg-gray-600 text-white px-4 py-2 rounded-full text-sm font-bold text-center mb-6">
-                    Most Popular
-                  </div>
-                )}
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                <div className="text-4xl font-bold text-gray-600 mb-6">{plan.price}</div>
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center gap-3">
-                      <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></div>
-                      <span className="text-gray-700">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                <button
-                  className={`w-full py-3 rounded-xl font-semibold transition-colors duration-300 ${
-                    key === "professional"
-                      ? "bg-gray-600 text-white hover:bg-gray-700"
-                      : "bg-gray-100 text-gray-900 hover:bg-gray-200"
-                  }`}
-                >
-                  {key === "enterprise" ? "Contact Sales" : "Start Free Trial"}
-                </button>
-              </motion.div>
-            ))}
-          </div>
+          {/* Using useState to manage the selected plan */}
+          {(() => {
+            // We need to use IIFE because useState cannot be called conditionally
+            const [selectedPlan, setSelectedPlan] = React.useState<string>("professional");
+            
+            return (
+              <div className="grid md:grid-cols-3 gap-8">
+                {Object.entries(solution.pricing).map(([key, plan], index) => {
+                  const isSelected = selectedPlan === key;
+                  
+                  return (
+                    <motion.div
+                      key={key}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      onClick={() => setSelectedPlan(key)}
+                      className={`bg-white rounded-3xl p-8 shadow-lg transition-all duration-300 cursor-pointer border-2 
+                        ${isSelected 
+                          ? "border-gray-600 ring-4 ring-gray-500/20 shadow-xl transform scale-[1.02]" 
+                          : "border-gray-100 hover:border-gray-300 hover:shadow-xl hover:scale-[1.01]"
+                        }
+                      `}
+                    >
+                      {key === "professional" && (
+                        <div className="bg-gray-600 text-white px-4 py-2 rounded-full text-sm font-bold text-center mb-6">
+                          Most Popular
+                        </div>
+                      )}
+                      <h3 className={`text-2xl font-bold mb-2 ${isSelected ? "text-gray-900" : "text-gray-800"}`}>
+                        {plan.name}
+                      </h3>
+                      <div className={`text-4xl font-bold mb-6 ${isSelected ? "text-gray-700" : "text-gray-600"}`}>
+                        {plan.price}
+                      </div>
+                      <ul className="space-y-3 mb-8">
+                        {plan.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center gap-3">
+                            <div className={`w-2 h-2 rounded-full flex-shrink-0 ${isSelected ? "bg-green-600" : "bg-green-500"}`}></div>
+                            <span className={`${isSelected ? "text-gray-800" : "text-gray-700"}`}>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <button
+                        className={`w-full py-3 rounded-xl font-semibold transition-all duration-300 ${
+                          isSelected
+                            ? "bg-gray-600 text-white hover:bg-gray-700"
+                            : "bg-gray-100 text-gray-900 hover:bg-gray-200"
+                        }`}
+                      >
+                        {key === "enterprise" ? "Contact Sales" : "Start Free Trial"}
+                      </button>
+                      
+                      {/* Selection indicator */}
+                      {/* {isSelected && (
+                        <div className="mt-6 text-center">
+                          <span className="inline-flex items-center text-sm font-medium text-gray-600">
+                            <svg className="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                            Selected Plan
+                          </span>
+                        </div>
+                      )} */}
+                    </motion.div>
+                  );
+                })}
+              </div>
+            );
+          })()}
         </div>
       </Section>
 
