@@ -3,17 +3,20 @@
 import type React from "react"
 import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { ChatbotService } from "@/service/Chatbot"
 
 interface Message {
   id: number
   text: string
   isUser: boolean
   timestamp: Date
+  session_id?: string
 }
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
+  const [sessionId, setSessionId] = useState<string | null>(null)
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
@@ -42,39 +45,70 @@ export default function ChatWidget() {
   const handleSendMessage = async () => {
     if (!inputValue.trim()) return
 
+    // Generate session ID if it doesn't exist yet
+    const currentSessionId = sessionId || new Date().toISOString();
+    if (!sessionId) {
+      setSessionId(currentSessionId);
+    }
+
     const userMessage: Message = {
       id: Date.now(),
       text: inputValue,
       isUser: true,
       timestamp: new Date(),
+      session_id: currentSessionId
     }
 
     setMessages((prev) => [...prev, userMessage])
     setInputValue("")
     setIsTyping(true)
 
-    // Simulate AI response
-    setTimeout(() => {
-      const responses = [
-        "Thank you for your question! I'd be happy to help you learn more about our industrial automation solutions. Would you like to know about our IIoT data collection services?",
-        "That's a great question about SCADA integration. Our team specializes in seamless integration with existing systems. Would you like me to connect you with one of our technical experts?",
-        "I can help you with that! Our solutions are designed for industrial-strength reliability. Let me know if you'd like to schedule a consultation with our team.",
-        "Excellent question! Our cybersecurity solutions are specifically designed for OT environments. Would you like to learn more about our SecureOT Shield platform?",
-        "I understand you're interested in our services. Our team has over 10 years of experience in industrial automation. Would you like me to arrange a call with one of our specialists?",
-      ]
+    try {
+      // Send message to API
+      const response = await ChatbotService.sendMessage({
+        session_id: currentSessionId,
+        message: inputValue.trim()
+      });
 
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)]
+      // Check if the API call was successful
+      if (response.success) {
+        // Create AI message from response
+        const aiMessage: Message = {
+          id: Date.now() + 1,
+          text: response.bot_response || "Thank you for your message. I'll get back to you shortly.",
+          isUser: false,
+          timestamp: new Date(),
+          session_id: currentSessionId
+        }
 
-      const aiMessage: Message = {
+        setMessages((prev) => [...prev, aiMessage]);
+      } else {
+        // Handle error by showing an error message
+        const errorMessage: Message = {
+          id: Date.now() + 1,
+          text: "Sorry, I'm having trouble connecting right now. Please try again in a moment.",
+          isUser: false,
+          timestamp: new Date(),
+          session_id: currentSessionId
+        }
+
+        setMessages((prev) => [...prev, errorMessage]);
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      // Show error message to user
+      const errorMessage: Message = {
         id: Date.now() + 1,
-        text: randomResponse,
+        text: "Sorry, I'm having trouble connecting right now. Please try again in a moment.",
         isUser: false,
         timestamp: new Date(),
+        session_id: currentSessionId
       }
 
-      setMessages((prev) => [...prev, aiMessage])
-      setIsTyping(false)
-    }, 1500)
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsTyping(false);
+    }
   }
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -89,11 +123,39 @@ export default function ChatWidget() {
     return null
   }
 
+  // Generate a session ID when the chat is opened
+  const handleOpenChat = () => {
+    if (!sessionId) {
+      // Create a timestamp-based session ID
+      const newSessionId = new Date().toISOString();
+      setSessionId(newSessionId);
+      
+      // Update the welcome message with the session ID
+      if (messages.length > 0) {
+        const updatedMessages = [...messages];
+        updatedMessages[0] = {
+          ...updatedMessages[0],
+          session_id: newSessionId
+        };
+        setMessages(updatedMessages);
+      }
+    }
+    setIsOpen(true);
+  };
+
+  // Reset session ID when chat is closed
+  const handleCloseChat = () => {
+    setIsOpen(false);
+    setSessionId(null);
+    setMessages([]); // Clear messages when chat is closed
+    // Don't reset sessionId here to keep it for the entire session
+  };
+
   return (
     <>
       {/* Chat Widget Button */}
       <motion.button
-        onClick={() => setIsOpen(true)}
+        onClick={handleOpenChat}
         className={`fixed bottom-6 right-6 z-50 w-16 h-16 bg-gradient-to-br from-gray-800 to-black text-white rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center justify-center group ${
           isOpen ? "hidden" : "block"
         }`}
@@ -147,7 +209,7 @@ export default function ChatWidget() {
                   </div>
                 </div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="text-gray-300 hover:text-white transition-colors p-1">
+              <button onClick={handleCloseChat} className="text-gray-300 hover:text-white transition-colors p-1">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
