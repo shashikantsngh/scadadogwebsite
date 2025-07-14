@@ -46,7 +46,7 @@ export default function ChatWidget() {
     if (!inputValue.trim()) return
 
     // Generate session ID if it doesn't exist yet
-    const currentSessionId = sessionId || new Date().toISOString();
+    const currentSessionId = sessionId || Date.now().toString();
     if (!sessionId) {
       setSessionId(currentSessionId);
     }
@@ -126,8 +126,8 @@ export default function ChatWidget() {
   // Generate a session ID when the chat is opened
   const handleOpenChat = () => {
     if (!sessionId) {
-      // Create a timestamp-based session ID
-      const newSessionId = new Date().toISOString();
+      // Create a timestamp-based session ID (numeric)
+      const newSessionId = Date.now().toString();
       setSessionId(newSessionId);
       
       // Update the welcome message with the session ID
