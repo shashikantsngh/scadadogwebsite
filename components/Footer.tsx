@@ -130,7 +130,7 @@ export default function Footer() {
                 { name: "Services", href: "/services" },
                 { name: "Support", href: "/support" },
                 { name: "Blog", href: "/blog" },
-                { name: "About", href: "/about" },
+                // { name: "About", href: "/about" },
                 { name: "Contact", href: "/contact" },
               ].map((link) => (
                 <li key={link.name}>
